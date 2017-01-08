@@ -10,16 +10,21 @@ $(document).ready(function(){
 			url: "api/registrUser",
 			data: {"fullName": fullName, "login": login, "password": password, "email": email},
 			success: function(response){
-				$("#fullName").val('');
-				$("#login").val('');
-				$("#password").val('');
-				$("#email").val('');
-				$(".sign-up-button").fadeOut(300, function(){
-					$(".success-feedback").fadeIn(300);
-				});
-				setTimeout(function(){
-					window.location.href = "/"
-				}, 1000);
+				if (response == 'Success') {
+					$("#fullName").val('');
+					$("#login").val('');
+					$("#password").val('');
+					$("#email").val('');
+					$(".sign-up-button").fadeOut(300, function(){
+						$(".success-feedback").fadeIn(300);
+					});
+					setTimeout(function(){
+						window.location.href = "/"
+					}, 1000);
+				}
+				if (response == 'Fail') {
+					$(".sign-up-button a").html('Произошла ошибка, нажмите что бы повторить.')
+				}
 			}
 		});
 	});
