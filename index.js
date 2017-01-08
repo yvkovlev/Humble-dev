@@ -53,12 +53,6 @@ app.post('/api/registrUser', function (req, res){
 	});
 });
 
-User.find({}, function(err, users) {
-  if (err) throw err;
-
-  console.log(users);
-});
-
 /*
 $set and $unset fields
 User.update({ login: 'terdenan'}, { $set: {admin: true}}, function(err){
