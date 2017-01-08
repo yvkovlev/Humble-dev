@@ -130,7 +130,6 @@ app.get('/api/getUser', function (req, res) {
 	});
 });
 
-
 /*
 $set and $unset fields
 User.update({ login: 'terdenan'}, { $set: {admin: true}}, function(err){
