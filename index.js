@@ -13,6 +13,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var User = require('./models/user');
 var dialog = require('./models/dialog');
+var userDialogList = require('./models/userDialogList');
 
 mongoose.connect('mongodb://localhost:27017/Humble');
 
@@ -24,7 +25,7 @@ app.use(session({
 	store: new MongoStore ({
 		mongooseConnection: mongoose.connection
 	}),
-	cookie: {httpOnly: true}
+	cookie: {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7}
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -40,14 +41,18 @@ app.use(function (req, res, next){
 			User.findOne({login: req.session.login}, function(err, user){
 				if (err) throw err;
 				if (user == null || user.password != req.session.password) res.redirect('sign-in');
-				else next();
+				else
+				{
+					res.cookie('login', req.session.login);
+					next();
+				}
 			});
 		}
-	} // Check session middleware
+	}
 });
 
 app.get('/', function (req, res){
-	res.sendFile(__dirname + '/public/view/index.html');
+	res.sendFile(__dirname + "/public/view/index.html");
 });
 
 app.get('/sign-in', function (req, res){
@@ -75,6 +80,8 @@ app.post('/api/registrUser', function (req, res){
 	  {
 	  	console.log("Registr new user " + req.body.fullName + "\nlogin: " + req.body.login + 
 		"\nemail: " + req.body.email + "\n");
+		req.session.login = login;
+		req.session.password = password;
 	  	res.send("Success");
 	  }
 	  
@@ -88,26 +95,31 @@ app.get('/api/getDialog', function (req, res){
 	});
 });
 
-/*var newDialog = dialog({
-  type: "single",
-  participants: ['terdenan', 'jakov'],
-  messages: [
-  	{
-  		from: 'terdenan',
-  		anonym: false,
-  		message: 'Hello, bro!'
-  	},
-  	{
-  		from: 'jakov',
-  		anonym: false,
-  		message: 'Hi!'
-  	}
-  ]
+/*app.get('/api/getUserDialogs', function (req, res){
+	var data;
+	userDialogList.findOne({login: req.session.login}, function (err, dialogList){
+		if (err) throw err;
+		var arr = dialogList.dialogs;
+		arr.forEach(function(dialog, arr){
+			data.
+		});
+	});
+});*/
+
+/*var newUserDialogList = userDialogList({
+  login: "terdenan",
+  dialogs: ["587204797631b42420326887"]
 });
 
-newDialog.save(function(err) {
-	  if (err) throw err;
-	  console.log('saved');
+newUserDialogList.save(function(err){
+	if (err) throw err;
+	console.log("saved");
+});
+*/
+
+/*userDialogList.find({}, function(err, dialogList){
+	if (err) throw err;
+	console.log(dialogList);
 });*/
 
 app.get('/api/getUser', function (req, res) {
@@ -123,7 +135,7 @@ app.get('/api/getUser', function (req, res) {
 			else
 			{
 				req.session.login = req.query.login;
-				req.session.password	 = req.query.password;
+				req.session.password = req.query.password;
 				res.send("Success");
 			}
 		}
