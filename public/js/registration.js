@@ -19,7 +19,7 @@ $(document).ready(function(){
 						$(".success-feedback").fadeIn(300);
 					});
 					setTimeout(function(){
-						window.location.href = "/"
+						//window.location.href = "/"
 					}, 1000);
 				}
 				if (response == 'Fail') {

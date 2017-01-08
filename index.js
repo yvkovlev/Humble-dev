@@ -66,20 +66,19 @@ app.post('/api/registrUser', function (req, res){
 	  email: req.body.email,
 	  admin: "true"
 	});
-	/*newUser.save(function(err) {
-	  if (err) {
-	  	throw err;
-	  	res.send("Fail");
-	  }
-	  else
-	  {
-	  	console.log("Registr new user " + req.body.fullName + "\nlogin: " + req.body.login + 
-		"\nemail: " + req.body.email + "\n");
-	  	res.send("Success");
-	  }
-	  
-	});*/
-	res.send("Success");
+	// newUser.save(function(err) {
+	//   if (err) {
+	//   	throw err;
+	//   	res.send("Fail");
+	//   }
+	//   else
+	//   {
+	//   	console.log("Registr new user " + req.body.fullName + "\nlogin: " + req.body.login + 
+	// 	"\nemail: " + req.body.email + "\n");
+	//   	res.send("Success");
+	//   }
+	// });
+	res.send("Fail");
 });
 
 app.get('/api/getDialog', function (req, res){
