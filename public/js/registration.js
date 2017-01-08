@@ -4,14 +4,14 @@ $(document).ready(function(){
 		var login = $("#login").val();
 		var password = $("#password").val();
 		var email = $("#email").val();
-		// Validation
-		$.ajax({
+		alert(checkFullName(fullName) + " " + checkLogin(login) + " " + checkPassword(password) + " " + checkEmail(email)); 
+		/*$.ajax({
 			type: "post",
 			url: "api/registrUser",
 			data: {"fullName": fullName, "login": login, "password": password, "email": email},
 			success: function(response){
 				alert(response);
 			}
-		});
+		});*/
 	});
 });
