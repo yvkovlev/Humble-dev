@@ -361,3 +361,19 @@
   display: none;
 }
 
+.success-feedback {
+  display: flex;
+  width: 60%;
+  margin: auto;
+  text-align: left;
+  margin-bottom: 25px;
+  display: none;
+}
+
+.success-feedback span {
+  color: rgba(255, 255, 255, 0.51);
+  font-size: 18px;
+  line-height: normal;
+  font-weight: lighter;
+  letter-spacing: 0.04em;
+}

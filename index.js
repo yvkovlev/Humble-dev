@@ -66,7 +66,7 @@ app.post('/api/registrUser', function (req, res){
 	  email: req.body.email,
 	  admin: "true"
 	});
-	newUser.save(function(err) {
+	/*newUser.save(function(err) {
 	  if (err) {
 	  	throw err;
 	  	res.send("Fail");
@@ -78,7 +78,8 @@ app.post('/api/registrUser', function (req, res){
 	  	res.send("Success");
 	  }
 	  
-	});
+	});*/
+	res.send("Success");
 });
 
 app.get('/api/getDialog', function (req, res){

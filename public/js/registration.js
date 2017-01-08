@@ -5,13 +5,22 @@ $(document).ready(function(){
 		var password = $("#password").val();
 		var email = $("#email").val();
 		alert(checkFullName(fullName) + " " + checkLogin(login) + " " + checkPassword(password) + " " + checkEmail(email)); 
-		/*$.ajax({
+		$.ajax({
 			type: "post",
 			url: "api/registrUser",
 			data: {"fullName": fullName, "login": login, "password": password, "email": email},
 			success: function(response){
-				alert(response);
+				$("#fullName").val('');
+				$("#login").val('');
+				$("#password").val('');
+				$("#email").val('');
+				$(".sign-up-button").fadeOut(300, function(){
+					$(".success-feedback").fadeIn(300);
+				});
+				setTimeout(function(){
+					window.location.href = '/'
+				}, 1000);
 			}
-		});*/
+		});
 	});
 });
