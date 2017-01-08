@@ -78,7 +78,7 @@ app.post('/api/registrUser', function (req, res){
 	//   	res.send("Success");
 	//   }
 	// });
-	res.send("Fail");
+	res.send("Success");
 });
 
 app.get('/api/getDialog', function (req, res){
