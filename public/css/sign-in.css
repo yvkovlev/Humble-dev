@@ -1,0 +1,208 @@
+
+.main-container {
+  margin: 50px auto 10px;
+  display: inline-block;
+  text-align: left;
+}
+
+.left-column {
+  float: left;
+  width: 400px;
+  background: #ffffff;
+  padding: 25px 0px 10px 0px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.right-column {
+  float: left;
+  width: 700px;
+  height: 649px;
+  position: relative;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  overflow: hidden;
+  background: rgba(41,71,142,1);
+  background: -moz-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(41,71,142,1)), color-stop(50%, rgba(0,167,179,1)), color-stop(100%, rgba(186,217,192,1)));
+  background: -webkit-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -o-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -ms-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29478e', endColorstr='#bad9c0', GradientType=1 );
+}
+
+.logo {
+  display: block;
+  text-align: center;
+  margin: 60px auto 0;
+}
+
+.logo img {
+  margin: auto;
+}
+
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 50px auto 0;
+}
+
+.sign-in-input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #f7f6f6;
+  width: 270px;
+  margin: 10px auto;
+  padding: 5px 10px;
+  font-size: 16px;
+  font-weight: lighter;
+  color: #585858;
+}
+
+.sign-in-input-button {
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 0px;
+  width: 230px;
+  margin: 40px auto;
+  font-size: 16px;
+  font-weight: lighter;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: rgba(41,71,142,1);
+  background: -moz-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(41,71,142,1)), color-stop(50%, rgba(0,167,179,1)), color-stop(100%, rgba(186,217,192,1)));
+  background: -webkit-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -o-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: -ms-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  background: linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29478e', endColorstr='#bad9c0', GradientType=1 );
+  transition: all 0.2s ease-in-out;
+}
+
+.sign-in-input-button:hover {
+  opacity: 0.9;
+}
+
+.information-block {
+  margin: 100px auto 0;
+  text-align: center;
+}
+
+.information-block span {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.top-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 15px 0;
+}
+
+.download-app {
+  color: #67C3BA;
+  background: #fff;
+  border-radius: 30px;
+  padding: 10px 40px;
+  line-height: 30px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.download-app:hover {
+  opacity: 0.9;
+  color: #67C3BA !important;
+}
+
+.sign-up {
+  color: #ffffff;
+  border-radius: 30px;
+  border: 2px solid #fff;
+  padding: 10px 40px;
+  margin-right: 15px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+}
+
+.sign-up:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app-description {
+  width: 100%;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.app-description h2 {
+  color: #fff;
+  font-size: 20px;
+  width: 520px;
+  margin: auto;
+  line-height: normal;
+  font-weight: lighter;
+  letter-spacing: 0.04em;
+}
+
+.app-description h3 {
+  color: #fff;
+  font-size: 18px;
+  width: 483px;
+  margin: auto;
+  line-height: normal;
+  font-weight: lighter;
+  letter-spacing: 0.04em;
+}
+
+.app-presentation {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.app-prsentation img {
+}
+
+.pagination {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.pagination-circles {
+  margin: auto;
+  display: flex;
+  text-align: center;
+}
+
+.pagination ul {
+  display: inline;
+  margin: auto;
+}
+
+.pagination ul li {
+  display: inline-table;
+  margin: 0 7px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.pagination ul li:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.active-pagination {
+  background: rgba(255, 255, 255, 0.6) !important;
+}
+
