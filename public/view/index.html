@@ -10,7 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"> 
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"> 
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/font-awesome.css">
@@ -21,7 +21,9 @@
         <script src="js/jquery-1.10.2.min.js"></script> 
         <script src="js/change-selection.js"></script> 
         <script src="js/actions.js"></script> 
+        <script src="js/parseCookie.js"></script>
         <script src="js/menu.js"></script> 
+        <script src="js/getUserDialogs.js"></script>
         <script src="js/getDialog.js"></script>
     </head>
     <body>
@@ -41,7 +43,7 @@
                 </header>
                 <div class="dialogs-list">
                     <!-- SINGLE DIALOGS START -->
-                    <div class="single-dialog active-dialog">
+                    <!-- <div class="single-dialog">
                         <div class="single-dialog-photo">
                             <div class="single-dialog-photo-border">
                                 <img src='images/1.jpeg'>
@@ -59,99 +61,7 @@
                                 <span class="last-message-time">12.47</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="single-dialog">
-                        <div class="single-dialog-photo">
-                            <div class="single-dialog-photo-border">
-                                <img src='images/2.jpg'>
-                            </div>
-                            <div class="online-status-dialogs"></div>
-                        </div>
-                        <div class="single-dialog-body">
-                            <div class="single-dialog-title">
-                                <span class="dialog-title">John Smith</span>
-                            </div>
-                            <div class="single-dialog-last-message">
-                                <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                            </div>
-                            <div class="single-dialog-time">
-                                <span class="new-message-indicator">NEW</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-dialog">
-                        <div class="single-dialog-photo">
-                            <div class="single-dialog-photo-border">
-                                <img src='images/3.jpg'>
-                            </div>
-                        </div>
-                        <div class="single-dialog-body">
-                            <div class="single-dialog-title">
-                                <span class="dialog-title">Alexandra Samoylova</span>
-                            </div>
-                            <div class="single-dialog-last-message">
-                                <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                            </div>
-                            <div class="single-dialog-time">
-                                <span class="last-message-time">12.47</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-dialog">
-                        <div class="single-dialog-photo">
-                            <div class="single-dialog-photo-border">
-                                <img src='images/4.jpg'>
-                            </div>
-                            <div class="online-status-dialogs"></div>
-                        </div>
-                        <div class="single-dialog-body">
-                            <div class="single-dialog-title">
-                                <span class="dialog-title">Dmitriy Lee</span>
-                            </div>
-                            <div class="single-dialog-last-message">
-                                <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                            </div>
-                            <div class="single-dialog-time">
-                                <span class="last-message-time">12.47</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-dialog">
-                        <div class="single-dialog-photo">
-                            <div class="single-dialog-photo-border">
-                                <img src='images/5.jpg'>
-                            </div>
-                        </div>
-                        <div class="single-dialog-body">
-                            <div class="single-dialog-title">
-                                <span class="dialog-title">Kevin Hart</span>
-                            </div>
-                            <div class="single-dialog-last-message">
-                                <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                            </div>
-                            <div class="single-dialog-time">
-                                <span class="last-message-time">12.47</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-dialog">
-                        <div class="single-dialog-photo">
-                            <div class="single-dialog-photo-border">
-                                <img src='images/6.jpg'>
-                            </div>
-                        </div>
-                        <div class="single-dialog-body">
-                            <div class="single-dialog-title">
-                                <span class="dialog-title">Luis Moore</span>
-                            </div>
-                            <div class="single-dialog-last-message">
-                                <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                            </div>
-                            <div class="single-dialog-time">
-                                <span class="last-message-time">12.47</span>
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
                     <!-- SINGLE DIALOGS END -->
                     <!-- CONVERSATIONS START -->
                     <div class="conversation-dialog">
@@ -334,7 +244,7 @@
                                 <span>12.47</span>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     <!-- MESSAGES END -->
                 </div>
                 <footer class="dialog-footer">

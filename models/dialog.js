@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var dialogSchema = new Schema({
   type: String, // single, group
+  name: String,
   participants: [{ type: String }],
   messages: [{from: String, anonym: Boolean, message: String}]
 });
