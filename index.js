@@ -8,7 +8,7 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 
 var User = require('./models/user');
@@ -89,22 +89,38 @@ app.post('/api/registrUser', function (req, res){
 });
 
 app.get('/api/getDialog', function (req, res){
-	dialog.findOne({_id: mongoose.Types.ObjectId('587204797631b42420326887')}, function(err, dialog) {
+	dialog.findOne({_id: mongoose.Types.ObjectId(req.query.dialogId)}, function(err, dialog) {
 	  if (err) throw err;
 	  res.send(dialog);
 	});
 });
 
-/*app.get('/api/getUserDialogs', function (req, res){
-	var data;
-	userDialogList.findOne({login: req.session.login}, function (err, dialogList){
+app.get('/api/getUserDialogs', function (req, res){
+	var userDialogs = [];
+	userDialogList.findOne({_id: mongoose.Types.ObjectId('587253aa46dd54265303b5bb')}, function (err, dialogList){
 		if (err) throw err;
 		var arr = dialogList.dialogs;
-		arr.forEach(function(dialog, arr){
-			data.
+		var promise = new Promise (function(resolve, reject){
+			var itemPassed = 0;
+			var arrSize = arr.length;
+			arr.forEach(function(curDialog, arr){
+				dialog.findOne({_id: mongoose.Types.ObjectId(curDialog)}, function(err, curDialog){
+					itemPassed++;
+					userDialogs.push({"id": curDialog._id, "name": curDialog.name, "lastMessage": curDialog.messages[0].message});
+					if (itemPassed == arrSize)
+					{
+						resolve("result");
+					}
+				});
+			});
+		});
+		promise.then(function(){
+			res.send(userDialogs);
+		}, function(){
+			res.send("Promise error");
 		});
 	});
-});*/
+});
 
 /*var newUserDialogList = userDialogList({
   login: "terdenan",
@@ -142,6 +158,13 @@ app.get('/api/getUser', function (req, res) {
 	});
 });
 
+/*userDialogList.findOne({_id: mongoose.Types.ObjectId('587253aa46dd54265303b5bb')}, function(err, data){
+	console.log(data);
+});*/
+
+/*dialog.findOneAndUpdate({}, {name: "Denis Tereschenko"}, function(err, data){
+	console.log("success");
+});*/
 
 /*
 $set and $unset fields
