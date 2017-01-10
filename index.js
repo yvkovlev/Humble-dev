@@ -8,11 +8,12 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 var MongoStore = require('connect-mongo')(session);
 
 var User = require('./models/user');
 var dialog = require('./models/dialog');
+var userDialogList = require('./models/userDialogList');
 
 mongoose.connect('mongodb://localhost:27017/Humble');
 
@@ -24,7 +25,7 @@ app.use(session({
 	store: new MongoStore ({
 		mongooseConnection: mongoose.connection
 	}),
-	cookie: {httpOnly: true}
+	cookie: {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7}
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -40,14 +41,18 @@ app.use(function (req, res, next){
 			User.findOne({login: req.session.login}, function(err, user){
 				if (err) throw err;
 				if (user == null || user.password != req.session.password) res.redirect('sign-in');
-				else next();
+				else
+				{
+					res.cookie('login', req.session.login);
+					next();
+				}
 			});
 		}
-	} // Check session middleware
+	}
 });
 
 app.get('/', function (req, res){
-	res.sendFile(__dirname + '/public/view/index.html');
+	res.sendFile(__dirname + "/public/view/index.html");
 });
 
 app.get('/sign-in', function (req, res){
@@ -75,6 +80,8 @@ app.post('/api/registrUser', function (req, res){
 	  {
 	  	console.log("Registr new user " + req.body.fullName + "\nlogin: " + req.body.login + 
 		"\nemail: " + req.body.email + "\n");
+		req.session.login = login;
+		req.session.password = password;
 	  	res.send("Success");
 	  }
 	  
@@ -82,32 +89,53 @@ app.post('/api/registrUser', function (req, res){
 });
 
 app.get('/api/getDialog', function (req, res){
-	dialog.findOne({_id: mongoose.Types.ObjectId('587204797631b42420326887')}, function(err, dialog) {
+	dialog.findOne({_id: mongoose.Types.ObjectId(req.query.dialogId)}, function(err, dialog) {
 	  if (err) throw err;
 	  res.send(dialog);
 	});
 });
 
-/*var newDialog = dialog({
-  type: "single",
-  participants: ['terdenan', 'jakov'],
-  messages: [
-  	{
-  		from: 'terdenan',
-  		anonym: false,
-  		message: 'Hello, bro!'
-  	},
-  	{
-  		from: 'jakov',
-  		anonym: false,
-  		message: 'Hi!'
-  	}
-  ]
+app.get('/api/getUserDialogs', function (req, res){
+	var userDialogs = [];
+	userDialogList.findOne({_id: mongoose.Types.ObjectId('587253aa46dd54265303b5bb')}, function (err, dialogList){
+		if (err) throw err;
+		var arr = dialogList.dialogs;
+		var promise = new Promise (function(resolve, reject){
+			var itemPassed = 0;
+			var arrSize = arr.length;
+			arr.forEach(function(curDialog, arr){
+				dialog.findOne({_id: mongoose.Types.ObjectId(curDialog)}, function(err, curDialog){
+					itemPassed++;
+					userDialogs.push({"id": curDialog._id, "name": curDialog.name, "lastMessage": curDialog.messages[0].message});
+					if (itemPassed == arrSize)
+					{
+						resolve("result");
+					}
+				});
+			});
+		});
+		promise.then(function(){
+			res.send(userDialogs);
+		}, function(){
+			res.send("Promise error");
+		});
+	});
 });
 
-newDialog.save(function(err) {
-	  if (err) throw err;
-	  console.log('saved');
+/*var newUserDialogList = userDialogList({
+  login: "terdenan",
+  dialogs: ["587204797631b42420326887"]
+});
+
+newUserDialogList.save(function(err){
+	if (err) throw err;
+	console.log("saved");
+});
+*/
+
+/*userDialogList.find({}, function(err, dialogList){
+	if (err) throw err;
+	console.log(dialogList);
 });*/
 
 app.get('/api/getUser', function (req, res) {
@@ -123,19 +151,12 @@ app.get('/api/getUser', function (req, res) {
 			else
 			{
 				req.session.login = req.query.login;
-				req.session.password	 = req.query.password;
+				req.session.password = req.query.password;
 				res.send("Success");
 			}
 		}
 	});
 });
-
-/*
-$set and $unset fields
-User.update({ login: 'terdenan'}, { $set: {admin: true}}, function(err){
-	if (err) throw err;
-	console.log('updated');
-});*/
 
 http.listen(3000, function(){
   console.log('Humble is listening on port 3000');
