@@ -126,7 +126,6 @@ app.get('/api/getUserDialogs', function (req, res){
   login: "terdenan",
   dialogs: ["587204797631b42420326887"]
 });
-
 newUserDialogList.save(function(err){
 	if (err) throw err;
 	console.log("saved");
@@ -157,21 +156,6 @@ app.get('/api/getUser', function (req, res) {
 		}
 	});
 });
-
-/*userDialogList.findOne({_id: mongoose.Types.ObjectId('587253aa46dd54265303b5bb')}, function(err, data){
-	console.log(data);
-});*/
-
-/*dialog.findOneAndUpdate({}, {name: "Denis Tereschenko"}, function(err, data){
-	console.log("success");
-});*/
-
-/*
-$set and $unset fields
-User.update({ login: 'terdenan'}, { $set: {admin: true}}, function(err){
-	if (err) throw err;
-	console.log('updated');
-});*/
 
 http.listen(3000, function(){
   console.log('Humble is listening on port 3000');
