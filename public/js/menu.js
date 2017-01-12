@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	var closeMenu = true;
+
 	$(".menu-list").css("display", "none");
     $(".menu-bars").on("click", function(){
     	if (closeMenu) {
@@ -24,5 +25,5 @@ $(document).ready(function(){
 	        });
 	        closeMenu = true;
 	    }
-    })
+    });
 });

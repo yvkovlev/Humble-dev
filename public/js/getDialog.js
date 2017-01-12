@@ -11,7 +11,7 @@ $(document).ready(function(){
 				var dialog = "";
 				var arr = response.messages;
 				arr.forEach(function(mess, arr){
-					if (mess.from == getCookie("login"))
+					if (mess.from == "jakov")
 					{
 						dialog += "<div class='message-outher'>" +
 				                        "<div class='message-out'>" + 
