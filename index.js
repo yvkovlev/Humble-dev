@@ -97,7 +97,7 @@ app.get('/api/getDialog', function (req, res){
 
 app.get('/api/getUserDialogs', function (req, res){
 	var userDialogs = [];
-	userDialogList.findOne({_id: mongoose.Types.ObjectId('587253aa46dd54265303b5bb')}, function (err, dialogList){
+	userDialogList.findOne({_id: mongoose.Types.ObjectId('587652556cb8a9779b2d6bb8')}, function (err, dialogList){
 		if (err) throw err;
 		var arr = dialogList.dialogs;
 		var promise = new Promise (function(resolve, reject){
@@ -122,6 +122,11 @@ app.get('/api/getUserDialogs', function (req, res){
 	});
 });
 
+User.find({}, function(err, data){
+console.log(data);
+});
+
+
 /*var newUserDialogList = userDialogList({
   login: "terdenan",
   dialogs: ["587204797631b42420326887"]
@@ -136,6 +141,7 @@ newUserDialogList.save(function(err){
 	if (err) throw err;
 	console.log(dialogList);
 });*/
+
 
 app.get('/api/getUser', function (req, res) {
 	User.findOne({login: req.query.login}, function (err, user){
