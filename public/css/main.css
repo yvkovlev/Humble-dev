@@ -751,7 +751,7 @@
 .menu-list ul li {
   display: flex;
   flex-direction: row;
-  padding: 5px 25px;
+  padding: 10px 25px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -861,14 +861,11 @@
   flex-direction: row;
   position: absolute;
   right: 0;
+  top: 9px;
 }
 
 .anonim-dialog {
-  width: 25px;
-  height: 25px;
-  background: url(../images/anonim.png) no-repeat;
-  opacity: 0.5;
-  margin: 1px 5px;
+  margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
@@ -878,11 +875,7 @@
 }
 
 .open-dialog {
-  width: 25px;
-  height: 25px;
-  background: url(../images/chat.png) no-repeat;
-  opacity: 0.5;
-  margin: 1px 5px;
+  margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
