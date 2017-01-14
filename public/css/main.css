@@ -872,8 +872,9 @@
 
 .anonim-dialog object {
   background: #525a63;
-  padding: 4px;
+  padding: 4px 0;
   border-radius: 3px;
+  width: 30px;
 }
 
 .anonim-dialog:hover {
@@ -888,8 +889,9 @@
 
 .open-dialog object {
   background: #525a63;
-  padding: 4px;
+  padding: 4px 0;
   border-radius: 3px;
+  width: 30px;
 }
 
 .open-dialog:hover {
