@@ -106,7 +106,7 @@ app.get('/api/getUserDialogs', function (req, res){
 			arr.forEach(function(curDialog, arr){
 				dialog.findOne({_id: mongoose.Types.ObjectId(curDialog)}, function(err, curDialog){
 					itemPassed++;
-					userDialogs.push({"id": curDialog._id, "name": curDialog.name, "lastMessage": curDialog.messages[0].message});
+					userDialogs.push({"id": curDialog._id, "name": curDialog.name, "lastMessage": curDialog.messages[curDialog.messages.length - 1].message});
 					if (itemPassed == arrSize)
 					{
 						resolve("result");
