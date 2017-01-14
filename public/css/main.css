@@ -861,13 +861,19 @@
   flex-direction: row;
   position: absolute;
   right: 0;
-  top: 9px;
+  top: 6px;
 }
 
 .anonim-dialog {
   margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.anonim-dialog object {
+  background: #525a63;
+  padding: 4px;
+  border-radius: 3px;
 }
 
 .anonim-dialog:hover {
@@ -878,6 +884,12 @@
   margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.open-dialog object {
+  background: #525a63;
+  padding: 4px;
+  border-radius: 3px;
 }
 
 .open-dialog:hover {
