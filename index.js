@@ -136,6 +136,9 @@ newUserDialogList.save(function(err){
 	if (err) throw err;
 	console.log(dialogList);
 });*/
+User.find(function(err, data){
+	console.log(data);
+});
 
 app.get('/api/getUser', function (req, res) {
 	User.findOne({login: req.query.login}, function (err, user){
