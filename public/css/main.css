@@ -97,11 +97,15 @@
   padding: 10px 25px;
   height: 50px;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
 }
 
 .single-dialog:hover {
   background: rgba(255, 255, 255, 0.05);
-  transition: all 0.1s ease-in-out;
+}
+
+.single-dialog:hover > .single-dialog-body {
+  border-bottom: 1px solid #494f56;
 }
 
 .active-dialog {
@@ -145,6 +149,8 @@
 .dialog-title {
   color: #fff;
   font-size: 16px;
+  font-weight: lighter;
+  letter-spacing: 0.01em;
 }
 
 .single-dialog-last-message {
@@ -156,7 +162,7 @@
 .last-message {
   color: #77818D;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: normal;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
