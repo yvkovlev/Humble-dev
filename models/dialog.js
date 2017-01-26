@@ -2,10 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var dialogSchema = new Schema({
-  type: String, // single, group
-  name: String,
-  participants: [{ type: String }],
-  messages: [{from: String, anonym: Boolean, message: String}]
+  participants: [{ type: String }]
 });
 
 var dialog = mongoose.model('dialogs', dialogSchema);

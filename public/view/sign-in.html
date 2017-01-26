@@ -18,7 +18,7 @@
         
         <script src="js/jquery-1.10.2.min.js"></script> 
         <script src="js/pagination.js"></script> 
-        <script src="js/sign-in.js"></script>
+        <!-- <script src="js/sign-in.js"></script> -->
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -31,9 +31,11 @@
                     <img src="images/logo.png">
                 </div>
                 <div class="sign-in-form">
-                    <input type="text" class="sign-in-input" placeholder="Логин" id="login">
-                    <input type="password" class="sign-in-input" placeholder="Пароль" id="password">
-                    <div class="sign-in-input-button">Вход</div>
+                    <form action="/api/login" method="post">
+                        <input type="text" class="sign-in-input" placeholder="Логин" id="login" name="username">
+                        <input type="password" class="sign-in-input" placeholder="Пароль" id="password" name="password">
+                        <input type="submit" value="Вход" class="sign-in-input-button"/>
+                    </form>
                 </div>
                 <div class="information-block">
                     <span>Политика конфиденциальности</span>
