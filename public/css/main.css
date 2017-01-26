@@ -23,6 +23,7 @@
   display: inline-block;
   text-align: left;
   width: 1300px;
+  position: relative;
 }
 
 .left-column {
@@ -37,9 +38,18 @@
 .right-column {
   float: left;
   width: 70%;
+  height: 706px;
   position: relative;
   border-top-right-radius: 10px;
   overflow: hidden;
+}
+
+.sidebar-lists {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  width: 780px;
+  overflow-y: hidden;
 }
 
 .menu-and-search {
@@ -80,6 +90,7 @@
   margin: 35px 0 10px;
   height: 560px;
   overflow-y: scroll;
+  width: 390px;
 }
 
 .single-dialog {
@@ -88,15 +99,23 @@
   padding: 10px 25px;
   height: 50px;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
 }
 
 .single-dialog:hover {
   background: rgba(255, 255, 255, 0.05);
-  transition: all 0.1s ease-in-out;
+}
+
+.single-dialog:hover > .single-dialog-body {
+  border-bottom: 1px solid #494f56;
 }
 
 .active-dialog {
   background: rgba(255, 255, 255, 0.05);
+}
+
+.active-dialog > .single-dialog-body {
+  border-bottom: 1px solid #494f56;
 }
 
 .single-dialog-photo {
@@ -132,6 +151,8 @@
 .dialog-title {
   color: #fff;
   font-size: 16px;
+  font-weight: lighter;
+  letter-spacing: 0.01em;
 }
 
 .single-dialog-last-message {
@@ -143,7 +164,7 @@
 .last-message {
   color: #77818D;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: normal;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -151,7 +172,7 @@
 
 .single-dialog-time {
   position: relative;
-  left: 230px;
+  left: 235px;
   top: -50px;
 }
 
@@ -213,7 +234,7 @@
 
 .conversation-dialog-time {
   position: relative;
-  left: 230px;
+  left: 235px;
   top: -50px;
 }
 
@@ -282,17 +303,18 @@
   width: 100%;
   height: 60px;
   background: #FCFDFD;
-  box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
   line-height: 60px;
 }
 
 .dialog-area {
   width: 100%;
   display: flex;
+  top: 60px;
+  position: absolute;
   flex-direction: column;
   padding: 20px 0px 5px;
   transition: padding .2s cubic-bezier(.69,0,.79,.14);
-  height: 559px;
+  height: 561px;
   overflow-y: scroll;
   background: url(../images/dialog-bg.png);
 }
@@ -414,8 +436,9 @@
 }
 
 .dialog-footer {
-  position: relative;
+  position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background: #FCFDFD;
@@ -742,6 +765,8 @@
   margin: 35px 0 10px;
   height: 560px;
   overflow-y: scroll;
+  position: absolute;
+  width: 390px;
 }
 
 .menu-list ul {
@@ -751,7 +776,7 @@
 .menu-list ul li {
   display: flex;
   flex-direction: row;
-  padding: 5px 25px;
+  padding: 10px 25px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -861,16 +886,20 @@
   flex-direction: row;
   position: absolute;
   right: 0;
+  top: 6px;
 }
 
 .anonim-dialog {
-  width: 25px;
-  height: 25px;
-  background: url(../images/anonim.png) no-repeat;
-  opacity: 0.5;
-  margin: 1px 5px;
+  margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+}
+
+.anonim-dialog object {
+  background: #525a63;
+  padding: 4px 0;
+  border-radius: 3px;
+  width: 30px;
 }
 
 .anonim-dialog:hover {
@@ -878,15 +907,44 @@
 }
 
 .open-dialog {
-  width: 25px;
-  height: 25px;
-  background: url(../images/chat.png) no-repeat;
-  opacity: 0.5;
-  margin: 1px 5px;
+  margin: 0px 5px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
+.open-dialog object {
+  background: #525a63;
+  padding: 4px 0;
+  border-radius: 3px;
+  width: 30px;
+}
+
 .open-dialog:hover {
   opacity: 0.7;
+}
+
+.empty-dialog {
+  margin: 90px auto;
+  text-align: center;
+}
+
+.empty-dialog-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.empty-dialog-photo img {
+  width: 100%;
+}
+
+.empty-dialog-info {
+  color: #A3A3A3;
+  margin: 20px auto;
+  font-weight: 100;
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 0.02em;
 }
