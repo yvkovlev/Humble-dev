@@ -2,8 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userDialogListSchema = new Schema({
-	login: String,
-	dialogs: [ {type: String} ]
+	user: String,
+	dialogs: [ 
+		{
+			dialogId: String,
+			companion: String,
+			name: String,
+			imgUrl: String
+		}
+	]
 });
 
 var userDialogList = mongoose.model('userDialogList', userDialogListSchema);

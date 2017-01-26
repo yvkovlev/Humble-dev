@@ -3,11 +3,12 @@ $(document).ready(function(){
 		var login = $("#login").val();
 		var password = $("#password").val();
 		$.ajax({
-			type: "get",
-			url: "api/getUser",
-			data: {"login": login, "password": password},
+			type: "post",
+			url: "api/login",
+			data: {login: login, password: password},
 			success: function(response) {
-				if (response == "Success") window.location.href = "/";
+				//alert(response);//if (response == "Success") window.location.href = "/";
+				console.log(response);
 			}
 		});
 	});
