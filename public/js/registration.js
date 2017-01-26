@@ -20,11 +20,11 @@ $(document).ready(function(){
 								$(".success-feedback").fadeIn(300);
 							});
 							setTimeout(function(){
-								window.location.href = "/"
+								window.location.href = "/sign-in"
 							}, 2000);
 						}
 						if (response == 'Fail') {
-							$(".sign-up-button a").html('Произошла ошибка, нажмите что бы повторить.')
+							$(".sign-up-button a").html('Произошла ошибка, нажмите чтобы повторить.')
 						}
 					}
 				});

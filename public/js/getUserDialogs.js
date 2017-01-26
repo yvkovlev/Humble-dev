@@ -6,7 +6,7 @@ $(document).ready(function(){
 		{
 			var dialogList = "";
 			response.forEach(function(curDialog, response){
-				dialogList +=   "<div class='single-dialog' id='" + curDialog.id + "'>" + 
+				dialogList +=   "<div class='single-dialog animated' id='" + curDialog.id + "'>" + 
 			                        "<div class='single-dialog-photo'>" + 
 			                            "<div class='single-dialog-photo-border'>" + 
 			                                "<img src='images/1.jpeg'>" + 

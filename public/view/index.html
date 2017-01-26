@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/font-awesome.css">
         <link rel="stylesheet" href="css/flaticon.css">
         <link rel="stylesheet" href="css/lightbox.css">
+        <link rel="stylesheet" href="css/animate.css">
 
         
         <script src="js/jquery-1.10.2.min.js"></script> 
@@ -23,6 +24,7 @@
         <script src="js/actions.js"></script> 
         <script src="js/parseCookie.js"></script>
         <script src="js/menu.js"></script> 
+        <script src="js/menu-fade.js"></script> 
         <script src="js/getUserDialogs.js"></script>
         <script src="js/getDialog.js"></script>
     </head>
@@ -122,6 +124,21 @@
                 </div>
                 <div class="menu-list">
                     <ul>
+                        <li id="newDialogAction">
+                            <div class="menu-icon">
+                               <i class="flaticon-users-1"></i> 
+                            </div>
+                            <div class="menu-item">Начать диалог</div>
+                        </li>
+                        <li class="not-hover" id="newDialog">
+                            <div class="start-dialog-container">
+                                <div class="companion-search">
+                                    <input type="text" placeholder="Поиск собедеседника" id="searchCompanion">
+                                </div>
+                                <div class="companions-results">
+                                </div>
+                            </div>
+                        </li>
                         <li>
                             <div class="menu-icon">
                                <i class="flaticon-users-1"></i> 
@@ -140,7 +157,7 @@
                             </div>
                             <div class="menu-item">Настройка уведомлений</div>
                         </li>
-                        <li>
+                        <li id="logOut">
                             <div class="menu-icon">
                                <i class="flaticon-exit-1"></i> 
                             </div>
