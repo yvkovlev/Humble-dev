@@ -56,6 +56,57 @@
                     </div>
                 </div>
             </div>
+            <div class="extra-blocks">
+                <div class="extra-block extra-left animated">
+                    <div class="user-settings">
+                        <header class="extra-block-header">
+                            <div class="extra-close">
+                                <div class="extra-close-fg"></div>
+                                    <object type="image/svg+xml" data="svg/previous.svg" height="25"></object>
+                            </div>
+                            <div class="extra-block-title">Настройки профиля</div>
+                        </header>
+                        <div class="extra-block-body">
+                            <div class="extra-block-section photo-settings">
+                                <div class="photo-settings-border" id="preview">
+                                    <img src="images/3.jpg">
+                                    <input type="file" name="Photo" id="photo-input" class="photo-input">
+                                    <label for="photo-input">
+                                        <div class="load-fg">
+                                            <div class="load-title">Изменить фотографию профиля</div>
+                                            <div class="load-icon">
+                                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="extra-block-section name-settings">
+                                <div class="extra-block-section-title">Ваше имя</div>
+                                <div class="extra-block-section-input">
+                                    <input type="text" name="" id="name-input" placeholder="Kevin Kennedy" disabled="disabled">
+                                    <div class="edit" id="edit-name">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="extra-block-section password-setting">
+                                <div class="extra-block-section-title">Новый пароль</div>
+                                <div class="extra-block-section-input">
+                                    <input type="password" name="" id="password-input" placeholder="••••••••••••" disabled="disabled">
+                                    <div class="edit" id="edit-password">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="extra-block-section save-settings">
+                                <div class="extra-block-button">Сохранить изменения</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="extra-block extra-right"></div>
+            </div>
             <div class="left-column">
                 <header class="menu-and-search">
                     <div class="menu-bars">
@@ -138,27 +189,10 @@
                             <li class="animated not-hover" id="newDialog">
                                 <div class="start-dialog-container">
                                     <div class="companion-search">
-                                        <input type="text" placeholder="Поиск собедеседника">
+                                        <input type="text" placeholder="Поиск собедеседника" id="searchCompanion">
                                     </div>
                                     <div class="companions-results">
-                                        <!--<div class="result">
-                                            <div class="result-photo-outher">
-                                                <div class="result-photo">
-                                                    <img src="images/7.jpg">
-                                                </div>
-                                            </div>
-                                            <div class="result-name">
-                                                <span>Christian Gordon</span>
-                                            </div>
-                                            <div class="result-actions">
-                                                <div class="anonim-dialog">
-                                                    <object type="image/svg+xml" data="svg/detective.svg" height="20" style="cursor: pointer;"></object>
-                                                </div>
-                                                <div class="open-dialog">
-                                                    <object type="image/svg+xml" data="svg/pencil-2.svg" height="20"></object> 
-                                                </div>
-                                            </div>
-                                        </div>--> 
+                                         
                                     </div>
                                 </div>
                             </li>
@@ -169,7 +203,7 @@
                                 </div>
                                 <div class="menu-item">Создать беседу</div>
                             </li>
-                            <li>
+                            <li id="profile-settings">
                                 <div class="menu-icon">
                                     <object type="image/svg+xml" data="svg/settings-2.svg" height="25">
                                     </object> 
@@ -188,7 +222,7 @@
                                    <object type="image/svg+xml" data="svg/exit.svg" height="25">
                                     </object> 
                                 </div>
-                                <div class="menu-item">Выход</div>
+                                <div class="menu-item" id="logOut">Выход</div>
                             </li>
                         </ul>
                     </div>
@@ -344,6 +378,7 @@
             </div>
         </div>
         <script src="js/lightbox.js"></script>
-        <script src="js/custom-file-input.js"></script> 
+        <script src="js/custom-file-input.js"></script>
+        <script src="js/load-photo-rendering.js"></script> 
     </body>
 </html>

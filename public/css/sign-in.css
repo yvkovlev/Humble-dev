@@ -64,14 +64,13 @@
 .sign-in-input-button {
   color: #fff;
   border-radius: 30px;
-  padding: 10px 0px;
   width: 230px;
+  height: 40px;
   margin: 40px auto;
   font-size: 16px;
   font-weight: lighter;
   letter-spacing: 0.04em;
-  cursor: pointer;
-  background: rgba(41,71,142,1);
+  font-family: 'SF', Helvetica, Arial;
   background: -moz-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
   background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(41,71,142,1)), color-stop(50%, rgba(0,167,179,1)), color-stop(100%, rgba(186,217,192,1)));
   background: -webkit-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
@@ -80,6 +79,8 @@
   background: linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29478e', endColorstr='#bad9c0', GradientType=1 );
   transition: all 0.2s ease-in-out;
+  border: none;
+  outline: none;
 }
 
 .sign-in-input-button:hover {

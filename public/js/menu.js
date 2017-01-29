@@ -38,8 +38,12 @@ $(document).ready(function(){
 	                        "<span>" + response.fullName + "</span>" + 
 	                    "</div>" + 
 	                    "<div class='result-actions'>" + 
-	                        "<div class='anonim-dialog' id='" + response._id + "'></div>" + 
-	                        "<div class='open-dialog' id='" + response._id + "'></div>" + 
+	                        "<div class='anonim-dialog' id='" + response._id + "'>" +
+	                        	"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" +
+	                        "</div>" + 
+	                        "<div class='open-dialog' id='" + response._id + "'>" +
+	                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20' style='cursor: pointer;''></object>" +
+	                        "</div>" + 
 	                    "</div>" + 
 	                "</div>";
 	                $(".companions-results").html(result);
