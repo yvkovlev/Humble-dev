@@ -110,7 +110,7 @@ app.post('/api/registrUser', function (req, res){
 	    newUser.save(function(err){
 	      if (err) throw err;
 	      var newUserDialogList = userDialogList({
-	      	_id: id,
+	      	user: id,
 	      	dialogs: []
 	      });
 	      newUserDialogList.save(function(err){
@@ -128,10 +128,34 @@ app.post('/api/registrUser', function (req, res){
 });
 
 app.get('/api/getDialog', function (req, res){
-	dialog.findOne({_id: mongoose.Types.ObjectId(req.query.dialogId)}, function(err, dialog) {
-	  if (err) throw err;
-	  res.send(dialog);
+	userMessageStorage.aggregate([
+		{$match: {user: (req.user._id).toString()}},
+		{$unwind: '$messages'},
+		{$match: {'messages.dialog': req.query.dialogId}},
+		/*{$group: {'_id': '$_id', 'messages': {'$push': '$messages'}}}*/
+		], 
+		function(err, data){
+			var response = [];
+			var promise = new Promise(function(resolve, reject){
+				var i = 0, size = data.length;
+				data.forEach(function(item, data){
+					var curMess = ({
+						from: String,
+						message: String
+					});
+					i++;
+					curMess.from = item.messages.from;
+					curMess.message = item.messages.message;
+					response.push(curMess);
+					if (i == size) resolve("result");
+				});
+			});
+			promise
+				.then(function(){
+					res.send(response);
+				});
 	});
+	//588b37d49aed576c18cb8b76
 });
 
 app.get('/api/getUser', function (req, res) {
@@ -160,32 +184,48 @@ app.get('/api/searchCompanion', function(req, res){
 });
 
 app.put('/api/createDialog', function (req, res){
-	var from = req.user._id, to = req.body.companion;
+	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
 	// Сначала проверяем есть ли у from диалог с to. Если есть, то возвращаем already been.
 	// Если нету, то проверяем есть ли у to беседа с from. Если есть, то берем id этой беседы
 	// и кладем в userDialogList from-а этот диалог с вытащенной id. Если нету, значит этого
 	// диалога еще не было - создаем диалог только у from (на случай, если он ничего не станет
 	// писать), а диалог у to создастся тогда, когда from напишет ему сообщение.
-	userDialogList.findOne({$and: [ { _id: mongoose.Types.ObjectId(from) }, { 'dialogs.companion': mongoose.Types.ObjectId(to) } ]}, 
+	userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, { 'dialogs.companion': mongoose.Types.ObjectId(to) } ]}, 
 		function(err, data){
 		if (data == undefined) { // Этого диалога у from нету
-			userDialogList.findOne({$and: [ { _id: mongoose.Types.ObjectId(to) }, { 'dialogs.companion': mongoose.Types.ObjectId(from) } ]},
+			userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(to) }, { 'dialogs.companion': mongoose.Types.ObjectId(from) } ]},
 				function(err, data1){
 					var id = "";
 					if (data1 == undefined) id = new mongoose.Types.ObjectId;
 					else id = data1.dialogId;
-					userDialogList.findOneAndUpdate({_id: mongoose.Types.ObjectId(from)}, 
-					{ $push: {"dialogs": {dialogId: id, companion: to} } }, function(err){
+					userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+					{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName} } }, function(err){
 						res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
 					});
 				});
-		}//res.send("created");
+		}
 		else res.send("already been");
 	});
 });
 
 app.get('/api/getUserDialogs', function (req, res){
-	console.log(req.user._id);
+	var dialogs = [];
+	userDialogList.findOne({user: mongoose.Types.ObjectId(req.user._id)}, function(err, data){
+		var promise = new Promise(function(resolve, reject){
+			var arr = data.dialogs, arrSize = arr.length, i = 0;
+			arr.forEach(function(dialog, arr){
+				i++;
+				dialogs.push({id: dialog.dialogId, name: dialog.name});
+				if (i == arrSize) {
+					resolve("result");
+				}
+			});
+		});
+		promise
+			.then(function(){
+				res.send(dialogs);
+			});
+	});
 });
 
 app.post('/api/login',
@@ -201,8 +241,12 @@ app.get('/api/logOut', function (req, res){
   });
 });
 
-/*userDialogList.findOne({_id: mongoose.Types.ObjectId("5889ddcd5766ea699284a823")}, function(err, data){
+/*userMessageStorage.findOne({user: mongoose.Types.ObjectId("588b376c8e7d0f6c0db77c22")}, function(err, data){
 	console.log(data);
+	(data.messages).push({dialog: '588b37d49aed576c18cb8b76', from: 'Nastya', message: 'come over here)'});
+	data.save(function(err){
+		console.log('saved');
+	});
 });*/
 
 http.listen(3000, function(){

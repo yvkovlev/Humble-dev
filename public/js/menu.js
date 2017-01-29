@@ -10,10 +10,11 @@ $(document).ready(function(){
 		});
 	});
 	$('.companions-results').on('click', '.open-dialog', function(){
+		var fullName = $(this).parent().parent().children('.result-name').children('span').html();
 		$.ajax({
 			method: 'put',
 			url: 'api/createDialog',
-			data: {companion: $(this).attr('id')},
+			data: {companion: $(this).attr('id'), fullName: fullName},
 			success: function(response){
 				alert(response);
 			}
@@ -38,8 +39,12 @@ $(document).ready(function(){
 	                        "<span>" + response.fullName + "</span>" + 
 	                    "</div>" + 
 	                    "<div class='result-actions'>" + 
-	                        "<div class='anonim-dialog' id='" + response._id + "'></div>" + 
-	                        "<div class='open-dialog' id='" + response._id + "'></div>" + 
+	                        "<div class='anonim-dialog' id='" + response._id + "'>" +
+	                        	/*"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + */
+	                        "</div>" + 
+	                        "asd<div class='open-dialog' id='" + response._id + "'>" +
+	                        	// "<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
+	                        "asd</div>" + 
 	                    "</div>" + 
 	                "</div>";
 	                $(".companions-results").html(result);

@@ -1,17 +1,19 @@
 $(document).ready(function(){
+	var curDialog;
 	//alert();
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
+		curDialog = $(this).attr('id');
+		console.log(curDialog);
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
 			data: {'dialogId': $(this).attr('id')},
 			success: function(response) {
 				var dialog = "";
-				var arr = response.messages;
-				arr.forEach(function(mess, arr){
-					if (mess.from == "jakov")
+				response.forEach(function(mess, response){
+					if (mess.from == "Denis")
 					{
 						dialog += "<div class='message-outher'>" +
 				                        "<div class='message-out'>" + 
