@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	var socket = io();
+	var scrollTop = 0;
 	socket.on('newMess', function(data){
 		var newMessage = "";
 		console.log(data);
@@ -39,6 +40,8 @@ $(document).ready(function(){
 	                    "</div>";
         }
         $(".dialog-area").append(newMessage);
+        scrollTop = scrollTop + $(".dialog-area").scrollTop() + $(".message-outher:last-child").offset().top - 561;
+		$(".dialog-area").scrollTop(scrollTop);
 	});
 	socket.emit('setRooms', {login: getCookie('login')});
 	$('.dialog-send-button').on('click', function(){
@@ -47,29 +50,37 @@ $(document).ready(function(){
 	$(".dialog-message-input").keypress(function(e){
 	    if(e.keyCode == 13 && e.shiftKey){
 	    	var rows = Number($(".dialog-message-input").attr("rows"));
-	    	if (rows < 3) {
+	    	if (rows < 2) {
 	    		$(".dialog-message-input").attr("rows", rows+=1);
-	    		$(".dialog-message-input").css("marginTop", "-=9");
-	    		$(".dialog-message-input").css("marginBottom", "-=9");
 	    		rows = rows + 1;
 	    	}
-	    	else if (rows >= 3 && rows < 5) {
+	    	else if (rows >= 2 && rows < 6) {
 	    		$(".dialog-message-input").attr("rows", rows+=1);
 	    		$(".dialog-footer").css("height", "+=20");
-	    		$(".dialog-message-input").css("marginBottom", "0");
+	    		var lineHeight = Number($(".dialog-footer").css("height").replace('px','')) + 20;
+	    		$(".dialog-message-input-outher").css("line-height", lineHeight + "px")
 	    		rows = rows + 1;
 	    	}
 	    }
 	    else if (e.keyCode == 13) {
 	    	sendMessage();
+	    	e.preventDefault();
 	    }
+	});
+	$(".dialog-message-input").keyup(function(e){
+		if (!($('.dialog-message-input').val())) {
+			$(".dialog-message-input").attr("rows", 1);
+			$(".dialog-footer").css("height", "60px");
+			$(".dialog-message-input-outher").css("line-height", 60 + "px");
+		}
 	});
 	function sendMessage () {
 		var messBody = $('.dialog-message-input').val();
-		$('.dialog-message-input').val("");
 		$(".dialog-message-input").attr("rows", 1);
-		$(".dialog-footer").css("height", "60px")
-		$(".dialog-message-input").css("margin", "18px 0");
+		$('.dialog-message-input').val("");
+		$('.dialog-message-input').val().replace(/\n$/m, ' ');
+		$(".dialog-footer").css("height", "60px");
+		$(".dialog-message-input-outher").css("line-height", 60 + "px");
 		if (messBody) {
 			$.ajax({
 				url: 'api/sendMessage',
