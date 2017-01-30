@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="css/animate.css">
         <link rel="stylesheet" href="css/preloader.css">
 
-        
+        <script src="/socket.io/socket.io.js"></script>
         <script src="js/jquery-1.10.2.min.js"></script> 
         <script src="js/change-selection.js"></script> 
         <script src="js/actions.js"></script> 
@@ -28,6 +28,7 @@
         <script src="js/menu-fade.js"></script> 
         <script src="js/getUserDialogs.js"></script>
         <script src="js/getDialog.js"></script>
+        <script src="js/sendMessage.js"></script>
         <script>
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
@@ -138,7 +139,7 @@
                             <li class="animated not-hover" id="newDialog">
                                 <div class="start-dialog-container">
                                     <div class="companion-search">
-                                        <input type="text" placeholder="Поиск собедеседника">
+                                        <input type="text" placeholder="Поиск собедеседника" id="searchCompanion">
                                     </div>
                                     <div class="companions-results">
                                         <!--<div class="result">
@@ -188,7 +189,7 @@
                                    <object type="image/svg+xml" data="svg/exit.svg" height="25">
                                     </object> 
                                 </div>
-                                <div class="menu-item">Выход</div>
+                                <div class="menu-item" id="logOut">Выход</div>
                             </li>
                         </ul>
                     </div>

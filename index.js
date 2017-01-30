@@ -82,6 +82,7 @@ app.use(function (req, res, next){
 	else
 	{
 		if (!req.user) res.redirect("/sign-in");
+		else if (req.cookies.login != req.user.login) res.redirect('sign-in');
 		else next();
 	}
 });
@@ -110,7 +111,7 @@ app.post('/api/registrUser', function (req, res){
 	    newUser.save(function(err){
 	      if (err) throw err;
 	      var newUserDialogList = userDialogList({
-	      	_id: id,
+	      	user: id,
 	      	dialogs: []
 	      });
 	      newUserDialogList.save(function(err){
@@ -128,9 +129,32 @@ app.post('/api/registrUser', function (req, res){
 });
 
 app.get('/api/getDialog', function (req, res){
-	dialog.findOne({_id: mongoose.Types.ObjectId(req.query.dialogId)}, function(err, dialog) {
-	  if (err) throw err;
-	  res.send(dialog);
+	userMessageStorage.aggregate([
+		{$match: {user: (req.user._id).toString()}},
+		{$unwind: '$messages'},
+		{$match: {'messages.dialog': req.query.dialogId}},
+		/*{$group: {'_id': '$_id', 'messages': {'$push': '$messages'}}}*/
+		], 
+		function(err, data){
+			var response = [];
+			var promise = new Promise(function(resolve, reject){
+				var i = 0, size = data.length;
+				data.forEach(function(item, data){
+					var curMess = ({
+						from: String,
+						message: String
+					});
+					i++;
+					curMess.from = item.messages.from;
+					curMess.message = item.messages.message;
+					response.push(curMess);
+					if (i == size) resolve("result");
+				});
+			});
+			promise
+				.then(function(){
+					res.send(response);
+				});
 	});
 });
 
@@ -160,50 +184,116 @@ app.get('/api/searchCompanion', function(req, res){
 });
 
 app.put('/api/createDialog', function (req, res){
-	var from = req.user._id, to = req.body.companion;
+	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
 	// Сначала проверяем есть ли у from диалог с to. Если есть, то возвращаем already been.
 	// Если нету, то проверяем есть ли у to беседа с from. Если есть, то берем id этой беседы
 	// и кладем в userDialogList from-а этот диалог с вытащенной id. Если нету, значит этого
 	// диалога еще не было - создаем диалог только у from (на случай, если он ничего не станет
 	// писать), а диалог у to создастся тогда, когда from напишет ему сообщение.
-	userDialogList.findOne({$and: [ { _id: mongoose.Types.ObjectId(from) }, { 'dialogs.companion': mongoose.Types.ObjectId(to) } ]}, 
+	userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, { 'dialogs.companion': mongoose.Types.ObjectId(to) } ]}, 
 		function(err, data){
 		if (data == undefined) { // Этого диалога у from нету
-			userDialogList.findOne({$and: [ { _id: mongoose.Types.ObjectId(to) }, { 'dialogs.companion': mongoose.Types.ObjectId(from) } ]},
+			userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(to) }, { 'dialogs.companion': mongoose.Types.ObjectId(from) } ]},
 				function(err, data1){
 					var id = "";
 					if (data1 == undefined) id = new mongoose.Types.ObjectId;
 					else id = data1.dialogId;
-					userDialogList.findOneAndUpdate({_id: mongoose.Types.ObjectId(from)}, 
-					{ $push: {"dialogs": {dialogId: id, companion: to} } }, function(err){
+					userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+					{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName} } }, function(err){
 						res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
 					});
 				});
-		}//res.send("created");
+		}
 		else res.send("already been");
 	});
 });
 
 app.get('/api/getUserDialogs', function (req, res){
-	console.log(req.user._id);
+	var dialogs = [];
+	userDialogList.findOne({user: mongoose.Types.ObjectId(req.user._id)}, function(err, data){
+		var promise = new Promise(function(resolve, reject){
+			var arr = data.dialogs, arrSize = arr.length, i = 0;
+			arr.forEach(function(dialog, arr){
+				i++;
+				dialogs.push({id: dialog.dialogId, name: dialog.name});
+				if (i == arrSize) {
+					resolve("result");
+				}
+			});
+		});
+		promise
+			.then(function(){
+				res.send(dialogs);
+			});
+	});
+});
+
+app.put('/api/sendMessage', function(req, res){
+	// Сначала нужно вытащить собеседника этого диалога.
+	userDialogList.aggregate([
+		{$match: {user: (req.user._id).toString()}},
+		{$unwind: '$dialogs'},
+		{$match: {'dialogs.dialogId': req.body.dialogId}},
+		/*{$group: {'_id': '$_id', 'messages': {'$push': '$messages'}}}*/
+		], 
+		function(err, data){
+		var from = req.user._id, to = data[0].dialogs.companion, dialogId = req.body.dialogId;
+		var newMessage = ({
+			_id: new mongoose.Types.ObjectId,
+			dialog: req.body.dialogId,
+			from: req.user.login,
+			date: new Date(),
+			message: req.body.message
+		});
+		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
+			function(err, data){
+				if (data == undefined) { // Создаем этот диалог и кладем в userDialogsList to
+					console.log('there is no dialog ' + to);
+					userDialogList.findOneAndUpdate({user: to}, 
+						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName} } }, function(err){
+							console.log('created successfully');
+						});
+				}
+				userMessageStorage.findOneAndUpdate({user: from}, 
+					{$push: {"messages": newMessage}}, function(err){
+						userMessageStorage.findOneAndUpdate({user: to}, 
+							{$push: {'messages': newMessage}}, function(err){
+								res.send(newMessage);
+							});
+					});
+			});
+	});
 });
 
 app.post('/api/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/test', failureFlash: true}),
-  function(req, res) {
+  passport.authenticate('local', {failureRedirect:'/test', failureFlash: true}),
+  function (req, res) {
+  	res.cookie('login', req.user.login);
     res.redirect('/');
   });
 
 app.get('/api/logOut', function (req, res){
   req.session.destroy(function (err) {
-  	res.cookie("login", "");
-  	res.send("Success");
+  	res.clearCookie("login");
+  	res.send('success');
   });
 });
 
-/*userDialogList.findOne({_id: mongoose.Types.ObjectId("5889ddcd5766ea699284a823")}, function(err, data){
-	console.log(data);
-});*/
+io.on('connection', function(socket){
+	socket.on('setRooms', function(data){
+		User.findOne({login: data.login}, function(err, data){
+			userDialogList.findOne({user: data._id}, function(err, data){
+				var arr = data.dialogs;
+				arr.forEach(function(item, arr){
+					socket.join(item.dialogId);
+				});
+			});
+		});
+	});
+	socket.on('newMess', function(data){
+		io.to(data.dialog).emit('newMess', data);
+	});
+})
 
 http.listen(3000, function(){
   console.log('Humble is listening on port 3000');
