@@ -18,12 +18,37 @@
 }
 
 
+.extra-block-section-input input::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.extra-block-section-input input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #fff;
+}
+
+.extra-block-section-input input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #fff;
+}
+
+.extra-block-section-input input:-ms-input-placeholder {
+  color: #fff;
+}
+
+
 .main-container {
   margin: 50px auto 10px;
   display: inline-block;
   text-align: left;
   width: 1300px;
   position: relative;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  overflow: hidden;
+  z-index: 200;
 }
 
 .left-column {
@@ -31,8 +56,6 @@
   width: 30%;
   background: #363E47;
   padding: 25px 0px 25px 0px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
 }
 
 .right-column {
@@ -40,7 +63,6 @@
   width: 70%;
   height: 706px;
   position: relative;
-  border-top-right-radius: 10px;
   overflow: hidden;
 }
 
@@ -947,4 +969,201 @@
   text-align: center;
   font-size: 15px;
   letter-spacing: 0.02em;
+}
+
+.extra-blocks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.extra-block {
+  display: block;
+}
+
+.extra-left {
+  width: 30%;
+  height: 100%;
+  background: #363E47;
+  padding: 0px 0px 25px 0px;
+  pointer-events: auto;
+  display: none;
+}
+
+.user-settings {
+  display: block;
+  position: relative;
+}
+
+.extra-block-header {
+  display: flex;
+  flex-direction: row;
+  margin: 0 25px;
+  color: #fff;
+  height: 60px;
+  line-height: 61px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.extra-close {
+  margin-right: 15px;
+  font-size: 18px;
+  line-height: 70px;
+  cursor: pointer;
+  position: relative;
+}
+
+.extra-close-fg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.extra-close object {
+  vertical-align: sub;
+  cursor: pointer;
+  pointer-events:visible;
+}
+
+.extra-block-title {
+  font-size: 18px;
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  line-height: 65px;
+}
+
+.extra-block-section {
+  display: block;
+  margin: 40px 25px;
+}
+
+.photo-settings {
+  margin: 30px auto;
+}
+
+.photo-settings-border {
+  margin: auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.photo-settings-border img {
+  width: 100%;
+  position: absolute;
+}
+
+.load-fg {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: none;
+}
+
+.load-title {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  margin: 50px 20px 0;
+}
+
+.load-icon {
+  margin: 5px auto;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+}
+
+.photo-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.name-settings {
+  display: block;
+}
+
+.password-settings {
+  display: block;
+}
+
+.extra-block-section-title {
+  color: #DCDCDC;
+  font-size: 15px;
+  font-weight: 100;
+}
+
+.extra-block-section-input {
+  width: 100%;
+  position: relative;
+}
+
+.extra-block-section-input input {
+  outline: none;
+  background: #363e47;
+  border: none;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 5px 0;
+  font-size: 16px;
+  font-weight: 100;
+  transition: all 0.2s ease-in-out;
+}
+
+.active-input {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.edit {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 18px;
+  color: #797f86;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.edit:hover {
+  color: #c4c6ca;
+}
+
+.extra-block-button {
+  padding: 10px 0;
+  text-align: center;
+  background: #363e47;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #DCDCDC;
+  font-weight: 100;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.extra-block-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.save-settings {
+  margin: 0px 25px;
 }

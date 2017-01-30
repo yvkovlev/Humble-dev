@@ -88,7 +88,8 @@
 .sign-in-input-button {
   color: #fff;
   border-radius: 30px;
-  padding: 10px 0px;
+  height: 40px;
+  line-height: 40px;
   width: 230px;
   margin: 40px auto;
   font-size: 16px;

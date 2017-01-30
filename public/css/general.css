@@ -150,7 +150,7 @@ Basic Style
 
 @font-face {
   font-family: 'SF';
-  src: url('../fonts/SFUIDisplay-Regular.otf');
+  src: url('../fonts/SF-Regular.otf') format('otf');;
   font-weight: normal;
   font-style: normal;
 }
