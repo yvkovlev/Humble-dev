@@ -279,6 +279,10 @@ app.get('/api/logOut', function (req, res){
   });
 });
 
+userDialogList.find({}, function(err,data){
+	console.log(data);
+});
+
 io.on('connection', function(socket){
 	socket.on('setRooms', function(data){
 		User.findOne({login: data.login}, function(err, data){

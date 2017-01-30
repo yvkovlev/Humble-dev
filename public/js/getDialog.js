@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	//alert();
+	var scrollTop;
+	var scrolledOnce = false;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
@@ -49,6 +50,11 @@ $(document).ready(function(){
 				});
 				$(".dialog-area").empty();
 		        $(".dialog-area").append(dialog);
+		        if (!scrolledOnce) {
+        			scrollTop = $(".message-outher:last-child").offset().top - 561;
+					$(".dialog-area").scrollTop(scrollTop);
+					scrolledOnce = true;
+				}
 			}
 		});
 	});
