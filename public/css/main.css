@@ -468,6 +468,7 @@
   line-height: 60px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
 
 .dialog-name-outher {
