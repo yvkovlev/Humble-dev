@@ -49,9 +49,14 @@ $(document).ready(function(){
 	    	var rows = Number($(".dialog-message-input").attr("rows"));
 	    	if (rows < 3) {
 	    		$(".dialog-message-input").attr("rows", rows+=1);
-	    		//$(".dialog-message-input").css("marginTop", "-=9");
-	    		//$(".dialog-message-input").css("marginBottom", "-=9");
-	    		$(".dialog-footer").css("height", "+=10")
+	    		$(".dialog-message-input").css("marginTop", "-=9");
+	    		$(".dialog-message-input").css("marginBottom", "-=9");
+	    		rows = rows + 1;
+	    	}
+	    	else if (rows >= 3 && rows < 5) {
+	    		$(".dialog-message-input").attr("rows", rows+=1);
+	    		$(".dialog-footer").css("height", "+=20");
+	    		$(".dialog-message-input").css("marginBottom", "0");
 	    		rows = rows + 1;
 	    	}
 	    }
@@ -64,7 +69,7 @@ $(document).ready(function(){
 		$('.dialog-message-input').val("");
 		$(".dialog-message-input").attr("rows", 1);
 		$(".dialog-footer").css("height", "60px")
-		//$(".dialog-message-input").css("margin", "18px 0");
+		$(".dialog-message-input").css("margin", "18px 0");
 		if (messBody) {
 			$.ajax({
 				url: 'api/sendMessage',
