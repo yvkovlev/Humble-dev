@@ -7,6 +7,7 @@ var userMessageStorageSchema = new Schema({
   	{
   		dialog: String,
   		from: String, // Login
+  		fromId: String,
   		message: String,
   		date: {type: Date}
   	}

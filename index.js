@@ -17,6 +17,7 @@ var bcrypt = require('bcrypt');
 var multer = require('multer');
 var morgan = require('morgan');
 var flash = require('connect-flash');
+var fs = require('fs');
 
 var User = require('./models/user');
 var dialog = require('./models/dialog');
@@ -25,16 +26,16 @@ var userMessageStorage = require('./models/userMessageStorage');
 
 mongoose.connect('mongodb://localhost:27017/Humble');
 
+/*var upload = multer({ dest: './public/uploads' });*/
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './public/uploads/')
     },
     filename: function (req, file, cb) {
-        var newName = Math.random().toString(36).substring(13) + ".jpg";
-        file.originalname = newName;
-        cb(null, file.originalname)
+        cb(null, req.user._id + '.jpg');
     }
 });
+var upload = multer({ storage: storage });
 app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -121,7 +122,13 @@ app.post('/api/registrUser', function (req, res){
 	      	});
 	      	newUserMessageStorage.save(function(err){
 	      		if (err) throw err;
-	      		else res.send('Success');
+	      		fs.readFile('public/images/noImage.jpg', function (err, data) {
+				    if (err) throw err;
+				    fs.writeFile('public/uploads/' + id + '.jpg', data, function (err) {
+				        if (err) throw err;
+				        else res.send('Success');
+				    });
+				});
 	      	});
 	      });
 	    });
@@ -142,11 +149,13 @@ app.get('/api/getDialog', function (req, res){
 				data.forEach(function(item, data){
 					var curMess = ({
 						from: String,
-						message: String
+						message: String,
+						fromId: String
 					});
 					i++;
 					curMess.from = item.messages.from;
 					curMess.message = item.messages.message;
+					curMess.fromId = item.messages.fromId;
 					response.push(curMess);
 					if (i == size) resolve("result");
 				});
@@ -159,20 +168,8 @@ app.get('/api/getDialog', function (req, res){
 });
 
 app.get('/api/getUser', function (req, res) {
-	User.findOne({login: req.query.login}, function (err, user){
-		if (err)
-		{
-			throw err;
-			res.send('Fail');
-		}
-		else
-		{
-			if (user == null || req.query.password != user.password) res.send('Fail');
-			else
-			{
-				res.send('Success');
-			}
-		}
+	User.findOne({login: req.query.login}, '_id login fullName email', function (err, user){
+		res.send(user);
 	});
 });
 
@@ -215,7 +212,7 @@ app.get('/api/getUserDialogs', function (req, res){
 			var arr = data.dialogs, arrSize = arr.length, i = 0;
 			arr.forEach(function(dialog, arr){
 				i++;
-				dialogs.push({id: dialog.dialogId, name: dialog.name});
+				dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion});
 				if (i == arrSize) {
 					resolve("result");
 				}
@@ -242,6 +239,7 @@ app.put('/api/sendMessage', function(req, res){
 			_id: new mongoose.Types.ObjectId,
 			dialog: req.body.dialogId,
 			from: req.user.login,
+			fromId: req.user._id,
 			date: new Date(),
 			message: req.body.message
 		});
@@ -262,6 +260,34 @@ app.put('/api/sendMessage', function(req, res){
 							});
 					});
 			});
+	});
+});
+
+app.post('/api/uploadImg', upload.single('file'), function (req, res){
+	res.send('ok');
+});
+
+app.put('/api/saveUserSettings', function (req, res){
+	User.findOne({login: req.user.login}, function(err, data){
+		var newFullName = req.body.newFullName;
+		var newPassword = req.body.newPassword;
+		if (newPassword != "")
+		{
+			bcrypt.hash(newPassword, 10).then(function(hash) {
+				data.password = hash;
+				if (newFullName != "") data.fullName = newFullName;
+				data.save(function(err){
+					res.send('Success');
+				});
+			});
+		}
+		else
+		{
+			data.fullName = newFullName;
+			data.save(function(err){
+				res.send('Success');
+			});
+		}
 	});
 });
 

@@ -32,7 +32,7 @@ $(document).ready(function(){
 					"<div class='result'>" + 
 	                    "<div class='result-photo-outher'>" + 
 	                        "<div class='result-photo'>" + 
-	                            "<img src='images/7.jpg'>" + 
+	                            "<img src='uploads/" + response._id + ".jpg" + "'>" + 
 	                        "</div>" + 
 	                    "</div>" + 
 	                    "<div class='result-name'>" + 

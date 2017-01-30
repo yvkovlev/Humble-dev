@@ -9,7 +9,7 @@ $(document).ready(function(){
 				dialogList +=   "<div class='single-dialog animated' id='" + curDialog.id + "'>" + 
 			                        "<div class='single-dialog-photo'>" + 
 			                            "<div class='single-dialog-photo-border'>" + 
-			                                "<img src='images/1.jpeg'>" + 
+			                                "<img src='uploads/" + curDialog.userId + ".jpg" + "'>" + 
 			                            "</div>" + 
 			                            "<div class='online-status-dialogs active-status'></div>" + 
 			                        "</div>" + 

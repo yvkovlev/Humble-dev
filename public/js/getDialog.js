@@ -17,7 +17,7 @@ $(document).ready(function(){
 				                        "<div class='message-out'>" + 
 				                            "<div class='message-out-photo'>" + 
 				                                "<div class='message-out-photo-border'>" +
-				                                    "<img src='images/1.jpeg'>" +
+				                                    "<img src='uploads/" + mess.fromId + ".jpg" + "'>" +
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-out-text-box'>" + 
@@ -34,7 +34,7 @@ $(document).ready(function(){
 				                        "<div class='message-in'>" + 
 				                            "<div class='message-in-photo'>" + 
 				                                "<div class='message-in-photo-border'>" +
-				                                    "<img src='images/1.jpeg'>" +
+				                                    "<img src='uploads/" + mess.fromId + ".jpg" + "'>" +
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-in-text-box'>" + 
