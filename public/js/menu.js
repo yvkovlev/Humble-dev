@@ -5,7 +5,7 @@ $(document).ready(function(){
 			url: 'api/logOut',
 			method: 'get',
 			success: function(response){
-				if (response == 'Success') window.location.href = "sign-in";
+				if (response == 'success') window.location.href = "sign-in";
 			}
 		});
 	});

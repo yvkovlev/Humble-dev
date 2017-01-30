@@ -1,11 +1,9 @@
 $(document).ready(function(){
-	var curDialog;
 	//alert();
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
-		curDialog = $(this).attr('id');
-		console.log(curDialog);
+		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -13,7 +11,7 @@ $(document).ready(function(){
 			success: function(response) {
 				var dialog = "";
 				response.forEach(function(mess, response){
-					if (mess.from == "Denis")
+					if (mess.from == getCookie('login'))
 					{
 						dialog += "<div class='message-outher'>" +
 				                        "<div class='message-out'>" + 

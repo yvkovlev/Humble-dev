@@ -82,6 +82,7 @@ app.use(function (req, res, next){
 	else
 	{
 		if (!req.user) res.redirect("/sign-in");
+		else if (req.cookies.login != req.user.login) res.redirect('sign-in');
 		else next();
 	}
 });
@@ -155,7 +156,6 @@ app.get('/api/getDialog', function (req, res){
 					res.send(response);
 				});
 	});
-	//588b37d49aed576c18cb8b76
 });
 
 app.get('/api/getUser', function (req, res) {
@@ -228,26 +228,72 @@ app.get('/api/getUserDialogs', function (req, res){
 	});
 });
 
+app.put('/api/sendMessage', function(req, res){
+	// Сначала нужно вытащить собеседника этого диалога.
+	userDialogList.aggregate([
+		{$match: {user: (req.user._id).toString()}},
+		{$unwind: '$dialogs'},
+		{$match: {'dialogs.dialogId': req.body.dialogId}},
+		/*{$group: {'_id': '$_id', 'messages': {'$push': '$messages'}}}*/
+		], 
+		function(err, data){
+		var from = req.user._id, to = data[0].dialogs.companion, dialogId = req.body.dialogId;
+		var newMessage = ({
+			_id: new mongoose.Types.ObjectId,
+			dialog: req.body.dialogId,
+			from: req.user.login,
+			date: new Date(),
+			message: req.body.message
+		});
+		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
+			function(err, data){
+				if (data == undefined) { // Создаем этот диалог и кладем в userDialogsList to
+					console.log('there is no dialog ' + to);
+					userDialogList.findOneAndUpdate({user: to}, 
+						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName} } }, function(err){
+							console.log('created successfully');
+						});
+				}
+				userMessageStorage.findOneAndUpdate({user: from}, 
+					{$push: {"messages": newMessage}}, function(err){
+						userMessageStorage.findOneAndUpdate({user: to}, 
+							{$push: {'messages': newMessage}}, function(err){
+								res.send(newMessage);
+							});
+					});
+			});
+	});
+});
+
 app.post('/api/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/test', failureFlash: true}),
-  function(req, res) {
+  passport.authenticate('local', {failureRedirect:'/test', failureFlash: true}),
+  function (req, res) {
+  	res.cookie('login', req.user.login);
     res.redirect('/');
   });
 
 app.get('/api/logOut', function (req, res){
   req.session.destroy(function (err) {
-  	res.cookie("login", "");
-  	res.send("Success");
+  	res.clearCookie("login");
+  	res.send('success');
   });
 });
 
-/*userMessageStorage.findOne({user: mongoose.Types.ObjectId("588b376c8e7d0f6c0db77c22")}, function(err, data){
-	console.log(data);
-	(data.messages).push({dialog: '588b37d49aed576c18cb8b76', from: 'Nastya', message: 'come over here)'});
-	data.save(function(err){
-		console.log('saved');
+io.on('connection', function(socket){
+	socket.on('setRooms', function(data){
+		User.findOne({login: data.login}, function(err, data){
+			userDialogList.findOne({user: data._id}, function(err, data){
+				var arr = data.dialogs;
+				arr.forEach(function(item, arr){
+					socket.join(item.dialogId);
+				});
+			});
+		});
 	});
-});*/
+	socket.on('newMess', function(data){
+		io.to(data.dialog).emit('newMess', data);
+	});
+})
 
 http.listen(3000, function(){
   console.log('Humble is listening on port 3000');
