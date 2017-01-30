@@ -25,10 +25,15 @@ $(document).ready(function(){
         $(".extra-left").css("display", "block");
         $(".extra-left").removeClass("translateLeftOut");
         $(".extra-left").addClass("translateLeftIn");
+        $(".photo-settings-border").removeClass("zoomOut");
+        $(".photo-settings-border").addClass("zoomIn");
+
     });
     $(".extra-close-fg").on("click", function(){
         $(".extra-left").removeClass("translateLeftIn");
         $(".extra-left").addClass("translateLeftOut");
+        $(".photo-settings-border").removeClass("zoomIn");
+        $(".photo-settings-border").addClass("zoomOut");
     });
     $("#edit-name").on("click", function(){
         if (nameInputDisabled) {
