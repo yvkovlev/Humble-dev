@@ -5,15 +5,16 @@ $(document).ready(function(){
 			url: 'api/logOut',
 			method: 'get',
 			success: function(response){
-				if (response == 'Success') window.location.href = "sign-in";
+				if (response == 'success') window.location.href = "sign-in";
 			}
 		});
 	});
 	$('.companions-results').on('click', '.open-dialog', function(){
+		var fullName = $(this).parent().parent().children('.result-name').children('span').html();
 		$.ajax({
 			method: 'put',
 			url: 'api/createDialog',
-			data: {companion: $(this).attr('id')},
+			data: {companion: $(this).attr('id'), fullName: fullName},
 			success: function(response){
 				alert(response);
 			}
@@ -39,11 +40,11 @@ $(document).ready(function(){
 	                    "</div>" + 
 	                    "<div class='result-actions'>" + 
 	                        "<div class='anonim-dialog' id='" + response._id + "'>" +
-	                        	"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" +
+	                        	/*"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + */
 	                        "</div>" + 
-	                        "<div class='open-dialog' id='" + response._id + "'>" +
-	                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20' style='cursor: pointer;''></object>" +
-	                        "</div>" + 
+	                        "asd<div class='open-dialog' id='" + response._id + "'>" +
+	                        	// "<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
+	                        "asd</div>" + 
 	                    "</div>" + 
 	                "</div>";
 	                $(".companions-results").html(result);
