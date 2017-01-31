@@ -22,7 +22,7 @@ $(document).ready(function(){
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-out-text-box'>" + 
-				                                "<span>" + mess.message + "</span>" + 
+				                                "<span>" + mess.message.replace(/\n/g, '<br>') + "</span>" + 
 				                            "</div>" + 
 				                            "<div class='message-out-time'>" + 
 				                                "<span>12.47</span>" + 
@@ -39,7 +39,7 @@ $(document).ready(function(){
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-in-text-box'>" + 
-				                                "<span>" + mess.message + "</span>" + 
+				                                "<span>" + mess.message.replace(/\n/g, '<br>') + "</span>" + 
 				                            "</div>" + 
 				                            "<div class='message-in-time'>" + 
 				                                "<span>12.47</span>" + 
