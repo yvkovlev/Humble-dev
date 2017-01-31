@@ -30,6 +30,7 @@
         <script src="js/getDialog.js"></script>
         <script src="js/sendMessage.js"></script>
         <script src="js/userSettings.js"></script>
+        <script src="js/dialogSettings.js"></script>
         <script>
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
@@ -291,7 +292,7 @@
                 </div>
                 <div class="settings-popup">
                     <ul>
-                        <li><span>Очистить чат</span></li>
+                        <li id="clearDialog"><span>Очистить чат</span></li>
                         <li><span>Заблокировать собедеседника</span></li>
                         <li><span>Удалить чат</span></li>
                     </ul>

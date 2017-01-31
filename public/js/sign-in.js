@@ -7,7 +7,6 @@ $(document).ready(function(){
 			url: "api/login",
 			data: {login: login, password: password},
 			success: function(response) {
-				//alert(response);//if (response == "Success") window.location.href = "/";
 				console.log(response);
 			}
 		});

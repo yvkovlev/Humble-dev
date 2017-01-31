@@ -206,16 +206,35 @@ app.put('/api/createDialog', function (req, res){
 });
 
 app.get('/api/getUserDialogs', function (req, res){
+	// Делаем выборку информации из userDialogList-а юзера, и по dialogId вытаскиваем 
+	// последнее сообщение юзера из этой беседы 
 	var dialogs = [];
 	userDialogList.findOne({user: mongoose.Types.ObjectId(req.user._id)}, function(err, data){
 		var promise = new Promise(function(resolve, reject){
 			var arr = data.dialogs, arrSize = arr.length, i = 0;
 			arr.forEach(function(dialog, arr){
-				i++;
-				dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion});
-				if (i == arrSize) {
-					resolve("result");
-				}
+				var lastMess = "";
+				var promise2 = new Promise(function(resolve2, rejec2){
+					userMessageStorage.aggregate([
+							{$match: {user: (req.user._id).toString()}},
+							{$unwind: '$messages'},
+							{$match: {'messages.dialog': dialog.dialogId}},
+							{$sort : { 'messages.date' : -1 } },
+						], 
+						function(err, data){
+							if (data.length == 0) lastMess = 'В беседе нет сообщений';
+							else lastMess = data[0].messages.message;
+							i++;
+							resolve2("result");
+					});
+				});
+				promise2
+					.then(function(){
+						dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess});
+						if (i == arrSize) {
+							resolve("result");
+						}
+					});
 			});
 		});
 		promise
@@ -246,7 +265,6 @@ app.put('/api/sendMessage', function(req, res){
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
 				if (data == undefined) { // Создаем этот диалог и кладем в userDialogsList to
-					console.log('there is no dialog ' + to);
 					userDialogList.findOneAndUpdate({user: to}, 
 						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName} } }, function(err){
 							console.log('created successfully');
@@ -261,6 +279,16 @@ app.put('/api/sendMessage', function(req, res){
 					});
 			});
 	});
+});
+
+app.delete('/api/clearDialog', function (req, res){
+	var dialogId = req.body.dialogId;
+	userMessageStorage.update({user: req.user._id}, {$pull: {'messages': {dialog: dialogId} } },
+		function(){
+			userMessageStorage.findOne({user: req.user._id}, function(err, data){
+				res.send('ok');
+			});
+		});
 });
 
 app.post('/api/uploadImg', upload.single('file'), function (req, res){

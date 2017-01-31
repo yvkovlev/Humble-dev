@@ -1,9 +1,9 @@
 $(document).ready(function(){
-	//alert();
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
+		$(".dialog-area").empty();
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -47,7 +47,6 @@ $(document).ready(function(){
 				                    "</div>";
 		            }
 				});
-				$(".dialog-area").empty();
 		        $(".dialog-area").append(dialog);
 			}
 		});

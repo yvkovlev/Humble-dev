@@ -46,7 +46,7 @@ $(document).ready(function(){
 		$.ajax({
 			url: 'api/saveUserSettings',
 			data: {newFullName: newFullName, newPassword: newPassword},
-			method: 'put',
+			type: 'put',
 			success: function(response){
 				console.log(response);
 			}
