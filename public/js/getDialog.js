@@ -55,6 +55,7 @@ $(document).ready(function(){
 					$(".dialog-area").scrollTop(scrollTop);
 					scrolledOnce = true;
 				}
+				$(".extra-right").css("display", "none");
 			}
 		});
 	});
