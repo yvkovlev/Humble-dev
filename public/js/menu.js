@@ -51,11 +51,13 @@ $(document).ready(function(){
 	                    "</div>" + 
 	                    "<div class='result-actions'>" + 
 	                        "<div class='anonim-dialog' id='" + response._id + "'>" +
-	                        	/*"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + */
-	                        "asd</div>" + 
+	                        	"<div class='result-actions-fg'></div>" +
+	                        	"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + 
+	                        "</div>" + 
 	                        "<div class='open-dialog' id='" + response._id + "'>" +
-	                        	// "<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
-	                        "asd</div>" + 
+	                        	"<div class='result-actions-fg'></div>" +
+	                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
+	                        "</div>" + 
 	                    "</div>" + 
 	                "</div>";
 	                $(".companions-results").html(result);
