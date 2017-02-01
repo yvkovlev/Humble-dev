@@ -31,7 +31,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     $("#photo-input").change(function() {
         //grab the first image in the fileList
         //in this example we are only loading one file.
-        console.log(this.files[0].size)
         renderImage(this.files[0])
     });
 } 
