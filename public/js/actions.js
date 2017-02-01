@@ -67,4 +67,11 @@ $(document).ready(function(){
             settingsClose = true;
         }
     });
+    $(document).click(function(event){ 
+        if (!$(event.target).closest(".settings-popup").length && !$(event.target).closest("#settings").length) {
+            $(".settings-popup").fadeOut(300);
+            settingsClose = true;
+        }
+        event.stopPropagation();
+    });
 });
