@@ -2,8 +2,8 @@ $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
-  var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
-	if (data.from == getCookie('login') && curDialog == data.dialog)
+  		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
+		if (data.from == getCookie('login') && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-out'>" + 
@@ -22,11 +22,14 @@ $(document).ready(function(){
 	                    "</div>"; 
 		}
 		else if (curDialog == data.dialog){
+			var fromId = "";
+			if (!data.anonym) fromId = data.fromId;
+			else fromId = 'anonym';
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-in'>" + 
 	                            "<div class='message-in-photo'>" + 
 	                                "<div class='message-in-photo-border'>" +
-	                                    "<img src='uploads/" + data.fromId + ".jpg" + "'>" +
+	                                    "<img src='uploads/" + fromId + ".jpg" + "'>" +
 	                                "</div>" +
 	                            "</div>" + 
 	                            "<div class='message-in-text-box'>" + 
