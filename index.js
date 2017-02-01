@@ -146,7 +146,6 @@ app.get('/api/getDialog', function (req, res){
 			var response = [];
 			var promise = new Promise(function(resolve, reject){
 				var i = 0, size = data.length, arr = data;
-				console.log(arr);
 				if (!size) resolve("result");
 				arr.forEach(function(item, arr){
 					var curMess = ({
@@ -185,10 +184,13 @@ app.get('/api/getUser', function (req, res) {
 });
 
 app.get('/api/searchCompanion', function(req, res){
-	User.findOne({login: req.query.searchText}, function(err, data){
-		if (data == undefined) res.send('Fail');
-		else res.send(data);
-	});
+	if (req.query.searchText == req.user.login) res.send('Fail');
+	else {
+		User.findOne({login: req.query.searchText}, function(err, data){
+			if (data == undefined) res.send('Fail');
+			else res.send(data);
+		});
+	}
 });
 
 app.put('/api/createDialog', function (req, res){
@@ -205,25 +207,29 @@ app.put('/api/createDialog', function (req, res){
 			{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(to) }, { 'dialogs.anonym': anonym }, {'dialogs.initiator': req.user._id} ] } ]}, 
 			function(err, data){
 			if (data == undefined) { // Этого диалога у from нету
-				userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(to) }, 
-					{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(from) }, {'dialogs.anonym': anonym}, {'dialogs.initiator': req.user._id} ] } ]},
-					function(err, data1){
-						var id = "";
-						if (data1 == undefined) id = new mongoose.Types.ObjectId;
-						else id = data1.dialogId;
-						if (anonym) {
-							userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
-							{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-								res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
-							});
-						} else
-						{
-							userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
-							{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-								res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
-							});
-						}
-					});
+				userDialogList.aggregate([
+				{$match: {user: to}},
+				{$unwind: '$dialogs'},
+				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym}/*, {'dialogs.initiator': from.toString()}*/ ] } },
+				], 
+				function(err, data1){
+					var id = "";
+					console.log(data1);
+					if (!data1.length) id = new mongoose.Types.ObjectId;
+					else id = data1[0].dialogs.dialogId;
+					if (anonym) {
+						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
+							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+						});
+					} else
+					{
+						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
+							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+						});
+					}
+				});
 			}
 			else res.send("already been");
 		});
@@ -232,25 +238,28 @@ app.put('/api/createDialog', function (req, res){
 			{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(to) }, { 'dialogs.anonym': anonym } ] } ]}, 
 			function(err, data){
 			if (data == undefined) { // Этого диалога у from нету
-				userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(to) }, 
-					{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(from) }, {'dialogs.anonym': anonym} ] } ]},
-					function(err, data1){
-						var id = "";
-						if (data1 == undefined) id = new mongoose.Types.ObjectId;
-						else id = data1.dialogId;
-						if (anonym) {
-							userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
-							{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-								res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
-							});
-						} else
-						{
-							userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
-							{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-								res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
-							});
-						}
-					});
+				userDialogList.aggregate([
+				{$match: {user: to}},
+				{$unwind: '$dialogs'},
+				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym} ] } },
+				], 
+				function(err, data1){
+					var id = "";
+					if (!data1.length) id = new mongoose.Types.ObjectId;
+					else id = data1[0].dialogs.dialogId;
+					if (anonym) {
+						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
+							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+						});
+					} else
+					{
+						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
+						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
+							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+						});
+					}
+				});
 			}
 			else res.send("already been");
 		});
@@ -266,6 +275,7 @@ app.get('/api/getUserDialogs', function (req, res){
 			var arr = data.dialogs, arrSize = arr.length, i = 0;
 			arr.forEach(function(dialog, arr){
 				var lastMess = "";
+				var lastMessDate = new Date();
 				var promise2 = new Promise(function(resolve2, rejec2){
 					userMessageStorage.aggregate([
 							{$match: {user: (req.user._id).toString()}},
@@ -275,15 +285,19 @@ app.get('/api/getUserDialogs', function (req, res){
 						], 
 						function(err, data){
 							if (data.length == 0) lastMess = 'В беседе нет сообщений';
-							else lastMess = data[0].messages.message;
+							else 
+							{
+								lastMess = data[0].messages.message;
+								lastMessDate = data[0].messages.date;
+							}
 							i++;
 							resolve2("result");
 					});
 				});
 				promise2
 					.then(function(){
-						if (dialog.anonym && !dialog.initiator) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess});
-						else dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess});
+						if (dialog.anonym && !dialog.initiator) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess, date: lastMessDate});
+						else dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess, date: lastMessDate});
 						if (i == arrSize) {
 							resolve("result");
 						}
@@ -395,7 +409,7 @@ app.put('/api/saveUserSettings', function (req, res){
 });
 
 app.post('/api/login',
-  passport.authenticate('local', {failureRedirect:'/test', failureFlash: true}),
+  passport.authenticate('local', {failureRedirect:'/sign-in', failureFlash: true}),
   function (req, res) {
   	res.cookie('login', req.user.login);
     res.redirect('/');

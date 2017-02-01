@@ -21,7 +21,7 @@ $(document).ready(function(){
 			                                "<span class='last-message'>" + curDialog.lastMessage + "</span>" + 
 			                            "</div>" + 
 			                            "<div class='single-dialog-time'>" + 
-			                                "<span class='last-message-time'>12.47</span>" + 
+			                                "<span class='last-message-time'>" + moment(curDialog.date).format('HH:mm') + "</span>" + 
 			                            "</div>" + 
 			                        "</div>" + 
 			                    "</div>";
