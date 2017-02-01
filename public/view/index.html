@@ -29,6 +29,8 @@
         <script src="js/getUserDialogs.js"></script>
         <script src="js/getDialog.js"></script>
         <script src="js/sendMessage.js"></script>
+        <script src="js/userSettings.js"></script>
+        <script src="js/dialogSettings.js"></script>
         <script>
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
@@ -70,7 +72,7 @@
                         <div class="extra-block-body">
                             <div class="extra-block-section photo-settings">
                                 <div class="photo-settings-border animated" id="preview">
-                                    <img src="images/3.jpg">
+                                    <img src="images/3.jpg" id="userImg">
                                     <input type="file" name="Photo" id="photo-input" class="photo-input">
                                     <label for="photo-input">
                                         <div class="load-fg">
@@ -81,6 +83,9 @@
                                         </div>
                                     </label>
                                 </div>
+                            </div>
+                            <div class="extra-block-section save-settings">
+                                <div class="extra-block-button" id="saveImg">Сохранить изменения</div>
                             </div>
                             <div class="extra-block-section name-settings">
                                 <div class="extra-block-section-title">Ваше имя</div>
@@ -293,7 +298,7 @@
                 </div>
                 <div class="settings-popup">
                     <ul>
-                        <li><span>Очистить чат</span></li>
+                        <li id="clearDialog"><span>Очистить чат</span></li>
                         <li><span>Заблокировать собедеседника</span></li>
                         <li><span>Удалить чат</span></li>
                     </ul>

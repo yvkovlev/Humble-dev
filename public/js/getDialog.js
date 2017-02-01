@@ -1,10 +1,11 @@
 $(document).ready(function(){
-	var scrollTop;
+  var scrollTop;
 	var scrolledOnce = false;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
+		$(".dialog-area").empty();
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -18,7 +19,7 @@ $(document).ready(function(){
 				                        "<div class='message-out'>" + 
 				                            "<div class='message-out-photo'>" + 
 				                                "<div class='message-out-photo-border'>" +
-				                                    "<img src='images/1.jpeg'>" +
+				                                    "<img src='uploads/" + mess.fromId + ".jpg" + "'>" +
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-out-text-box'>" + 
@@ -35,7 +36,7 @@ $(document).ready(function(){
 				                        "<div class='message-in'>" + 
 				                            "<div class='message-in-photo'>" + 
 				                                "<div class='message-in-photo-border'>" +
-				                                    "<img src='images/1.jpeg'>" +
+				                                    "<img src='uploads/" + mess.fromId + ".jpg" + "'>" +
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-in-text-box'>" + 
@@ -48,7 +49,6 @@ $(document).ready(function(){
 				                    "</div>";
 		            }
 				});
-				$(".dialog-area").empty();
 		        $(".dialog-area").append(dialog);
 		        if (!scrolledOnce) {
         			scrollTop = $(".message-outher:last-child").offset().top - 561;

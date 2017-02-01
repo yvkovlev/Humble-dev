@@ -2,15 +2,14 @@ $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
-		var newMessage = "";
-		console.log(data);
-		if (data.from == getCookie('login'))
+  var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
+	if (data.from == getCookie('login') && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-out'>" + 
 	                            "<div class='message-out-photo'>" + 
 	                                "<div class='message-out-photo-border'>" +
-	                                    "<img src='images/1.jpeg'>" +
+	                                    "<img src='uploads/" + data.fromId + ".jpg" + "'>" +
 	                                "</div>" +
 	                            "</div>" + 
 	                            "<div class='message-out-text-box'>" + 
@@ -22,12 +21,12 @@ $(document).ready(function(){
 	                        "</div>" + 
 	                    "</div>"; 
 		}
-		else {
+		else if (curDialog == data.dialog){
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-in'>" + 
 	                            "<div class='message-in-photo'>" + 
 	                                "<div class='message-in-photo-border'>" +
-	                                    "<img src='images/1.jpeg'>" +
+	                                    "<img src='uploads/" + data.fromId + ".jpg" + "'>" +
 	                                "</div>" +
 	                            "</div>" + 
 	                            "<div class='message-in-text-box'>" + 
@@ -88,9 +87,6 @@ $(document).ready(function(){
 				data: {message: messBody, dialogId: $('.dialog-send-button').attr('id')},
 				success: function(response)
 				{
-					/*console.log(response);
-					console.log(typeof(response));
-					console.log(typeof(response.date));*/
 					socket.emit('newMess', response);
 				}
 			});
