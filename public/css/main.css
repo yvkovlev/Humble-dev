@@ -128,6 +128,10 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+.single-dialog:hover >  .single-dialog-photo > .online-status-dialogs {
+  border:2px solid #3f4750;
+}
+
 .single-dialog:hover > .single-dialog-body {
   border-bottom: 1px solid #494f56;
 }

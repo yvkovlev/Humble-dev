@@ -11,7 +11,7 @@ $(document).ready(function(){
 			                            "<div class='single-dialog-photo-border'>" + 
 			                                "<img src='uploads/" + curDialog.userId + ".jpg" + "'>" + 
 			                            "</div>" + 
-			                            "<div class='online-status-dialogs active-status'></div>" + 
+			                            "<div class='online-status-dialogs'></div>" + 
 			                        "</div>" + 
 			                        "<div class='single-dialog-body'>" + 
 			                            "<div class='single-dialog-title'>" + 

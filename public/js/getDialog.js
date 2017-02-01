@@ -4,7 +4,9 @@ $(document).ready(function(){
 		var dialogName = $(this).find(".dialog-title").html();
 		$(".dialog-name").html(dialogName);
 		$(".single-dialog").removeClass("active-dialog");
+		$(".online-status-dialogs").removeClass("active-status");
 		$(this).addClass("active-dialog");
+		$(this).find(".online-status-dialogs").addClass("active-status");
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
