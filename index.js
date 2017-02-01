@@ -200,11 +200,11 @@ app.put('/api/createDialog', function (req, res){
 	if (anonym)
 	{
 		userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, 
-			{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(to) }, { 'dialogs.anonym': anonym }, {'dialog.initiator': req.user._id} ] } ]}, 
+			{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(to) }, { 'dialogs.anonym': anonym }, {'dialogs.initiator': req.user._id} ] } ]}, 
 			function(err, data){
 			if (data == undefined) { // Этого диалога у from нету
 				userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(to) }, 
-					{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(from) }, {'dialogs.anonym': anonym}, {'dialog.initiator': req.user._id} ] } ]},
+					{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(from) }, {'dialogs.anonym': anonym}, {'dialogs.initiator': req.user._id} ] } ]},
 					function(err, data1){
 						var id = "";
 						if (data1 == undefined) id = new mongoose.Types.ObjectId;
@@ -316,6 +316,7 @@ app.put('/api/sendMessage', function(req, res){
 			anonym: false,
 			message: req.body.message,
 		});
+		console.log("from api sendMessage");
 		if (initiator) newMessage.anonym = true;
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
@@ -418,6 +419,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('newMess', function(data){
 		io.to(data.dialog).emit('newMess', data);
+		console.log("From socket");
 	});
 })
 

@@ -386,6 +386,7 @@
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.01em;
+  word-wrap: break-word;
 }
 .message-in-time {
   margin: 0;
@@ -435,6 +436,7 @@
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.01em;
+  word-wrap: break-word;
 }
 .message-out-time {
   margin: 0;
@@ -479,6 +481,7 @@
   float: left;
   margin: 0 15px;
   line-height: 60px;
+  width: 340px;
 }
 
 .online-status {
@@ -492,6 +495,21 @@
   color: #545454;
   font-size: 16px;
   font-weight: normal;
+}
+
+.dialog-class-outher {
+  float: left;
+  margin: 0 15px;
+  line-height: 60px;
+}
+
+.dialog-class {
+  margin: auto;
+}
+
+.dialog-class span {
+  color: #9C9C9C;
+  font-size: 12px;
 }
 
 .action-icons {
