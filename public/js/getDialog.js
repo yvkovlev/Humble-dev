@@ -1,9 +1,12 @@
 $(document).ready(function(){
-  var scrollTop;
-	var scrolledOnce = false;
+  	var scrollTop;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
+		var dialogName = $(this).find(".dialog-title").html();
+		$(".dialog-name").html(dialogName);
 		$(".single-dialog").removeClass("active-dialog");
+		$(".online-status-dialogs").removeClass("active-status");
 		$(this).addClass("active-dialog");
+		$(this).find(".online-status-dialogs").addClass("active-status");
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
@@ -13,6 +16,7 @@ $(document).ready(function(){
 			data: {'dialogId': $(this).attr('id')},
 			success: function(response) {
 				var dialog = "";
+				var scrolledOnce = false;
 				response.forEach(function(mess, response){
 					if (mess.from == getCookie('login'))
 					{
@@ -52,7 +56,12 @@ $(document).ready(function(){
 				});
 		        $(".dialog-area").append(dialog);
 		        if (!scrolledOnce) {
-        			scrollTop = $(".message-outher:last-child").offset().top - 561;
+        			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
+						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;
+					}
+					else {
+						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop();
+					}
 					$(".dialog-area").scrollTop(scrollTop);
 					scrolledOnce = true;
 				}
