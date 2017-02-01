@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  var scrollTop;
+	var scrolledOnce = false;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
@@ -21,7 +23,7 @@ $(document).ready(function(){
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-out-text-box'>" + 
-				                                "<span>" + mess.message + "</span>" + 
+				                                "<span>" + mess.message.replace(/\n/g, '<br>') + "</span>" + 
 				                            "</div>" + 
 				                            "<div class='message-out-time'>" + 
 				                                "<span>12.47</span>" + 
@@ -38,7 +40,7 @@ $(document).ready(function(){
 				                                "</div>" +
 				                            "</div>" + 
 				                            "<div class='message-in-text-box'>" + 
-				                                "<span>" + mess.message + "</span>" + 
+				                                "<span>" + mess.message.replace(/\n/g, '<br>') + "</span>" + 
 				                            "</div>" + 
 				                            "<div class='message-in-time'>" + 
 				                                "<span>12.47</span>" + 
@@ -48,6 +50,12 @@ $(document).ready(function(){
 		            }
 				});
 		        $(".dialog-area").append(dialog);
+		        if (!scrolledOnce) {
+        			scrollTop = $(".message-outher:last-child").offset().top - 561;
+					$(".dialog-area").scrollTop(scrollTop);
+					scrolledOnce = true;
+				}
+				$(".extra-right").css("display", "none");
 			}
 		});
 	});
