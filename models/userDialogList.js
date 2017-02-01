@@ -7,6 +7,8 @@ var userDialogListSchema = new Schema({
 		{
 			dialogId: String,
 			companion: String,
+			anonym: Boolean,
+			initiator: String,
 			name: String,
 			imgUrl: String
 		}
