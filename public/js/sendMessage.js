@@ -2,7 +2,8 @@ $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
-  	var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
+		console.log(data);
+  		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
 		if (data.from == getCookie('login') && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
@@ -19,7 +20,7 @@ $(document).ready(function(){
 	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
-	                    "</div>"; 
+	                    "</div>";
 		}
 		else if (curDialog == data.dialog){
 			var fromId = "";
@@ -96,6 +97,7 @@ $(document).ready(function(){
 				success: function(response)
 				{
 					socket.emit('newMess', response);
+					console.log("From sendMessage function");
 				}
 			});
 		}

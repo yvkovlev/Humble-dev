@@ -146,7 +146,7 @@ app.get('/api/getDialog', function (req, res){
 			var response = [];
 			var promise = new Promise(function(resolve, reject){
 				var i = 0, size = data.length, arr = data;
-				if (size == 0) resolve("result");
+				if (!size) resolve("result");
 				arr.forEach(function(item, arr){
 					var curMess = ({
 						from: String,
@@ -158,7 +158,7 @@ app.get('/api/getDialog', function (req, res){
 					if (item.messages.anonym && item.messages.from != req.user.login) {
 						curMess.from = 'Anonym';
 						curMess.message = item.messages.message;
-						curMess.fromId = 'anonym';
+						curMess.fromId= 'anonym';
 						curMess.date = item.messages.date;
 					} else {
 						curMess.from = item.messages.from;
@@ -332,6 +332,7 @@ app.put('/api/sendMessage', function(req, res){
 			anonym: false,
 			message: req.body.message,
 		});
+		console.log("from api sendMessage");
 		if (initiator) newMessage.anonym = true;
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
@@ -434,6 +435,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('newMess', function(data){
 		io.to(data.dialog).emit('newMess', data);
+		console.log("From socket");
 	});
 })
 
