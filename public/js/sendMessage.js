@@ -16,7 +16,7 @@ $(document).ready(function(){
 	                                "<span>" + data.message.replace(/\n/g, '<br>') + "</span>" + 
 	                            "</div>" + 
 	                            "<div class='message-out-time'>" + 
-	                                "<span>12.47</span>" + 
+	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
 	                    "</div>"; 
@@ -33,7 +33,7 @@ $(document).ready(function(){
 	                                "<span>" + data.message.replace(/\n/g, '<br>') + "</span>" + 
 	                            "</div>" + 
 	                            "<div class='message-in-time'>" + 
-	                                "<span>12.47</span>" + 
+	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
 	                    "</div>";
