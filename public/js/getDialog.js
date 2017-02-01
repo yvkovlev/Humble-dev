@@ -1,6 +1,5 @@
 $(document).ready(function(){
   	var scrollTop;
-	var scrolledOnce = false;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		var dialogName = $(this).find(".dialog-title").html();
 		$(".dialog-name").html(dialogName);
@@ -15,6 +14,7 @@ $(document).ready(function(){
 			data: {'dialogId': $(this).attr('id')},
 			success: function(response) {
 				var dialog = "";
+				var scrolledOnce = false;
 				response.forEach(function(mess, response){
 					if (mess.from == getCookie('login'))
 					{
@@ -54,7 +54,12 @@ $(document).ready(function(){
 				});
 		        $(".dialog-area").append(dialog);
 		        if (!scrolledOnce) {
-        			scrollTop = $(".message-outher:last-child").offset().top - 561;
+        			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
+						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;
+					}
+					else {
+						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop();
+					}
 					$(".dialog-area").scrollTop(scrollTop);
 					scrolledOnce = true;
 				}

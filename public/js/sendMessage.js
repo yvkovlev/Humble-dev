@@ -2,7 +2,7 @@ $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
-  var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
+  	var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
 	if (data.from == getCookie('login') && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
@@ -39,7 +39,12 @@ $(document).ready(function(){
 	                    "</div>";
         }
         $(".dialog-area").append(newMessage);
-        scrollTop = scrollTop + $(".dialog-area").scrollTop() + $(".message-outher:last-child").offset().top - 561;
+        if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
+        	scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;
+        }
+        else {
+        	scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop();
+        }
 		$(".dialog-area").scrollTop(scrollTop);
 	});
 	socket.emit('setRooms', {login: getCookie('login')});

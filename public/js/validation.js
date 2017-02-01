@@ -17,6 +17,6 @@ function checkPassword(str)
 
 function checkFullName(str)
 {
-	var re = /^[а-яА-ЯёЁa-zA-Z ]{2,15}$/; // 2-15 символов, кириллица и латиница
+	var re = /^[а-яА-ЯёЁa-zA-Z ]{2,}$/; // от 2 символов, кириллица и латиница
 	return re.test(str);
 }
