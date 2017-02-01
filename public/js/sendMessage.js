@@ -3,7 +3,8 @@ $(document).ready(function(){
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
 		var newMessage = "";
-		console.log(data);
+		console.log(data.date);
+		console.log(moment(data.date).format('HH:mm'));
 		if (data.from == getCookie('login'))
 		{
 			newMessage += "<div class='message-outher'>" +
@@ -17,7 +18,7 @@ $(document).ready(function(){
 	                                "<span>" + data.message.replace(/\n/g, '<br>') + "</span>" + 
 	                            "</div>" + 
 	                            "<div class='message-out-time'>" + 
-	                                "<span>12.47</span>" + 
+	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
 	                    "</div>"; 
@@ -34,7 +35,7 @@ $(document).ready(function(){
 	                                "<span>" + data.message.replace(/\n/g, '<br>') + "</span>" + 
 	                            "</div>" + 
 	                            "<div class='message-in-time'>" + 
-	                                "<span>12.47</span>" + 
+	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
 	                    "</div>";
