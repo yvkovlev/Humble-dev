@@ -1,11 +1,14 @@
 $(document).ready(function(){
-  var scrollTop;
+  	var scrollTop;
 	var scrolledOnce = false;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
+		var dialogName = $(this).find(".dialog-title").html();
+		$(".dialog-name").html(dialogName);
 		$(".single-dialog").removeClass("active-dialog");
 		$(this).addClass("active-dialog");
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
+		$(".extra-right").css("display", "none");
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -55,7 +58,6 @@ $(document).ready(function(){
 					$(".dialog-area").scrollTop(scrollTop);
 					scrolledOnce = true;
 				}
-				$(".extra-right").css("display", "none");
 			}
 		});
 	});
