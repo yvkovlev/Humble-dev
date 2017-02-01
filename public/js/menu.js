@@ -14,7 +14,18 @@ $(document).ready(function(){
 		$.ajax({
 			method: 'put',
 			url: 'api/createDialog',
-			data: {companion: $(this).attr('id'), fullName: fullName},
+			data: {companion: $(this).attr('id'), fullName: fullName, anonym: false},
+			success: function(response){
+				alert(response);
+			}
+		});
+	});
+	$('.companions-results').on('click', '.anonim-dialog', function(){
+		var fullName = $(this).parent().parent().children('.result-name').children('span').html();
+		$.ajax({
+			method: 'put',
+			url: 'api/createDialog',
+			data: {companion: $(this).attr('id'), fullName: fullName, anonym: true},
 			success: function(response){
 				alert(response);
 			}
@@ -41,8 +52,8 @@ $(document).ready(function(){
 	                    "<div class='result-actions'>" + 
 	                        "<div class='anonim-dialog' id='" + response._id + "'>" +
 	                        	/*"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + */
-	                        "</div>" + 
-	                        "asd<div class='open-dialog' id='" + response._id + "'>" +
+	                        "asd</div>" + 
+	                        "<div class='open-dialog' id='" + response._id + "'>" +
 	                        	// "<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
 	                        "asd</div>" + 
 	                    "</div>" + 
