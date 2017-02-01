@@ -794,6 +794,7 @@
   height: 560px;
   overflow-y: scroll;
   position: absolute;
+  left: 0;
   width: 390px;
 }
 
