@@ -311,6 +311,11 @@ app.get('/api/getUserDialogs', function (req, res){
 		});
 		promise
 			.then(function(){
+				function fn(a, b) {
+					if (a.date < b.date) return 1;
+					else return -1; 
+				}
+				dialogs.sort(fn);
 				res.send(dialogs);
 			});
 	});
@@ -333,11 +338,11 @@ app.put('/api/sendMessage', function(req, res){
 			dialog: req.body.dialogId,
 			from: req.user.login,
 			fromId: req.user._id,
+			toId: to,
 			date: new Date(),
 			anonym: false,
 			message: req.body.message,
 		});
-		console.log("from api sendMessage");
 		if (initiator) newMessage.anonym = true;
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
@@ -430,17 +435,20 @@ app.get('/api/logOut', function (req, res){
 io.on('connection', function(socket){
 	socket.on('setRooms', function(data){
 		User.findOne({login: data.login}, function(err, data){
-			userDialogList.findOne({user: data._id}, function(err, data){
+			socket.join(data._id);
+			/*userDialogList.findOne({user: data._id}, function(err, data){
 				var arr = data.dialogs;
 				arr.forEach(function(item, arr){
 					socket.join(item.dialogId);
 				});
-			});
+			});*/
 		});
 	});
 	socket.on('newMess', function(data){
-		io.to(data.dialog).emit('newMess', data);
-		console.log("From socket");
+		//console.log(data);
+		io.to(data.toId).emit('newMess', data);
+		io.to(data.fromId).emit('newMess', data);
+		//io.to(data.dialog).emit('newMess', data);
 	});
 })
 
