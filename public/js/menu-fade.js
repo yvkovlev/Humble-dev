@@ -21,13 +21,8 @@ $(document).ready(function(){
     	}
     })
 
-    $("#profile-settings").on("click", function(){
-        $(".extra-left").css("display", "block");
-        $(".extra-left").removeClass("translateLeftOut");
-        $(".extra-left").addClass("translateLeftIn");
-        $(".photo-settings-border").removeClass("zoomOut");
-        $(".photo-settings-border").addClass("zoomIn");
-
+    $("#profile-settings, .user-info-photo").on("click", function(){
+        openUserSettings();
     });
     $(".extra-close-fg").on("click", function(){
         $(".extra-left").removeClass("translateLeftIn");
@@ -71,4 +66,12 @@ $(document).ready(function(){
     }, function(){
         $(".load-fg").stop().fadeOut(100);
     })
+
+    function openUserSettings() {
+        $(".extra-left").css("display", "block");
+        $(".extra-left").removeClass("translateLeftOut");
+        $(".extra-left").addClass("translateLeftIn");
+        $(".photo-settings-border").removeClass("zoomOut");
+        $(".photo-settings-border").addClass("zoomIn");
+    }
 });

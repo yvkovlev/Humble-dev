@@ -21,13 +21,12 @@
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="js/jquery-1.10.2.min.js"></script> 
+        <script src="js/getUserDialogs.js"></script>
+        <script src="js/getDialog.js"></script>
         <script src="js/change-selection.js"></script> 
-        <script src="js/actions.js"></script> 
         <script src="js/parseCookie.js"></script>
         <script src="js/menu.js"></script> 
         <script src="js/menu-fade.js"></script> 
-        <script src="js/getUserDialogs.js"></script>
-        <script src="js/getDialog.js"></script>
         <script src="js/sendMessage.js"></script>
         <script src="js/moment.min.js"></script>
         <script src="js/userSettings.js"></script>
@@ -73,7 +72,7 @@
                         <div class="extra-block-body">
                             <div class="extra-block-section photo-settings">
                                 <div class="photo-settings-border animated" id="preview">
-                                    <img src="images/3.jpg" id="userImg">
+                                    <img src="images/3.jpg" id="userImg" class="animated">
                                     <input type="file" name="Photo" id="photo-input" class="photo-input">
                                     <label for="photo-input">
                                         <div class="load-fg">
@@ -83,10 +82,25 @@
                                             </div>
                                         </div>
                                     </label>
+                                    <div class="save-changes animated">
+                                        <div class="save-changes-title">Сохранить фотографию?</div>
+                                        <div class="save-changes-actions">
+                                            <ul>
+                                                <li class="confirm" id="saveImg">
+                                                    <div class="object-fg"></div>
+                                                    <object type="image/svg+xml" data="svg/success.svg" height="25"></object>
+                                                </li>
+                                                <li class="refuse" id="refuseImg">
+                                                    <div class="object-fg"></div>
+                                                    <object type="image/svg+xml" data="svg/error.svg" height="25"></object>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="photo-settings-preloader">
+                                        <div class="photo-preloader"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="extra-block-section save-settings">
-                                <div class="extra-block-button" id="saveImg">Сохранить изменения</div>
                             </div>
                             <div class="extra-block-section name-settings">
                                 <div class="extra-block-section-title">Ваше имя</div>
@@ -113,22 +127,38 @@
                     </div>
                 </div>
                 <div class="extra-block extra-right animated">
-                    <div class="cap">
-                        <div class="cap-rocket"></div>
+                    <div class="cap" id="cap-rocket">
+                        <div class="cap-image cap-rocket"></div>
                         <div class="cap-title">Мы рады, что Вы вернулись!</div>
                         <div class="cap-text">Для того, что бы начать общаться, нажмите на диалог слева.</div>
+                    </div>
+                    <div class="cap" id="cap-empty">
+                        <div class="cap-image cap-empty"></div>
+                        <div class="cap-title">Не выбрано ни одного диалога.</div>
+                        <div class="cap-text">Для того, что бы продолжить общаться, нажмите на диалог слева <br> или создайте его через поиск.</div>
                     </div>
                 </div>
             </div>
             <div class="left-column">
-                <header class="menu-and-search">
-                    <div class="menu-bars">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
+                <header class="menu-and-profile">
+                    <div class="user-info-outher">
+                        <div class="user-info-photo">
+                            <div class="user-info-photo-border">
+                                <img src="images/13.jpeg">
+                            </div>
+                        </div>
+                        <div class="user-info-body">
+                            <div class="user-info-name">User name <span class="online-status"><i class="fa fa-circle" aria-hidden="true"></i></span></div>
+                            <div class="user-info-login">@login</div>
+                        </div>
                     </div>
-                    <div class="search">
-                        <input type="text">
+                    <div class="menu-bars">
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                     </div>
                 </header>
+                <div class="search">
+                    <input type="text">
+                </div>
                 <div class="sidebar-lists">
                     <div class="dialogs-list animated">
                         <!-- SINGLE DIALOGS START -->
@@ -305,8 +335,18 @@
                 <div class="settings-popup">
                     <ul>
                         <li id="clearDialog"><span>Очистить чат</span></li>
-                        <li><span>Заблокировать собедеседника</span></li>
-                        <li id="deleteDialog"><span>Удалить чат</span></li>
+                        <li id="test11"><span>Заблокировать собедеседника</span></li>
+                        <li id="deleteDialog">
+                            <span class="action-info">Удалить чат</span>
+                            <div class='actions-confirm'> 
+                                <span class='action-confirm' id='deleteDialogConfirm'>
+                                    <i class='fa fa-check'></i>
+                                </span>
+                                <span class='action-refuse' id='deleteDialogRefuse'>
+                                    <i class='fa fa-times'></i>
+                                </span>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <!-- POPUP WINDOWS END -->

@@ -16,7 +16,14 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: $(this).attr('id'), fullName: fullName, anonym: false},
 			success: function(response){
-				alert(response);
+				$(".response-feedback").html(response);
+				if (response == "Диалог успешно создан") {
+					setTimeout(function(){
+						//window.location.href = "/";
+						menuOpenClose();
+						getUserDialogs();
+					}, 1000);
+				}
 			}
 		});
 	});
@@ -27,7 +34,14 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: $(this).attr('id'), fullName: fullName, anonym: true},
 			success: function(response){
-				alert(response);
+				$(".response-feedback").html(response);
+				if (response == "Диалог успешно создан") {
+					setTimeout(function(){
+						//window.location.href = "/";
+						menuOpenClose();
+						getUserDialogs();
+					}, 1000);
+				}
 			}
 		});
 	});
@@ -59,7 +73,8 @@ $(document).ready(function(){
 	                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
 	                        "</div>" + 
 	                    "</div>" + 
-	                "</div>";
+	                "</div>" +
+	                "<div class='response-feedback'></div>";
 	                $(".companions-results").html(result);
 	            }
 			}
@@ -67,17 +82,15 @@ $(document).ready(function(){
 	});
 	$(".menu-list").css("display", "none");
     $(".menu-bars").on("click", function(){
+    	menuOpenClose();
+    });
+    function menuOpenClose() {
     	if (closeMenu) {
 	        $(".menu-list").css("display", "block");
 	        $(".menu-list").removeClass("fadeOutLeft");
 	        $(".dialogs-list").removeClass("fadeInRight");
 	        $(".dialogs-list").addClass("fadeOutRight");
 	        $(".menu-list").addClass("fadeInLeft");
-	        $(".menu-bars i").stop().fadeOut(300, function(){
-	        	$(".menu-bars").html("<i class='fa fa-reply'></i>");
-	        	$(".menu-bars i").css("display", "none");
-	        	$(".menu-bars i").stop().fadeIn(300);
-	        });
 	        closeMenu = false;
 	    }
 	    else {
@@ -85,12 +98,7 @@ $(document).ready(function(){
 	        $(".menu-list").removeClass("fadeInLeft");
 	        $(".menu-list").addClass("fadeOutLeft");
 	        $(".dialogs-list").addClass("fadeInRight");
-	        $(".menu-bars i").stop().fadeOut(300, function(){
-	        	$(".menu-bars").html("<i class='fa fa-bars'></i>");
-	        	$(".menu-bars i").css("display", "none");
-	        	$(".menu-bars i").stop().fadeIn(300);
-	        });
 	        closeMenu = true;
 	    }
-    });
+    }
 });

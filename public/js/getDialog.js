@@ -10,6 +10,7 @@ $(document).ready(function(){
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
+		$("#cap-rocket").css("display", "none");
 		var curDialog = $(this).attr('id');
 		$.ajax({
 			type: 'get',
@@ -60,6 +61,8 @@ $(document).ready(function(){
 				var selector = "#" + curDialog + " .single-dialog-time";
 				$(selector).html(lastdate);
 		        $(".dialog-area").append(dialog);
+		        console.log(response[0]);
+		        if (response[0].anonym) $(".dialog-class span").html("Анонимный диалог");
 		        if (!scrolledOnce) {
         			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
 						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;

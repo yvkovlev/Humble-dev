@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	getUserDialogs();
+});
+
+function getUserDialogs() {
+	$("#cap-rocket").css("display", "block");
+	$('.dialogs-list').html("");
 	$.ajax({
 		type: 'get',
 		url: 'api/getUserDialogs',
@@ -29,4 +35,4 @@ $(document).ready(function(){
 			$('.dialogs-list').prepend(dialogList);
 		}
 	});
-});
+}
