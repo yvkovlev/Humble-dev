@@ -19,7 +19,9 @@ $(document).ready(function(){
 				$(".response-feedback").html(response);
 				if (response == "Диалог успешно создан") {
 					setTimeout(function(){
-						window.location.href = "/"
+						//window.location.href = "/";
+						menuOpenClose();
+						getUserDialogs();
 					}, 1000);
 				}
 			}
@@ -35,7 +37,9 @@ $(document).ready(function(){
 				$(".response-feedback").html(response);
 				if (response == "Диалог успешно создан") {
 					setTimeout(function(){
-						window.location.href = "/"
+						//window.location.href = "/";
+						menuOpenClose();
+						getUserDialogs();
 					}, 1000);
 				}
 			}
@@ -78,6 +82,9 @@ $(document).ready(function(){
 	});
 	$(".menu-list").css("display", "none");
     $(".menu-bars").on("click", function(){
+    	menuOpenClose();
+    });
+    function menuOpenClose() {
     	if (closeMenu) {
 	        $(".menu-list").css("display", "block");
 	        $(".menu-list").removeClass("fadeOutLeft");
@@ -93,5 +100,5 @@ $(document).ready(function(){
 	        $(".dialogs-list").addClass("fadeInRight");
 	        closeMenu = true;
 	    }
-    });
+    }
 });

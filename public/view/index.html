@@ -21,13 +21,12 @@
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="js/jquery-1.10.2.min.js"></script> 
+        <script src="js/getUserDialogs.js"></script>
+        <script src="js/getDialog.js"></script>
         <script src="js/change-selection.js"></script> 
-        <script src="js/actions.js"></script> 
         <script src="js/parseCookie.js"></script>
         <script src="js/menu.js"></script> 
         <script src="js/menu-fade.js"></script> 
-        <script src="js/getUserDialogs.js"></script>
-        <script src="js/getDialog.js"></script>
         <script src="js/sendMessage.js"></script>
         <script src="js/moment.min.js"></script>
         <script src="js/userSettings.js"></script>
@@ -128,10 +127,15 @@
                     </div>
                 </div>
                 <div class="extra-block extra-right animated">
-                    <div class="cap">
-                        <div class="cap-rocket"></div>
+                    <div class="cap" id="cap-rocket">
+                        <div class="cap-image cap-rocket"></div>
                         <div class="cap-title">Мы рады, что Вы вернулись!</div>
                         <div class="cap-text">Для того, что бы начать общаться, нажмите на диалог слева.</div>
+                    </div>
+                    <div class="cap" id="cap-empty">
+                        <div class="cap-image cap-empty"></div>
+                        <div class="cap-title">Не выбрано ни одного диалога.</div>
+                        <div class="cap-text">Для того, что бы продолжить общаться, нажмите на диалог слева <br> или создайте его через поиск.</div>
                     </div>
                 </div>
             </div>

@@ -106,6 +106,7 @@ $(document).ready(function(){
 		var curDialog = $('.single-dialog.active-dialog').attr('id');
 		$('#deleteDialog > .action-info').html("Удалить чат");
 		$(".actions-confirm").css("display", "none");
+        $(".active-dialog").remove();
 		setTimeout(function(){
 			deleteConfirmClose = true;
 		}, 1);
@@ -121,6 +122,7 @@ $(document).ready(function(){
 					success: function(response) {
 						console.log(response);
 						$(".extra-right").css("display", "block");
+                        $("#cap-empty").css("display", "block");
 						$(".settings-popup").fadeOut(300);
 						settingsClose = true;
 					}

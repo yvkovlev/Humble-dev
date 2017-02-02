@@ -1373,18 +1373,25 @@
 }
 
 .cap {
-  display: block;
+  display: none;
   position: relative;
   width: 100%;
   text-align: center;
 }
 
-.cap-rocket {
+.cap-image {
   margin: 100px auto 30px;
   width: 300px;
   height: 320px;
-  background: url(../images/rocket.png);
   background-size: cover;
+}
+
+.cap-rocket {
+  background: url(../images/rocket.png);
+}
+
+.cap-empty {
+  background: url(../images/empty.png);
 }
 
 .cap-title {

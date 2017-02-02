@@ -277,6 +277,7 @@ app.get('/api/getUserDialogs', function (req, res){
 	userDialogList.findOne({user: mongoose.Types.ObjectId(req.user._id)}, function(err, data){
 		var promise = new Promise(function(resolve, reject){
 			var arr = data.dialogs, arrSize = arr.length, i = 0;
+			if (!arrSize) resolve("result");
 			arr.forEach(function(dialog, arr){
 				var lastMess = "";
 				var lastMessDate = new Date();
