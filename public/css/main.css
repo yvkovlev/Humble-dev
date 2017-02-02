@@ -801,6 +801,7 @@
   margin: auto;
   padding: 5px 15px;
   cursor: pointer;
+  position: relative;
 }
 
 .settings-popup ul li:hover {
@@ -809,6 +810,24 @@
 
 .settings-popup ul li span {
   margin: auto;
+}
+
+.actions-confirm {
+  color: #b8c0c8;
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  display: none;
+}
+
+.action-confirm, .action-refuse {
+  padding: 0 0 0 15px;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.action-confirm:hover, .action-refuse:hover {
+  color: #15b4f1;
 }
 
 .input-photo {
@@ -982,6 +1001,15 @@
 
 .result-photo img {
   width: 100%;
+}
+
+.response-feedback {
+  color: #ccc;
+  background: #505861;
+  padding: 0 5px;
+  font-size: 12px;
+  border-radius: 4px;
+  text-align: center;
 }
 
 .not-hover:hover {

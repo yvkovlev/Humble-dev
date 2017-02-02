@@ -16,7 +16,12 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: $(this).attr('id'), fullName: fullName, anonym: false},
 			success: function(response){
-				alert(response);
+				$(".response-feedback").html(response);
+				if (response == "Диалог успешно создан") {
+					setTimeout(function(){
+						window.location.href = "/"
+					}, 1000);
+				}
 			}
 		});
 	});
@@ -27,7 +32,12 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: $(this).attr('id'), fullName: fullName, anonym: true},
 			success: function(response){
-				alert(response);
+				$(".response-feedback").html(response);
+				if (response == "Диалог успешно создан") {
+					setTimeout(function(){
+						window.location.href = "/"
+					}, 1000);
+				}
 			}
 		});
 	});
@@ -59,7 +69,8 @@ $(document).ready(function(){
 	                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
 	                        "</div>" + 
 	                    "</div>" + 
-	                "</div>";
+	                "</div>" +
+	                "<div class='response-feedback'></div>";
 	                $(".companions-results").html(result);
 	            }
 			}

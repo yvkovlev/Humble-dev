@@ -224,18 +224,18 @@ app.put('/api/createDialog', function (req, res){
 					if (anonym) {
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+							res.send("Диалог успешно создан"); // Создаем этот диалог и кладем в userDialogsList from-a
 						});
 					} else
 					{
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+							res.send("Диалог успешно создан"); // Создаем этот диалог и кладем в userDialogsList from-a
 						});
 					}
 				});
 			}
-			else res.send("already been");
+			else res.send("Такой диалог уже существует");
 		});
 	} else {
 		userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, 
@@ -254,18 +254,18 @@ app.put('/api/createDialog', function (req, res){
 					if (anonym) {
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+							res.send("Диалог успешно создан"); // Создаем этот диалог и кладем в userDialogsList from-a
 						});
 					} else
 					{
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-							res.send("Success"); // Создаем этот диалог и кладем в userDialogsList from-a
+							res.send("Диалог успешно создан"); // Создаем этот диалог и кладем в userDialogsList from-a
 						});
 					}
 				});
 			}
-			else res.send("already been");
+			else res.send("Такой диалог уже существует");
 		});
 	}
 });
