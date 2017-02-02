@@ -1171,7 +1171,7 @@
   border-radius: 50%;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .photo-settings-border img {
@@ -1202,6 +1202,62 @@
   margin: 5px auto;
   color: rgba(255, 255, 255, 0.4);
   font-size: 20px;
+}
+
+.save-changes {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: none;
+}
+
+.save-changes-title {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  margin: 50px 20px 0;
+}
+
+.save-changes-actions {
+  display: block;
+  margin: 10px auto;
+}
+
+.save-changes-actions ul {
+  display: inline-flex;
+}
+
+.save-changes-actions ul li {
+  display: block;
+  width: 50px;
+  text-align: center;
+}
+
+.confirm, .refuse {
+  color: #fff;
+  font-size: 18px;
+  position: relative;
+  opacity: 0.7;
+  transition: all 0.2s ease-in-out;
+}
+
+.confirm object, .refuse object {
+  z-index: 3;
+}
+
+.confirm:hover, .refuse:hover {
+  opacity: 1;
+}
+
+.photo-settings-preloader {
+  position: absolute;
+  top: calc(50% - 22px);
+  left: calc(50% - 26px);
+  display: none;
 }
 
 .photo-input {
@@ -1312,4 +1368,49 @@
 .cap-text {
   color: #989898;
   font-size: 14px;
+}
+
+.object-fg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  cursor: pointer;
+}
+
+.photo-preloader {
+  width: 49px;
+  height: 49px;
+  margin: 0 auto;
+  border: 3px solid rgb(146, 158, 171);
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: photo-preloader 650ms infinite linear;
+  -o-animation: photo-preloader 650ms infinite linear;
+  -ms-animation: photo-preloader 650ms infinite linear;
+  -webkit-animation: photo-preloader 650ms infinite linear;
+  -moz-animation: photo-preloader 650ms infinite linear;
+}
+
+@keyframes photo-preloader {
+  100%{ transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-o-keyframes photo-preloader {
+  100%{ -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-ms-keyframes photo-preloader {
+  100%{ -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-webkit-keyframes photo-preloader {
+  100%{ -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-moz-keyframes photo-preloader {
+  100%{ -moz-transform: rotate(360deg); transform: rotate(360deg); }
 }

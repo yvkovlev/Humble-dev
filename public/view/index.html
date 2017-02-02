@@ -73,7 +73,7 @@
                         <div class="extra-block-body">
                             <div class="extra-block-section photo-settings">
                                 <div class="photo-settings-border animated" id="preview">
-                                    <img src="images/3.jpg" id="userImg">
+                                    <img src="images/3.jpg" id="userImg" class="animated">
                                     <input type="file" name="Photo" id="photo-input" class="photo-input">
                                     <label for="photo-input">
                                         <div class="load-fg">
@@ -83,10 +83,25 @@
                                             </div>
                                         </div>
                                     </label>
+                                    <div class="save-changes animated">
+                                        <div class="save-changes-title">Сохранить фотографию?</div>
+                                        <div class="save-changes-actions">
+                                            <ul>
+                                                <li class="confirm" id="saveImg">
+                                                    <div class="object-fg"></div>
+                                                    <object type="image/svg+xml" data="svg/success.svg" height="25"></object>
+                                                </li>
+                                                <li class="refuse" id="refuseImg">
+                                                    <div class="object-fg"></div>
+                                                    <object type="image/svg+xml" data="svg/error.svg" height="25"></object>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="photo-settings-preloader">
+                                        <div class="photo-preloader"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="extra-block-section save-settings">
-                                <div class="extra-block-button" id="saveImg">Сохранить изменения</div>
                             </div>
                             <div class="extra-block-section name-settings">
                                 <div class="extra-block-section-title">Ваше имя</div>

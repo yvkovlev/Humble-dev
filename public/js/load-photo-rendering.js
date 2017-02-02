@@ -19,7 +19,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
         var reader = new FileReader();
         reader.onload = function(event){
             the_url = event.target.result
-      //of course using a template library like handlebars.js is a better solution than just inserting a string
             $('#preview img').attr("src", the_url);
         }
 
@@ -29,6 +28,11 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
   //watch for change on the 
     $("#photo-input").change(function() {
+        $(".photo-settings-border label").html("");
+        setTimeout(function(){
+            $(".save-changes").css("display", "block");
+            $(".save-changes").addClass("fadeIn");
+        }, 800);
         //grab the first image in the fileList
         //in this example we are only loading one file.
         renderImage(this.files[0])
