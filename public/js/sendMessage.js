@@ -2,8 +2,51 @@ $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
 	socket.on('newMess', function(data){
-		console.log(data);
   		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
+  		var dialog = "";
+  		if ($('#' + data.dialog).html() == undefined) {
+  			dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" + 
+                        "<div class='single-dialog-photo'>" + 
+                            "<div class='single-dialog-photo-border'>" + 
+                                "<img src='uploads/" + data.fromId + ".jpg" + "'>" + 
+                            "</div>" + 
+                            "<div class='online-status-dialogs'></div>" + 
+                        "</div>" + 
+                        "<div class='single-dialog-body'>" + 
+                            "<div class='single-dialog-title'>" + 
+                                "<span class='dialog-title'>" + data.from + "</span>" +
+                            "</div>" + 
+                            "<div class='single-dialog-last-message'>" + 
+                                "<span class='last-message'>" + data.message + "</span>" + 
+                            "</div>" + 
+                            "<div class='single-dialog-time'>" + 
+                                "<span class='new-message-indicator'>NEW</span>" +
+                            "</div>" + 
+                        "</div>" + 
+                    "</div>";
+            $('.dialogs-list').prepend(dialog);
+  		} else {
+  			var selector = "#" + data.dialog + " .single-dialog-last-message .last-message";
+	  		$(selector).html(data.message);
+	  		selector = "#" + data.dialog + " .single-dialog-time";
+
+  			if (curDialog == data.dialog)
+  			{
+  				$(selector).html("<span class='last-message-time'>" + moment(data.date).format('HH:mm') + "</span>");
+  				dialog = "<div class='single-dialog animated active-dialog' id='" + data.dialog + "'>" +
+  						$('#' + data.dialog).html() + 
+  					"</div>";
+  			}
+  			else
+  			{
+  				$(selector).html("<span class='new-message-indicator'>NEW</span>");
+  				dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" +
+  						$('#' + data.dialog).html() + 
+  					"</div>";
+  			}
+  			$('#' + data.dialog).remove();
+  			$('.dialogs-list').prepend(dialog);
+  		}
 		if (data.from == getCookie('login') && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
@@ -97,7 +140,6 @@ $(document).ready(function(){
 				success: function(response)
 				{
 					socket.emit('newMess', response);
-					console.log("From sendMessage function");
 				}
 			});
 		}

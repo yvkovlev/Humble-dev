@@ -10,6 +10,7 @@ $(document).ready(function(){
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
+		var curDialog = $(this).attr('id');
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -17,7 +18,9 @@ $(document).ready(function(){
 			success: function(response) {
 				var dialog = "";
 				var scrolledOnce = false;
+				var lastdate;
 				response.forEach(function(mess, response){
+					lastdate = "<span class='last-message-time'>" + moment(mess.date).format('HH:mm') + "</span>";
 					if (mess.from == getCookie('login'))
 					{
 						dialog += "<div class='message-outher'>" +
@@ -54,6 +57,8 @@ $(document).ready(function(){
 				                    "</div>";
 		            }
 				});
+				var selector = "#" + curDialog + " .single-dialog-time";
+				$(selector).html(lastdate);
 		        $(".dialog-area").append(dialog);
 		        if (!scrolledOnce) {
         			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
