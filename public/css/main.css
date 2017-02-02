@@ -55,7 +55,7 @@
   float: left;
   width: 30%;
   background: #363E47;
-  padding: 25px 0px 0px 0px;
+  padding: 0;
 }
 
 .right-column {
@@ -74,32 +74,43 @@
   overflow-y: hidden;
 }
 
-.menu-and-search {
+.menu-and-profile {
   display: flex;
-  margin: 0 25px;
+  position: relative;
+  padding: 10px 0 10px;
 }
 
 .menu-bars {
   color: #fff;
+  width: 30px;
   font-size: 20px;
   cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  text-align: center;
 }
 
 .menu-bars i {
   vertical-align:middle;
   width: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.menu-bars i:hover {
+  color: #d4d4d4;
 }
 
 .search {
-  margin: 0 0 0 30px;
+  margin: 0 25px;
 }
 
 .search input {
   outline: none;
-  border-radius: 16px;
-  width: 260px;
+  border-radius: 3px;
+  width: calc(100% - 30px);
   border: 0;
-  background: url(../icons/search.png) rgba(255,255,255,0.13);
+  background: url(../icons/search.png) rgba(255, 255, 255, 0.05);
   background-repeat: no-repeat;
   background-position: 10px 5px;
   color: #fbfbfb;
@@ -109,8 +120,8 @@
 
 .dialogs-list {
   display: block;
-  margin: 35px 0 10px;
-  height: 549px;
+  margin: 10px 0;
+  height: 504px;
   overflow-y: scroll;
   width: 390px;
 }
@@ -147,6 +158,7 @@
 .single-dialog-photo {
   margin-right: 15px;
   height: 50px;
+  position: relative;
 }
 
 .single-dialog-photo-border {
@@ -269,12 +281,12 @@
 .online-status-dialogs {
   background: #15b4f1;
   border: 2px solid #363E47;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  position: relative;
-  top: -12px;
-  left: 35px;
+  position: absolute;
+  top: 37px;
+  right: 0;
 }
 
 .new-message-indicator {
@@ -288,9 +300,10 @@
 
 .conversations-selection-outher {
   position: relative;
-  display: none;
+  display: flex;
   bottom: 0px;
   text-align: center;
+  margin: 20px auto;
 }
 
 .conversations-selection-inner {
@@ -320,27 +333,24 @@
 
 .user-info-outher {
   position: relative;
-  bottom: 0px;
-  padding: 10px 25px 9px;
+  padding: 10px 25px;
   text-align: center;
   display: flex;
   flex-direction: row;
-  border-top: 1px solid #3f4750;
-  cursor: pointer;
+  width: 100%;
+  line-height: 50px;
   transition: all 0.2s ease-in-out;
-}
-
-.user-info-outher:hover {
-  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .user-info-photo {
   display: block;
+  cursor: pointer;
 }
 
 .user-info-photo-border {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -353,16 +363,17 @@
   display: block;
   text-align: left;
   margin: 0 15px;
-  line-height: 20px;
+  line-height: normal;
 }
 
 .user-info-name {
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   white-space: nowrap;
   text-overflow: ellipsis;
   letter-spacing: 0.04em;
+  line-height: 25px;
 }
 
 .user-info-login {
@@ -872,8 +883,8 @@
 
 .menu-list {
   display: block;
-  margin: 35px 0 10px;
-  height: 549px;
+  margin: 10px 0;
+  height: 504px;
   overflow-y: scroll;
   position: absolute;
   left: 0;
