@@ -55,7 +55,7 @@
   float: left;
   width: 30%;
   background: #363E47;
-  padding: 25px 0px 25px 0px;
+  padding: 25px 0px 0px 0px;
 }
 
 .right-column {
@@ -110,7 +110,7 @@
 .dialogs-list {
   display: block;
   margin: 35px 0 10px;
-  height: 560px;
+  height: 549px;
   overflow-y: scroll;
   width: 390px;
 }
@@ -178,6 +178,8 @@
   color: #fff;
   font-size: 16px;
   font-weight: 300;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   letter-spacing: 0.04em;
 }
 
@@ -286,6 +288,7 @@
 
 .conversations-selection-outher {
   position: relative;
+  display: none;
   bottom: 0px;
   text-align: center;
 }
@@ -313,6 +316,63 @@
 
 .group-users-selection i:hover {
   cursor:pointer;
+}
+
+.user-info-outher {
+  position: relative;
+  bottom: 0px;
+  padding: 10px 25px 9px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #3f4750;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.user-info-outher:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.user-info-photo {
+  display: block;
+}
+
+.user-info-photo-border {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-info-photo-border img {
+  width: 100%;
+}
+
+.user-info-body {
+  display: block;
+  text-align: left;
+  margin: 0 15px;
+  line-height: 20px;
+}
+
+.user-info-name {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  letter-spacing: 0.04em;
+}
+
+.user-info-login {
+  color: #858c94;
+  font-size: 12px;
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .active-selection {
@@ -813,7 +873,7 @@
 .menu-list {
   display: block;
   margin: 35px 0 10px;
-  height: 560px;
+  height: 549px;
   overflow-y: scroll;
   position: absolute;
   left: 0;

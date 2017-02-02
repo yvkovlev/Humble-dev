@@ -152,6 +152,7 @@ app.get('/api/getDialog', function (req, res){
 						from: String,
 						message: String,
 						fromId: String,
+						anonym: Boolean,
 						date: Date
 					});
 					i++;
@@ -166,6 +167,9 @@ app.get('/api/getDialog', function (req, res){
 						curMess.fromId = item.messages.fromId;
 						curMess.date = item.messages.date;
 					}
+					if (item.messages.anonym) curMess.anonym = true;
+					else curMess.anonym = false;
+					console.log(item);
 					response.push(curMess);
 					if (i == size) resolve("result");
 				});

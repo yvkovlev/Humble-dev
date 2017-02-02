@@ -55,6 +55,8 @@ $(document).ready(function(){
 		            }
 				});
 		        $(".dialog-area").append(dialog);
+		        console.log(response[0]);
+		        if (response[0].anonym) $(".dialog-class span").html("Анонимный диалог");
 		        if (!scrolledOnce) {
         			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
 						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;
