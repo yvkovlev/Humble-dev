@@ -61,8 +61,8 @@ $(document).ready(function(){
 				var selector = "#" + curDialog + " .single-dialog-time";
 				$(selector).html(lastdate);
 		        $(".dialog-area").append(dialog);
-		        console.log(response[0]);
 		        if (response[0].anonym) $(".dialog-class span").html("Анонимный диалог");
+		        else $(".dialog-class span").html("Открытый диалог");
 		        if (!scrolledOnce) {
         			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
 						scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;

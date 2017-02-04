@@ -190,9 +190,8 @@ app.get('/api/getUser', function (req, res) {
 app.get('/api/searchCompanion', function(req, res){
 	if (req.query.searchText == req.user.login) res.send('Fail');
 	else {
-		User.findOne({login: req.query.searchText}, function(err, data){
-			if (data == undefined) res.send('Fail');
-			else res.send(data);
+		User.find({fullName: {"$regex": req.query.searchText}}, function(err, data){
+			res.send(data);
 		});
 	}
 });
