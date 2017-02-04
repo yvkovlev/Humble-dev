@@ -36,6 +36,7 @@ $(document).ready(function(){
 				                            "</div>" + 
 				                            "<div class='message-out-time'>" + 
 				                                "<span>" + moment(mess.date).format('HH:mm') + "</span>" + 
+				                                "<div class='readed'></div>" +
 				                            "</div>" + 
 				                        "</div>" + 
 				                    "</div>"; 

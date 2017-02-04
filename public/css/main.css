@@ -499,6 +499,7 @@
   border-radius: 8px;
   padding: 5px 10px;
   max-width: 400px;
+  position: relative;
 }
 
 .message-out-text-box span {
@@ -509,6 +510,18 @@
   letter-spacing: 0.01em;
   word-wrap: break-word;
 }
+
+.readed {
+  width: 17px;
+  height: 10px;
+  position: absolute;
+  bottom: 8px;
+  left: -55px;
+  background: url(../images/eye.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .message-out-time {
   margin: 0;
   position: relative;
