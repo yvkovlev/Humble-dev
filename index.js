@@ -213,7 +213,7 @@ app.put('/api/createDialog', function (req, res){
 				userDialogList.aggregate([
 				{$match: {user: to}},
 				{$unwind: '$dialogs'},
-				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym}/*, {'dialogs.initiator': from.toString()}*/ ] } },
+				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym}, {'dialogs.initiator': from.toString()} ] } },
 				], 
 				function(err, data1){
 					var id = "";
