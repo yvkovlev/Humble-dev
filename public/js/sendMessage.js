@@ -6,17 +6,26 @@ $(document).ready(function(){
 	socket.on('newMess', function(data){
   		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
   		var dialog = "";
+  		console.log(data);
   		if ($('#' + data.dialog).html() == undefined) {
+  			var fromId, from;
+  			if (data.anonym) {
+  				from = 'Anonym';
+  				fromId = 'anonym';
+  			} else {
+  				from = data.from;
+  				fromId = data.fromId;
+  			}
   			dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" + 
                         "<div class='single-dialog-photo'>" + 
                             "<div class='single-dialog-photo-border'>" + 
-                                "<img src='uploads/" + data.fromId + ".jpg" + "'>" + 
+                                "<img src='uploads/" + fromId + ".jpg" + "'>" + 
                             "</div>" + 
                             "<div class='online-status-dialogs'></div>" + 
                         "</div>" + 
                         "<div class='single-dialog-body'>" + 
                             "<div class='single-dialog-title'>" + 
-                                "<span class='dialog-title'>" + data.from + "</span>" +
+                                "<span class='dialog-title'>" + from + "</span>" +
                             "</div>" + 
                             "<div class='single-dialog-last-message'>" + 
                                 "<span class='last-message'>" + data.message + "</span>" + 

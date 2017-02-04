@@ -169,7 +169,6 @@ app.get('/api/getDialog', function (req, res){
 					}
 					if (item.messages.anonym) curMess.anonym = true;
 					else curMess.anonym = false;
-					console.log(item);
 					response.push(curMess);
 					if (i == size) resolve("result");
 				});
@@ -213,11 +212,10 @@ app.put('/api/createDialog', function (req, res){
 				userDialogList.aggregate([
 				{$match: {user: to}},
 				{$unwind: '$dialogs'},
-				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym}/*, {'dialogs.initiator': from.toString()}*/ ] } },
+				{$match: {$and: [ {'dialogs.companion': from.toString()}, {'dialogs.anonym': anonym}, {'dialogs.initiator': from.toString()} ] } },
 				], 
 				function(err, data1){
 					var id = "";
-					console.log(data1);
 					if (!data1.length) id = new mongoose.Types.ObjectId;
 					else id = data1[0].dialogs.dialogId;
 					if (anonym) {
