@@ -125,6 +125,7 @@ $(document).ready(function(){
 						$(".extra-right").css("display", "block");
                         $("#cap-empty").css("display", "block");
 						$(".settings-popup").fadeOut(300);
+                        $('.dialog-send-button').removeAttr('id');
 						settingsClose = true;
 					}
 				});
