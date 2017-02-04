@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	var socket = io();
 	var scrollTop = 0;
+	var chord = document.getElementById('chord');
+	var login = getCookie('login');
 	socket.on('newMess', function(data){
   		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
   		var dialog = "";
@@ -36,6 +38,7 @@ $(document).ready(function(){
   				dialog = "<div class='single-dialog animated active-dialog' id='" + data.dialog + "'>" +
   						$('#' + data.dialog).html() + 
   					"</div>";
+  				if (data.from != login) chord.play();
   			}
   			else
   			{
@@ -43,11 +46,12 @@ $(document).ready(function(){
   				dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" +
   						$('#' + data.dialog).html() + 
   					"</div>";
+  	  			if (data.from != login) chord.play();
   			}
   			$('#' + data.dialog).remove();
   			$('.dialogs-list').prepend(dialog);
   		}
-		if (data.from == getCookie('login') && curDialog == data.dialog)
+		if (data.from == login && curDialog == data.dialog)
 		{
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-out'>" + 
@@ -94,7 +98,7 @@ $(document).ready(function(){
         }
 		$(".dialog-area").scrollTop(scrollTop);
 	});
-	socket.emit('setRooms', {login: getCookie('login')});
+	socket.emit('setRooms', {login: login});
 	$('.dialog-send-button').on('click', function(){
 		sendMessage();
 	});
