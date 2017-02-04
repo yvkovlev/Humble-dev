@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	var closeMenu = true;
+	var closeNewDialog = true;
 	$("#logOut").on('click', function(){
 		$.ajax({
 			url: 'api/logOut',
@@ -84,6 +85,26 @@ $(document).ready(function(){
     $(".menu-bars").on("click", function(){
     	menuOpenClose();
     });
+
+    $("#newDialog").css("display", "none");
+    $("#newDialogAction").on("click", function(){
+    	if (closeNewDialog) {
+            $("#newDialog").css("display", "block");
+            $("#newDialog").removeClass("fadeOut");
+    		$("#newDialog").addClass("fadeIn");
+    		$("#searchCompanion").focus();
+    		closeNewDialog = false;
+    	}
+    	else {
+            $("#newDialog").removeClass("fadeIn");
+            $("#newDialog").addClass("fadeOut");
+            setTimeout(function(){
+                $("#newDialog").css("display", "none");
+            }, 600);
+    		closeNewDialog = true;
+    	}
+    });
+
     function menuOpenClose() {
     	if (closeMenu) {
 	        $(".menu-list").css("display", "block");
@@ -98,6 +119,12 @@ $(document).ready(function(){
 	        $(".menu-list").removeClass("fadeInLeft");
 	        $(".menu-list").addClass("fadeOutLeft");
 	        $(".dialogs-list").addClass("fadeInRight");
+	        $("#newDialog").removeClass("fadeIn");
+            $("#newDialog").addClass("fadeOut");
+            $("#newDialog").css("display", "none");
+            $("#searchCompanion").val("");
+            $(".companions-results").html("");
+    		closeNewDialog = true;
 	        closeMenu = true;
 	    }
     }
