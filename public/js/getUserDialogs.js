@@ -15,7 +15,7 @@ function getUserDialogs() {
 				dialogList +=   "<div class='single-dialog animated' id='" + curDialog.id + "'>" + 
 			                        "<div class='single-dialog-photo'>" + 
 			                            "<div class='single-dialog-photo-border'>" + 
-			                                "<img src='uploads/" + curDialog.userId + ".jpg" + "'>" + 
+			                                "<img src='uploads/" + curDialog.userId + ".jpg" + "' title='" + curDialog.name + "'>" + 
 			                            "</div>" + 
 			                            "<div class='online-status-dialogs'></div>" + 
 			                        "</div>" + 
@@ -33,6 +33,10 @@ function getUserDialogs() {
 			                    "</div>";
 			});		
 			$('.dialogs-list').prepend(dialogList);
+			$('.last-message').linkify({
+            		target: "_blank"
+        	});
+        	$(".dialogs-list span").Emoji(); 
 		}
 	});
 }

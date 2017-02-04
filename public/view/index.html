@@ -20,7 +20,8 @@
         <link rel="stylesheet" href="css/preloader.css">
 
         <script src="/socket.io/socket.io.js"></script>
-        <script src="js/jquery-1.10.2.min.js"></script> 
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/emoji.min.js"></script> 
         <script src="js/getUserDialogs.js"></script>
         <script src="js/getDialog.js"></script>
         <script src="js/change-selection.js"></script> 
@@ -31,10 +32,15 @@
         <script src="js/moment.min.js"></script>
         <script src="js/userSettings.js"></script>
         <script src="js/dialogSettings.js"></script>
+        <script src="js/linkify.js"></script>
+        <script src="js/linkify-jquery.js"></script>
         <script>
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
             });
+        </script>
+        <script type="text/javascript">
+            //$('.dialog-area').Emoji();
         </script>
     </head>
     <body>
@@ -349,6 +355,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="emoji-popup">
+                    <div class="emoji-table">
+                </div>
                 <!-- POPUP WINDOWS END -->
                 <div class="dialog-area">
                     <!-- MESSAGES START -->
@@ -413,12 +422,6 @@
                         </div>
                     </div>-->
                     <!-- MESSAGES END -->
-                    <div class="empty-dialog">
-                        <div class="empty-dialog-photo">
-                            <img src="images/13.jpeg">
-                        </div>
-                        <div class="empty-dialog-info">У Вас пока нет сообщений</div>
-                    </div>
                 </div>
                 <footer class="dialog-footer">
                     <div class="dialog-message-input-outher">
@@ -438,6 +441,6 @@
         <audio id="chord" src="audio/chord.mp3"></audio>
         <script src="js/lightbox.js"></script>
         <script src="js/custom-file-input.js"></script>
-        <script src="js/load-photo-rendering.js"></script> 
+        <script src="js/load-photo-rendering.js"></script>
     </body>
 </html>
