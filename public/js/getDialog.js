@@ -2,6 +2,9 @@ $(document).ready(function(){
   	var scrollTop;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
 		var dialogName = $(this).find(".dialog-title").html();
+		var curDialog = $(this).attr('id');
+		var selector = "#" + curDialog + " .single-dialog-time";
+		var companionPhotoSrc = $(this).find("img").attr("src");
 		$(".dialog-name").html(dialogName);
 		$(".single-dialog").removeClass("active-dialog");
 		$(".online-status-dialogs").removeClass("active-status");
@@ -11,7 +14,6 @@ $(document).ready(function(){
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
 		$("#cap-rocket").css("display", "none");
-		var curDialog = $(this).attr('id');
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',
@@ -59,9 +61,20 @@ $(document).ready(function(){
 				                    "</div>";
 		            }
 				});
-				var selector = "#" + curDialog + " .single-dialog-time";
+				if (!response[0]) {
+					dialog = "<div class='empty-dialog'>" +
+                        		"<div class='empty-dialog-photo'>" +
+                            		"<img src='" + companionPhotoSrc + "'>" +
+                        		"</div>" +
+                        		"<div class='empty-dialog-info'>У Вас пока нет сообщений</div>" +
+                    		"</div>";
+				}
 				$(selector).html(lastdate);
 		        $(".dialog-area").append(dialog);
+		        $(".dialog-area span").Emoji();
+		        $('.dialog-area').linkify({
+            		target: "_blank"
+        		}); 
 		        if (response[0].anonym) $(".dialog-class span").html("Анонимный диалог");
 		        else $(".dialog-class span").html("Открытый диалог");
 		        if (!scrolledOnce) {

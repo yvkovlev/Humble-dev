@@ -36,6 +36,12 @@
   color: #fff;
 }
 
+.emoji {
+    width: 20px;
+    height: 20px;
+    padding: 0 0 0 0;
+    vertical-align: -0.35em;
+}
 
 .main-container {
   margin: 50px auto 10px;
@@ -43,10 +49,7 @@
   text-align: left;
   width: 1300px;
   position: relative;
-  border-bottom-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-top-left-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
   z-index: 200;
 }
@@ -178,6 +181,11 @@
   border-bottom: 1px solid #3f4750;
 }
 
+.single-dialog .emoji {
+  width: 16px;
+  height: 16px;
+}
+
 .single-dialog-title {
   display: block;
   max-width: 200px;
@@ -208,6 +216,10 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.last-message a {
+  color: #d1d2d4;
 }
 
 .single-dialog-time {
@@ -500,6 +512,7 @@
   padding: 5px 10px;
   max-width: 400px;
   position: relative;
+  /* line-height: 30px; */
 }
 
 .message-out-text-box span {
@@ -1097,7 +1110,7 @@
 }
 
 .empty-dialog {
-  margin: 90px auto;
+  margin: 110px auto;
   text-align: center;
 }
 

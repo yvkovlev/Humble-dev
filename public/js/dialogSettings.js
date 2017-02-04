@@ -85,6 +85,7 @@ $(document).ready(function(){
 			success: function(response) {
 				$(".dialog-area").empty();
 				$('.single-dialog.active-dialog > .single-dialog-body > .single-dialog-last-message > .last-message').html('В беседе нет сообщений');
+                emptyDialog();
 			}
 		});
 	});
@@ -132,3 +133,16 @@ $(document).ready(function(){
 		});
 	});
 });
+
+function emptyDialog() {
+    var companionPhotoSrc = $(".active-dialog").find("img").attr("src");
+    if ($(".dialog-area").html() == '') {
+        var emptyMessage = "<div class='empty-dialog'>" +
+                    "<div class='empty-dialog-photo'>" +
+                        "<img src='" + companionPhotoSrc + "'>" +
+                    "</div>" +
+                    "<div class='empty-dialog-info'>У Вас пока нет сообщений</div>" +
+                "</div>";
+        $(".dialog-area").append(emptyMessage);        
+    }
+}

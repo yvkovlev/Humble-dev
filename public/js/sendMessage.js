@@ -19,7 +19,7 @@ $(document).ready(function(){
   			dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" + 
                         "<div class='single-dialog-photo'>" + 
                             "<div class='single-dialog-photo-border'>" + 
-                                "<img src='uploads/" + fromId + ".jpg" + "'>" + 
+                                "<img src='uploads/" + fromId + ".jpg" + "' title='" + curDialog.name + "'>" + 
                             "</div>" + 
                             "<div class='online-status-dialogs'></div>" + 
                         "</div>" + 
@@ -36,11 +36,14 @@ $(document).ready(function(){
                         "</div>" + 
                     "</div>";
             $('.dialogs-list').prepend(dialog);
+            $('.last-message').linkify({
+            		target: "_blank"
+        	});
+        	$(".dialogs-list span").Emoji();  
   		} else {
   			var selector = "#" + data.dialog + " .single-dialog-last-message .last-message";
 	  		$(selector).html(data.message);
 	  		selector = "#" + data.dialog + " .single-dialog-time";
-
   			if (curDialog == data.dialog)
   			{
   				$(selector).html("<span class='last-message-time'>" + moment(data.date).format('HH:mm') + "</span>");
@@ -59,9 +62,14 @@ $(document).ready(function(){
   			}
   			$('#' + data.dialog).remove();
   			$('.dialogs-list').prepend(dialog);
+  			$('.last-message').linkify({
+            	target: "_blank"
+        	});
+        	$(".dialogs-list span").Emoji(); 
   		}
 		if (data.from == login && curDialog == data.dialog)
 		{
+			$(".empty-dialog").remove();
 			newMessage += "<div class='message-outher'>" +
 	                        "<div class='message-out'>" + 
 	                            "<div class='message-out-photo'>" + 
@@ -80,6 +88,7 @@ $(document).ready(function(){
 		}
 		else if (curDialog == data.dialog){
 			var fromId = "";
+			$(".empty-dialog").remove();
 			if (!data.anonym) fromId = data.fromId;
 			else fromId = 'anonym';
 			newMessage += "<div class='message-outher'>" +
@@ -96,9 +105,13 @@ $(document).ready(function(){
 	                                "<span>" + moment(data.date).format('HH:mm') + "</span>" + 
 	                            "</div>" + 
 	                        "</div>" + 
-	                    "</div>";
+	                    "</div>";           
         }
         $(".dialog-area").append(newMessage);
+        $('.dialog-area').linkify({
+            target: "_blank"
+        });
+        $(".dialog-area span").Emoji(); 
         if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {
         	scrollTop = $(".message-outher:last-child").position().top + $(".dialog-area").scrollTop() - 10;
         }
