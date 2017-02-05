@@ -1,9 +1,9 @@
 $(document).ready(function(){
+	$("#cap-rocket").css("display", "block");
 	getUserDialogs();
 });
 
 function getUserDialogs() {
-	$("#cap-rocket").css("display", "block");
 	$('.dialogs-list').html("");
 	$.ajax({
 		type: 'get',
