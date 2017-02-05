@@ -10,42 +10,62 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$('.companions-results').on('click', '.open-dialog', function(){
-		var fullName = $(this).parent().parent().children('.result-name').children('span').html();
+	$('.open-dialog').on('click', function(){
+		var id = $(this).attr("id");
+		var fullName;
+		if ($("#" + id).hasClass("result")) fullName = $("#" + id).find(".result-name").html();
+		console.log(fullName);
 		$.ajax({
 			method: 'put',
 			url: 'api/createDialog',
-			data: {companion: $(this).attr('id'), fullName: fullName, anonym: false},
+			data: {companion: id, fullName: fullName, anonym: false},
 			success: function(response){
-				$(".response-feedback").html(response);
 				if (response == "Диалог успешно создан") {
-					setTimeout(function(){
-						//window.location.href = "/";
-						menuOpenClose();
-						getUserDialogs();
-					}, 1000);
+					$(".search-companion").removeClass("translateLeftIn");
+    				$(".search-companion").addClass("translateLeftOut");
+    				$(".cap").css("display", "none");
+					$("#cap-empty").css("display", "block");
+					$(".cap-response").html('');
+					menuOpenClose();
+					getUserDialogs();
 				}
+				else $(".cap-response").html('Такой диалог уже был создан.');
 			}
 		});
 	});
-	$('.companions-results').on('click', '.anonim-dialog', function(){
-		var fullName = $(this).parent().parent().children('.result-name').children('span').html();
+	$('.anonim-dialog').on('click', function(){
+		var id = $(this).attr("id");
+		var fullName;
+		if ($("#" + id).hasClass("result")) fullName = $("#" + id).find(".result-name").html();
+		console.log(fullName);
 		$.ajax({
 			method: 'put',
 			url: 'api/createDialog',
-			data: {companion: $(this).attr('id'), fullName: fullName, anonym: true},
+			data: {companion: id, fullName: fullName, anonym: true},
 			success: function(response){
-				$(".response-feedback").html(response);
 				if (response == "Диалог успешно создан") {
-					setTimeout(function(){
-						//window.location.href = "/";
-						menuOpenClose();
-						getUserDialogs();
-					}, 1000);
+					$(".search-companion").removeClass("translateLeftIn");
+    				$(".search-companion").addClass("translateLeftOut");
+    				$(".cap").css("display", "none");
+					$("#cap-empty").css("display", "block");
+					$(".cap-response").html('');
+					menuOpenClose();
+					getUserDialogs();
 				}
+				else $(".cap-response").html('Такой диалог уже был создан.');
 			}
 		});
 	});
+	$('.companions-results').on('click', '.result', function(){
+		var id = $(this).attr("id");
+		$(".cap").css("display", "none");
+		$(".extra-right").css("display", "block");
+		$("#create-dialog").css("display", "block");
+		$(".cap-user").css("background", "url(../uploads/" + id + ".jpg)");
+		$(".cap-response").html('');
+		$(".open-dialog").attr("id", id);
+		$(".anonim-dialog").attr("id", id);
+	})
 	$("#searchCompanion").keyup(function(){
 		if ($("#searchCompanion").val().length) {
 			$.ajax({
@@ -53,63 +73,35 @@ $(document).ready(function(){
 				method: 'get',
 				data: {searchText: $("#searchCompanion").val()},
 				success: function(response){
-					if (!response.length || (response.length == 1 && response[0].login == getCookie('login'))) $(".companions-results").html("Совпадений не найдено");
+					if (!response.length || (response.length == 1 && response[0].login == getCookie('login'))) $(".companions-results").html("<div class='no-result'>Совпадений не найдено</div>");
 					else {
 						var result = "";
 						response.forEach(function(item, response){
 							if (item.login != getCookie('login')) {
 								result += 
-										"<div class='result'>" + 
+										"<div class='result' id='" + item._id + "''>" + 
 						                    "<div class='result-photo-outher'>" + 
 						                        "<div class='result-photo'>" + 
 						                            "<img src='uploads/" + item._id + ".jpg" + "'>" + 
 						                        "</div>" + 
 						                    "</div>" + 
-						                    "<div class='result-name'>" + 
-						                        "<span>" + item.fullName + "</span>" + 
+						                    "<div class='result-body'>" + 
+						                        "<div class='result-name'>" + item.fullName + "</div>" + 
+						                        "<div class='result-login'>@" + item.login + "</div>" +
 						                    "</div>" + 
-						                    "<div class='result-actions'>" + 
-						                        "<div class='anonim-dialog' id='" + item._id + "'>" +
-						                        	"<div class='result-actions-fg'></div>" +
-						                        	"<object type='image/svg+xml' data='svg/detective.svg' height='20' style='cursor: pointer;''></object>" + 
-						                        "</div>" + 
-						                        "<div class='open-dialog' id='" + item._id + "'>" +
-						                        	"<div class='result-actions-fg'></div>" +
-						                        	"<object type='image/svg+xml' data='svg/pencil-2.svg' height='20'></object>" +
-						                        "</div>" + 
-						                    "</div>" + 
-						                "</div>" +
-						                "<div class='response-feedback'></div>";
+						                "</div>";						
 							}
 						});
 		                $(".companions-results").html(result);
 		            }
 				}
 			});
+			$(".search-tip").css("display", "none");
 		}
 	});
 	$(".menu-list").css("display", "none");
     $(".menu-bars").on("click", function(){
     	menuOpenClose();
-    });
-
-    $("#newDialog").css("display", "none");
-    $("#newDialogAction").on("click", function(){
-    	if (closeNewDialog) {
-            $("#newDialog").css("display", "block");
-            $("#newDialog").removeClass("fadeOut");
-    		$("#newDialog").addClass("fadeIn");
-    		$("#searchCompanion").focus();
-    		closeNewDialog = false;
-    	}
-    	else {
-            $("#newDialog").removeClass("fadeIn");
-            $("#newDialog").addClass("fadeOut");
-            setTimeout(function(){
-                $("#newDialog").css("display", "none");
-            }, 600);
-    		closeNewDialog = true;
-    	}
     });
 
     function menuOpenClose() {

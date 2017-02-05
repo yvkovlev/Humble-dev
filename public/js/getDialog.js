@@ -13,7 +13,7 @@ $(document).ready(function(){
 		$('.dialog-send-button').attr('id', $(this).attr('id'));
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
-		$("#cap-rocket").css("display", "none");
+		$(".cap").css("display", "none");
 		$.ajax({
 			type: 'get',
 			url: 'api/getDialog',

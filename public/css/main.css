@@ -999,7 +999,7 @@
 }
 
 .companions-results {
-  margin: 10px;
+  margin: 20px 0px !important;
   display: flex;
   flex-direction: column;
 }
@@ -1007,20 +1007,35 @@
 .result {
   display: flex;
   flex-direction: row;
-  line-height: 30px;
   position: relative;
-  padding: 5px 0;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #474d54;
+  padding: 10px 25px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.result:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.result:hover .result-body  {
+  border-bottom: 1px solid #494f56;
 }
 
 .result-photo-outher {
   display: block;
+  margin-right: 15px;
+}
+
+.result-body {
+  display: block;
+  height: 50px;
+  border-bottom: 1px solid #3f4750;
+  transition: all 0.2s ease-in-out;
 }
 
 .result-photo {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -1045,15 +1060,29 @@
 
 .result-name {
   display: block;
-  margin: 0 10px;
-  max-width: 150px;
-  text-overflow: ellipsis;
+  width: 270px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 300;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  letter-spacing: 0.04em;
+}
+
+.result-login {
+  display: block;
+  width: 270px;
+  color: #858c94;
+  font-size: 12px;
+  font-weight: normal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .result-name span {
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: lighter;
 }
 
@@ -1070,43 +1099,6 @@
   z-index: 4;
   width: 30px;
   height: 30px;
-}
-
-.anonim-dialog {
-  margin: 0px 5px;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  position: relative;
-}
-
-.anonim-dialog object {
-  background: #525a63;
-  padding: 4px 0;
-  border-radius: 3px;
-  width: 30px;
-  z-index: 3;
-}
-
-.anonim-dialog:hover {
-  opacity: 0.7;
-}
-
-.open-dialog {
-  margin: 0px 5px;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  position: relative;
-}
-
-.open-dialog object {
-  background: #525a63;
-  padding: 4px 0;
-  border-radius: 3px;
-  width: 30px;
-}
-
-.open-dialog:hover {
-  opacity: 0.7;
 }
 
 .empty-dialog {
@@ -1148,13 +1140,6 @@
 
 .extra-block {
   display: block;
-  width: 70%;
-  height: 100%;
-  background: #F7F9FA;
-  padding: 0px 0px 25px 0px;
-  pointer-events: auto;
-  /* display: none; */
-  float: right;
 }
 
 .extra-left {
@@ -1167,10 +1152,21 @@
   float: left;
 }
 
-.user-settings {
+.extra-right {
   display: block;
-  position: relative;
+  width: 70%;
+  height: 100%;
+  background: #F7F9FA;
+  padding: 0px 0px 25px 0px;
+  pointer-events: auto;
+  float: right;
 }
+
+.user-settings, .search-companion {
+  display: none;
+  position: absolute;
+}
+
 
 .extra-block-header {
   display: flex;
@@ -1214,6 +1210,26 @@
   margin: 40px 25px;
 }
 
+.search-tip {
+  margin: 10px 25px;
+  text-align: center;
+  background: url(../images/search-user.png);
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  padding-top: 110px;
+  color: #C3C3C3;
+}
+
+.no-result {
+  width: 100%;
+  margin: 25px 0;
+  color: #c3c3c3;
+  text-align: center;
+  background: url(../images/no-result.png) no-repeat;
+  padding-top: 110px;
+  background-position-x: 50%;
+}
+
 .photo-settings {
   margin: 30px auto;
 }
@@ -1231,6 +1247,24 @@
 .photo-settings-border img {
   width: 100%;
   position: absolute;
+}
+
+.search-section {
+  margin: 10px 25px;
+}
+
+
+.search-section input {
+  outline: none;
+  border-radius: 3px;
+  width: calc(100% - 35px);
+  border: 0;
+  background: url(../icons/search.png) rgba(255, 255, 255, 0.05);
+  background-repeat: no-repeat;
+  background-position: 10px 5px;
+  color: #fbfbfb;
+  padding: 5px 0 5px 35px;
+  font-weight: lighter;
 }
 
 .load-fg {
@@ -1409,6 +1443,7 @@
   margin: 100px auto 30px;
   width: 300px;
   height: 320px;
+  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -1420,6 +1455,15 @@
   background: url(../images/empty.png);
 }
 
+.cap-user {
+  background: url(../images/empty-user.png);
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
 .cap-title {
   color: #595959;
   font-size: 20px;
@@ -1429,6 +1473,31 @@
 .cap-text {
   color: #989898;
   font-size: 14px;
+}
+
+.cap-buttons {
+  display: flex;
+  margin: 20px auto;
+  width: 420px;
+}
+
+.cap-button {
+  width: 200px;
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 5px;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #DBDBDB;
+  transition: all 0.2s ease-in-out;
+}
+
+.cap-button:hover {
+  background: #fdfdfd;
+}
+
+.cap-response {
+  color: #de1313;
 }
 
 .object-fg {

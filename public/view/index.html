@@ -39,9 +39,6 @@
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
             });
         </script>
-        <script type="text/javascript">
-            //$('.dialog-area').Emoji();
-        </script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -66,8 +63,8 @@
                 </div>
             </div>
             <div class="extra-blocks">
-                <div class="extra-block extra-left animated">
-                    <div class="user-settings">
+                <div class="extra-block">
+                    <div class="user-settings extra-left animated">
                         <header class="extra-block-header">
                             <div class="extra-close">
                                 <div class="extra-close-fg"></div>
@@ -131,6 +128,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="search-companion extra-left animated">
+                        <header class="extra-block-header">
+                            <div class="extra-close">
+                                <div class="extra-close-fg"></div>
+                                    <object type="image/svg+xml" data="svg/previous.svg" height="25"></object>
+                            </div>
+                            <div class="extra-block-title">Поиск собеседника</div>
+                        </header>
+                        <div class="extra-block-body">
+                            <div class="extra-block-section search-section">
+                                <input type="text" name="searchCompanion" id="searchCompanion">
+                            </div>
+                            <div class="extra-block-section companions-results"></div>
+                            <div class="extra-block-section search-tip">Находите друзей, знакомых и начинайте общаться!</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="extra-block extra-right animated">
                     <div class="cap" id="cap-rocket">
@@ -142,6 +155,16 @@
                         <div class="cap-image cap-empty"></div>
                         <div class="cap-title">Не выбрано ни одного диалога.</div>
                         <div class="cap-text">Для того, что бы продолжить общаться, нажмите на диалог слева <br> или создайте его через поиск.</div>
+                    </div>
+                    <div class="cap" id="create-dialog">
+                        <div class="cap-image cap-user"></div>
+                        <div class="cap-title">У Вас пока нет сообщений c этим пользователем.</div>
+                        <div class="cap-text">Вы можете создать с ним открытый или анонимный диалог</div>
+                        <div class="cap-buttons">
+                            <div class="cap-button open-dialog">Открытый диалог</div>
+                            <div class="cap-button anonim-dialog">Анонимный диалог</div>
+                        </div>
+                        <div class="cap-response"></div>
                     </div>
                 </div>
             </div>
@@ -234,16 +257,6 @@
                                    <object type="image/svg+xml" data="svg/user-13.svg" height="25"></object> 
                                 </div>
                                 <div class="menu-item">Начать диалог</div>
-                            </li>
-                            <li class="animated not-hover" id="newDialog">
-                                <div class="start-dialog-container">
-                                    <div class="companion-search">
-                                        <input type="text" placeholder="Поиск собедеседника" id="searchCompanion">
-                                    </div>
-                                    <div class="companions-results">
-                                         
-                                    </div>
-                                </div>
                             </li>
                             <li>
                                 <div class="menu-icon">

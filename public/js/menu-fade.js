@@ -5,9 +5,12 @@ $(document).ready(function(){
     $("#profile-settings, .user-info-photo").on("click", function(){
         openUserSettings();
     });
-    $(".extra-close-fg").on("click", function(){
-        $(".extra-left").removeClass("translateLeftIn");
-        $(".extra-left").addClass("translateLeftOut");
+    $("#newDialogAction").on("click", function(){
+        openSearchCompanion();
+    })
+    $(".extra-close-fg").on("click", function(e){
+        $(e.target).closest(".extra-left").removeClass("translateLeftIn");
+        $(e.target).closest(".extra-left").addClass("translateLeftOut");
         $(".photo-settings-border").removeClass("zoomIn");
         $(".photo-settings-border").addClass("zoomOut");
     });
@@ -49,10 +52,15 @@ $(document).ready(function(){
     })
 
     function openUserSettings() {
-        $(".extra-left").css("display", "block");
-        $(".extra-left").removeClass("translateLeftOut");
-        $(".extra-left").addClass("translateLeftIn");
+        $(".user-settings").css("display", "block");
+        $(".user-settings").removeClass("translateLeftOut");
+        $(".user-settings").addClass("translateLeftIn");
         $(".photo-settings-border").removeClass("zoomOut");
         $(".photo-settings-border").addClass("zoomIn");
+    }
+    function openSearchCompanion() {
+        $(".search-companion").css("display", "block");
+        $(".search-companion").removeClass("translateLeftOut");
+        $(".search-companion").addClass("translateLeftIn");
     }
 });
