@@ -19,7 +19,7 @@ $(document).ready(function(){
   			dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" + 
                         "<div class='single-dialog-photo'>" + 
                             "<div class='single-dialog-photo-border'>" + 
-                                "<img src='uploads/" + fromId + ".jpg" + "' title='" + curDialog.name + "'>" + 
+                                "<img src='uploads/" + fromId + ".jpg" + "' title='" + from + "'>" + 
                             "</div>" + 
                             "<div class='online-status-dialogs'></div>" + 
                         "</div>" + 
