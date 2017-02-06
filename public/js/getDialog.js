@@ -19,10 +19,8 @@ $(document).ready(function(){
 			url: 'api/getDialog',
 			data: {'dialogId': $(this).attr('id')},
 			success: function(response) {
-				var dialog = "";
-				var scrolledOnce = false;
-				var lastdate;
-				response.forEach(function(mess, response){
+				var dialog = "", scrolledOnce = false, lastdate, arr = response.messages;
+				arr.forEach(function(mess, arr){
 					lastdate = "<span class='last-message-time'>" + moment(mess.date).format('HH:mm') + "</span>";
 					if (mess.from == getCookie('login'))
 					{
@@ -61,7 +59,7 @@ $(document).ready(function(){
 				                    "</div>";
 		            }
 				});
-				if (!response[0]) {
+				if (!arr.length) {
 					dialog = "<div class='empty-dialog'>" +
                         		"<div class='empty-dialog-photo'>" +
                             		"<img src='" + companionPhotoSrc + "'>" +
@@ -75,7 +73,7 @@ $(document).ready(function(){
 		        $('.dialog-area').linkify({
             		target: "_blank"
         		}); 
-		        if (response[0].anonym) $(".dialog-class span").html("Анонимный диалог");
+		        if (response.anonym) $(".dialog-class span").html("Анонимный диалог");
 		        else $(".dialog-class span").html("Открытый диалог");
 		        if (!scrolledOnce) {
         			if ($(".message-outher:last-child").height() >= $(".dialog-area").height()) {

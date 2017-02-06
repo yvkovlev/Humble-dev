@@ -6,7 +6,6 @@ $(document).ready(function(){
 	socket.on('newMess', function(data){
   		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
   		var dialog = "";
-  		console.log(data);
   		if ($('#' + data.dialog).html() == undefined) {
   			var fromId, from;
   			if (data.anonym) {
@@ -16,10 +15,11 @@ $(document).ready(function(){
   				from = data.from;
   				fromId = data.fromId;
   			}
-  			dialog = "<div class='single-dialog animated' id='" + data.dialog + "'>" + 
+  			dialog = 
+  					"<div class='single-dialog animated' id='" + data.dialog + "'>" + 
                         "<div class='single-dialog-photo'>" + 
                             "<div class='single-dialog-photo-border'>" + 
-                                "<img src='uploads/" + fromId + ".jpg" + "' title='" + curDialog.name + "'>" + 
+                                "<img src='uploads/" + fromId + ".jpg" + "' title='" + from + "'>" + 
                             "</div>" + 
                             "<div class='online-status-dialogs'></div>" + 
                         "</div>" + 
@@ -51,6 +51,11 @@ $(document).ready(function(){
   						$('#' + data.dialog).html() + 
   					"</div>";
   				if (data.from != login) chord.play();
+  				$.ajax({
+					type: 'get',
+					url: 'api/getDialog',
+					data: {'dialogId': data.dialog}
+				});
   			}
   			else
   			{
