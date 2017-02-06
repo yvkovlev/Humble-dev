@@ -216,6 +216,10 @@ app.get('/api/searchCompanion', function(req, res){
 	}
 });
 
+/*userDialogList.findOne({user: '58977e66ae5e008e38140123'}, function(err, data){
+	console.log(data);
+});*/
+
 app.put('/api/createDialog', function (req, res){
 	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
 	var anonym = (req.body.anonym == 'true');
@@ -319,7 +323,7 @@ app.get('/api/getUserDialogs', function (req, res){
 				});
 				promise2
 					.then(function(){
-						if (dialog.anonym && !dialog.initiator) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess, date: lastMessDate, newMessage: newMessage});
+						if (dialog.anonym && dialog.initiator != (req.user._id).toString()) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess, date: lastMessDate, newMessage: newMessage});
 						else dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess, date: lastMessDate, newMessage: newMessage});
 						if (i == arrSize) {
 							resolve("result");
@@ -334,6 +338,7 @@ app.get('/api/getUserDialogs', function (req, res){
 					else return -1; 
 				}
 				dialogs.sort(fn);
+				console.log(dialogs);
 				res.send(dialogs);
 			});
 	});
@@ -362,18 +367,19 @@ app.put('/api/sendMessage', function(req, res){
 			anonym: false,
 			message: req.body.message,
 		});
-		if (initiator) newMessage.anonym = true;
+		if (initiator == (req.user._id).toString()) newMessage.anonym = true;
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
 				if (data == undefined) { // Создаем этот диалог и кладем в userDialogsList to
-					if (initiator || !anonym) {
+					console.log(anonym);
+					if (!anonym) {
 						userDialogList.findOneAndUpdate({user: to}, 
 						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName, anonym: anonym} } }, function(err){
 							console.log('created successfully');
 						});
-					} else if (anonym) {
+					} else {
 						userDialogList.findOneAndUpdate({user: to}, 
-						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName, anonym: anonym, initiator: to} } }, function(err){
+						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName, anonym: anonym, initiator: initiator} } }, function(err){
 							console.log('created successfully');
 						});
 					}
