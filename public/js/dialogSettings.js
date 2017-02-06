@@ -121,7 +121,6 @@ $(document).ready(function(){
 					type: 'delete',
 					data: {dialogId: curDialog},
 					success: function(response) {
-						console.log(response);
 						$(".extra-right").css("display", "block");
                         $("#cap-empty").css("display", "block");
 						$(".settings-popup").fadeOut(300);

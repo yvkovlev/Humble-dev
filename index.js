@@ -136,6 +136,17 @@ app.post('/api/registrUser', function (req, res){
 });
 
 app.get('/api/getDialog', function (req, res){
+	userMessageStorage.findOne({user: req.user._id}, function(err, data){
+		var arr = data.messages;
+		arr.forEach(function(item, arr){
+			if (item.dialog == req.query.dialogId) {
+				item.readed = true;
+				data.save(function(err){
+					
+				});
+			}
+		});
+	});
 	userMessageStorage.aggregate([
 		{$match: {user: (req.user._id).toString()}},
 		{$unwind: '$messages'},
@@ -143,39 +154,49 @@ app.get('/api/getDialog', function (req, res){
 		/*{$group: {'_id': '$_id', 'messages': {'$push': '$messages'}}}*/
 		], 
 		function(err, data){
-			var response = [];
-			var promise = new Promise(function(resolve, reject){
-				var i = 0, size = data.length, arr = data;
-				if (!size) resolve("result");
-				arr.forEach(function(item, arr){
-					var curMess = ({
-						from: String,
-						message: String,
-						fromId: String,
-						anonym: Boolean,
-						date: Date
-					});
-					i++;
-					if (item.messages.anonym && item.messages.from != req.user.login) {
-						curMess.from = 'Anonym';
-						curMess.message = item.messages.message;
-						curMess.fromId= 'anonym';
-						curMess.date = item.messages.date;
-					} else {
-						curMess.from = item.messages.from;
-						curMess.message = item.messages.message;
-						curMess.fromId = item.messages.fromId;
-						curMess.date = item.messages.date;
-					}
-					if (item.messages.anonym) curMess.anonym = true;
-					else curMess.anonym = false;
-					response.push(curMess);
-					if (i == size) resolve("result");
-				});
+			var response = ({
+				anonym: Boolean,
+				messages: []
 			});
-			promise
-				.then(function(){
-					res.send(response);
+			userDialogList.aggregate([
+				{$match: {user: (req.user._id).toString()}},
+				{$unwind: '$dialogs'},
+				{$match: {'dialogs.dialogId': req.query.dialogId}},
+				], function(err, data1){
+					response.anonym = data1[0].dialogs.anonym;
+					var promise = new Promise(function(resolve, reject){
+						var i = 0, size = data.length, arr = data;
+						if (!size) resolve("result");
+						arr.forEach(function(item, arr){
+							var curMess = ({
+								from: String,
+								message: String,
+								fromId: String,
+								anonym: Boolean,
+								date: Date
+							});
+							i++;
+							if (item.messages.anonym && item.messages.from != req.user.login) {
+								curMess.from = 'Anonym';
+								curMess.message = item.messages.message;
+								curMess.fromId= 'anonym';
+								curMess.date = item.messages.date;
+							} else {
+								curMess.from = item.messages.from;
+								curMess.message = item.messages.message;
+								curMess.fromId = item.messages.fromId;
+								curMess.date = item.messages.date;
+							}
+							if (item.messages.anonym) curMess.anonym = true;
+							else curMess.anonym = false;
+							response.messages.push(curMess);
+							if (i == size) resolve("result");
+						});
+					});
+					promise
+						.then(function(){
+								res.send(response);
+						});
 				});
 	});
 });
@@ -276,8 +297,7 @@ app.get('/api/getUserDialogs', function (req, res){
 			var arr = data.dialogs, arrSize = arr.length, i = 0;
 			if (!arrSize) resolve("result");
 			arr.forEach(function(dialog, arr){
-				var lastMess = "";
-				var lastMessDate = new Date();
+				var lastMess = "", lastMessDate = new Date(), newMessage;
 				var promise2 = new Promise(function(resolve2, rejec2){
 					userMessageStorage.aggregate([
 							{$match: {user: (req.user._id).toString()}},
@@ -291,6 +311,7 @@ app.get('/api/getUserDialogs', function (req, res){
 							{
 								lastMess = data[0].messages.message;
 								lastMessDate = data[0].messages.date;
+								newMessage = data[0].messages.readed;
 							}
 							i++;
 							resolve2("result");
@@ -298,8 +319,8 @@ app.get('/api/getUserDialogs', function (req, res){
 				});
 				promise2
 					.then(function(){
-						if (dialog.anonym && !dialog.initiator) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess, date: lastMessDate});
-						else dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess, date: lastMessDate});
+						if (dialog.anonym && !dialog.initiator) dialogs.push({id: dialog.dialogId, name: 'Anonym', userId: 'anonym', lastMessage: lastMess, date: lastMessDate, newMessage: newMessage});
+						else dialogs.push({id: dialog.dialogId, name: dialog.name, userId: dialog.companion, lastMessage: lastMess, date: lastMessDate, newMessage: newMessage});
 						if (i == arrSize) {
 							resolve("result");
 						}
@@ -336,6 +357,7 @@ app.put('/api/sendMessage', function(req, res){
 			from: req.user.login,
 			fromId: req.user._id,
 			toId: to,
+			readed: true,
 			date: new Date(),
 			anonym: false,
 			message: req.body.message,
@@ -358,6 +380,7 @@ app.put('/api/sendMessage', function(req, res){
 				}
 				userMessageStorage.findOneAndUpdate({user: from}, 
 					{$push: {"messages": newMessage}}, function(err){
+						newMessage.readed = false;
 						userMessageStorage.findOneAndUpdate({user: to}, 
 							{$push: {'messages': newMessage}}, function(err){
 								res.send(newMessage);

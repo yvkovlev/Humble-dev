@@ -12,6 +12,9 @@ function getUserDialogs() {
 		{
 			var dialogList = "";
 			response.forEach(function(curDialog, response){
+				var newMessage = "";
+				if (!curDialog.newMessage) newMessage = "<span class='new-message-indicator'>NEW</span>";
+				else newMessage = "<span class='last-message-time'>" + moment(curDialog.date).format('HH:mm') + "</span>";
 				dialogList +=   "<div class='single-dialog animated' id='" + curDialog.id + "'>" + 
 			                        "<div class='single-dialog-photo'>" + 
 			                            "<div class='single-dialog-photo-border'>" + 
@@ -27,7 +30,7 @@ function getUserDialogs() {
 			                                "<span class='last-message'>" + curDialog.lastMessage + "</span>" + 
 			                            "</div>" + 
 			                            "<div class='single-dialog-time'>" + 
-			                                "<span class='last-message-time'>" + moment(curDialog.date).format('HH:mm') + "</span>" + 
+			                                newMessage +
 			                            "</div>" + 
 			                        "</div>" + 
 			                    "</div>";

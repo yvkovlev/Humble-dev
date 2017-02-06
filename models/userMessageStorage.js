@@ -9,6 +9,7 @@ var userMessageStorageSchema = new Schema({
   		from: String, // Login
   		fromId: String,
       toId: String,
+      readed: Boolean,
       anonym: Boolean,
   		message: String,
   		date: {type: Date}
