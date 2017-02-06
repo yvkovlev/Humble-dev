@@ -667,6 +667,7 @@
   padding: 7px 27px 7px 7px;
   background: #ffffff;
   resize: none;
+  line-height: 18px;
   vertical-align: middle;
   width: calc(100% - 34px);
   outline: none;
@@ -836,6 +837,54 @@
 
 .settings-popup ul li span {
   margin: auto;
+}
+
+.emoji-popup {
+  position: absolute;
+  z-index: 100;
+  right: 28px;
+  bottom: 58px;
+  display: none;
+  margin: 10px;
+  padding: 10px 0;
+  background: #fcfdfd;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
+}
+
+.emoji-popup:after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  z-index: 2000;
+  left: 47px;
+  border: solid 7px transparent;
+  border-top-color: rgb(252, 253, 253);
+}
+
+.emoji-table {
+  display: block;
+  margin: 0 10px;
+}
+
+.emoji-table table {
+  display: block;
+  margin: auto;
+}
+
+.emoji-table table td {
+  padding: 2px;
+  cursor: pointer;
+}
+
+.emoji-table table span {
+  padding: 4px;
+  border-radius: 3px;
+  transition: all 0.1s ease-in-out;
+}
+
+.emoji-table table span:hover {
+  background: #eff1f1;
 }
 
 .actions-confirm {

@@ -70,6 +70,7 @@ $(document).ready(function(){
 				$(selector).html(lastdate);
 		        $(".dialog-area").append(dialog);
 		        $(".dialog-area span").Emoji();
+		        $(".emoji-table span").Emoji();
 		        $('.dialog-area').linkify({
             		target: "_blank"
         		}); 

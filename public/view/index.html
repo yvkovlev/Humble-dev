@@ -38,6 +38,7 @@
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
             });
+            $(".emoji-table span").Emoji();
         </script>
     </head>
     <body>
@@ -212,42 +213,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="conversation-dialog animated">
-                            <div class="conversation-dialog-photo">
-                                <div class="conversation-dialog-photo-border">
-                                    <img src='images/9.jpg'>
-                                </div>
-                            </div>
-                            <div class="conversation-dialog-body">
-                                <div class="conversation-dialog-title">
-                                    <span class="dialog-title">11 A grade</span>
-                                </div>
-                                <div class="conversation-dialog-last-message">
-                                    <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                                </div>
-                                <div class="conversation-dialog-time">
-                                    <span class="new-message-indicator">NEW</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="conversation-dialog animated">
-                            <div class="conversation-dialog-photo">
-                                <div class="conversation-dialog-photo-border">
-                                    <img src='images/10.jpg'>
-                                </div>
-                            </div>
-                            <div class="conversation-dialog-body">
-                                <div class="conversation-dialog-title">
-                                    <span class="dialog-title">Music in hurts</span>
-                                </div>
-                                <div class="conversation-dialog-last-message">
-                                    <span class="last-message">Tousled food truck polaroid, salvia bespoke small...</span>
-                                </div>
-                                <div class="conversation-dialog-time">
-                                    <span class="last-message-time">12.47</span>
-                                </div>
-                            </div>
-                        </div>
                         <!-- CONVERSATIONS END -->
                     </div>
                     <div class="menu-list animated">
@@ -353,8 +318,18 @@
                 </div>
                 <div class="settings-popup">
                     <ul>
-                        <li id="clearDialog"><span>Очистить чат</span></li>
-                        <li id="test11"><span>Заблокировать собедеседника</span></li>
+                        <li id="clearDialog">
+                            <span class="action-info">Очистить чат</span>
+                            <div class='actions-confirm'> 
+                                <span class='action-confirm' id='clearDialogConfirm'>
+                                    <i class='fa fa-check'></i>
+                                </span>
+                                <span class='action-refuse' id='clearDialogRefuse'>
+                                    <i class='fa fa-times'></i>
+                                </span>
+                            </div>
+                        </li>
+                        <li id="blockUser"><span>Заблокировать собедеседника</span></li>
                         <li id="deleteDialog">
                             <span class="action-info">Удалить чат</span>
                             <div class='actions-confirm'> 
@@ -370,6 +345,16 @@
                 </div>
                 <div class="emoji-popup">
                     <div class="emoji-table">
+                        <table>
+                            <tr>
+                                <td><span>😀</span></td>
+                                <td><span>😃</span></td>
+                                <td><span>😄</span></td>
+                                <td><span>😁</span></td>
+                                <td><span>😆</span></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <!-- POPUP WINDOWS END -->
                 <div class="dialog-area">
@@ -440,7 +425,7 @@
                     <div class="dialog-message-input-outher">
                         <textarea class="dialog-message-input" rows="1" spellcheck="false" placeholder="Ваше сообщение..."></textarea>
                         <div class="dialog-smiles-outher">
-                            <i class="fa fa-smile-o" aria-hidden="true"></i>
+                            <i class="fa fa-smile-o" aria-hidden="true" id="emoji"></i>
                         </div>
                     </div>
                     <div class="dialog-send-button-outher">

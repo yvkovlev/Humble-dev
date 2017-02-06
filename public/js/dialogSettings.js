@@ -1,9 +1,11 @@
 $(document).ready(function(){
 	var deleteConfirmClose = true;
+    var clearConfirmClose = true;
 	var photoClose = true;
     var videoClose = true;
     var geopositionClose = true;
     var settingsClose = true;
+    var emojiClose = true;
     $("#photo").click(function(){
         if (photoClose) {
             $(".add-video-popup").fadeOut(300);
@@ -72,19 +74,48 @@ $(document).ready(function(){
         if (!$(event.target).closest(".settings-popup").length && !$(event.target).closest("#settings").length) {
             $(".settings-popup").fadeOut(300);
             settingsClose = true;
+            setTimeout(function(){
+                $('#deleteDialog > .action-info').html("Удалить чат");
+                $('#clearDialog > .action-info').html("Очистить чат");
+                $(".actions-confirm").css("display", "none");
+                setTimeout(function(){
+                    deleteConfirmClose = true;
+                    clearConfirmClose = true;
+                }, 1);
+            }, 300);
         }
         event.stopPropagation();
     });
 
-	$('#clearDialog').on('click', function(){
+
+    $('#clearDialog').on('click', function(){
+        if (clearConfirmClose) {
+            $('#clearDialog > .action-info').html("Вы уверены?");
+            $("#clearDialog > .actions-confirm").css("display", "block");
+            clearConfirmClose = false;
+        }
+    });
+    $("#clearDialogRefuse").on("click", function(){
+        $('#clearDialog > .action-info').html("Очистить чат");
+        $("#clearDialog > .actions-confirm").css("display", "none");
+        setTimeout(function(){
+            clearConfirmClose = true;
+        }, 1);
+    });
+	$('#clearDialogConfirm').on('click', function(){
 		var curDialog = $('.single-dialog.active-dialog').attr('id');
+        $('#clearDialog > .action-info').html("Очистить чат");
+        $("#clearDialog > .actions-confirm").css("display", "none");
+        setTimeout(function(){
+            clearConfirmClose = true;
+        }, 1);
 		$.ajax({
 			url: 'api/clearDialog',
 			type: 'delete',
 			data: {dialogId: curDialog},
 			success: function(response) {
 				$(".dialog-area").empty();
-				$('.single-dialog.active-dialog > .single-dialog-body > .single-dialog-last-message > .last-message').html('В беседе нет сообщений');
+				$('.active-dialog .last-message').html('В беседе нет сообщений');
                 emptyDialog();
 			}
 		});
@@ -92,13 +123,13 @@ $(document).ready(function(){
 	$('#deleteDialog').on('click', function(){
 		if (deleteConfirmClose) {
 			$('#deleteDialog > .action-info').html("Вы уверены?");
-			$(".actions-confirm").css("display", "block");
+			$("#deleteDialog > .actions-confirm").css("display", "block");
 			deleteConfirmClose = false;
 		}
 	});
 	$("#deleteDialogRefuse").on("click", function(){
 		$('#deleteDialog > .action-info').html("Удалить чат");
-		$(".actions-confirm").css("display", "none");
+		$("#deleteDialog > .actions-confirm").css("display", "none");
 		setTimeout(function(){
 			deleteConfirmClose = true;
 		}, 1);
@@ -106,7 +137,7 @@ $(document).ready(function(){
 	$('#deleteDialogConfirm').on('click', function(){
 		var curDialog = $('.single-dialog.active-dialog').attr('id');
 		$('#deleteDialog > .action-info').html("Удалить чат");
-		$(".actions-confirm").css("display", "none");
+		$("#deleteDialog > .actions-confirm").css("display", "none");
         $(".active-dialog").remove();
 		setTimeout(function(){
 			deleteConfirmClose = true;
@@ -131,6 +162,24 @@ $(document).ready(function(){
 			}
 		});
 	});
+    $("#emoji").click(function(){
+        if (emojiClose) {
+            $(".emoji-popup").fadeIn(300);
+            emojiClose = false;
+        }
+        else {
+            $(".emoji-popup").fadeOut(300);
+            emojiClose = true;
+        }
+    });
+    $(".emoji-table span").on("click", function(){
+        var smile = $(this).find("img").attr("alt");
+        $(".dialog-message-input").val($(".dialog-message-input").val() + ' ' + smile + ' ');
+    });
+    $(".dialog-send-button").on("click", function(){
+        $(".emoji-popup").fadeOut(300);
+        emojiClose = true;
+    })
 });
 
 function emptyDialog() {
