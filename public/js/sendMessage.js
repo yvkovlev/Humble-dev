@@ -3,7 +3,8 @@ $(document).ready(function(){
 	var scrollTop = 0;
 	var chord = document.getElementById('chord');
 	var login = getCookie('login');
-	socket.on('newMess', function(data){
+	socket.on('newMess', function(response){
+		var data = response.message;
   		var newMessage = "", curDialog = $('.single-dialog.active-dialog').attr('id');
   		var dialog = "";
   		if ($('#' + data.dialog).html() == undefined) {
@@ -12,7 +13,7 @@ $(document).ready(function(){
   				from = 'Anonym';
   				fromId = 'anonym';
   			} else {
-  				from = data.from;
+  				from = response.fullName;
   				fromId = data.fromId;
   			}
   			dialog = 

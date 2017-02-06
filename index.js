@@ -81,7 +81,7 @@ passport.use(new LocalStrategy(
 app.use(function (req, res, next){
 	if (req.url == "/sign-in" || req.url == "/sign-up" || req.url.split('/')[1] == 'api') next();
 	else
-	{
+	{	
 		if (!req.user) res.redirect("/sign-in");
 		else if (req.cookies.login != req.user.login) res.redirect('sign-in');
 		else next();
@@ -210,15 +210,11 @@ app.get('/api/getUser', function (req, res) {
 app.get('/api/searchCompanion', function(req, res){
 	if (req.query.searchText == req.user.login) res.send('Fail');
 	else {
-		User.find({fullName: {"$regex": req.query.searchText}}, function(err, data){
+		User.find({$or: [{fullName: {$regex: req.query.searchText, $options: 'i'}}, {login: {$regex: req.query.searchText, $options: 'i'}}] }, function(err, data){
 			res.send(data);
 		});
 	}
 });
-
-/*userDialogList.findOne({user: '58977e66ae5e008e38140123'}, function(err, data){
-	console.log(data);
-});*/
 
 app.put('/api/createDialog', function (req, res){
 	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
@@ -338,7 +334,6 @@ app.get('/api/getUserDialogs', function (req, res){
 					else return -1; 
 				}
 				dialogs.sort(fn);
-				console.log(dialogs);
 				res.send(dialogs);
 			});
 	});
@@ -371,7 +366,6 @@ app.put('/api/sendMessage', function(req, res){
 		userDialogList.findOne({$and: [{user: to}, {'dialogs.dialogId': dialogId}]}, 
 			function(err, data){
 				if (data == undefined) { // Создаем этот диалог и кладем в userDialogsList to
-					console.log(anonym);
 					if (!anonym) {
 						userDialogList.findOneAndUpdate({user: to}, 
 						{ $push: {"dialogs": {dialogId: dialogId, companion: from, name: req.user.fullName, anonym: anonym} } }, function(err){
@@ -389,7 +383,7 @@ app.put('/api/sendMessage', function(req, res){
 						newMessage.readed = false;
 						userMessageStorage.findOneAndUpdate({user: to}, 
 							{$push: {'messages': newMessage}}, function(err){
-								res.send(newMessage);
+								res.send({fullName: req.user.fullName, message: newMessage});
 							});
 					});
 			});
@@ -462,19 +456,11 @@ io.on('connection', function(socket){
 	socket.on('setRooms', function(data){
 		User.findOne({login: data.login}, function(err, data){
 			socket.join(data._id);
-			/*userDialogList.findOne({user: data._id}, function(err, data){
-				var arr = data.dialogs;
-				arr.forEach(function(item, arr){
-					socket.join(item.dialogId);
-				});
-			});*/
 		});
 	});
 	socket.on('newMess', function(data){
-		//console.log(data);
-		io.to(data.toId).emit('newMess', data);
-		io.to(data.fromId).emit('newMess', data);
-		//io.to(data.dialog).emit('newMess', data);
+		io.to(data.message.toId).emit('newMess', data);
+		io.to(data.message.fromId).emit('newMess', data);
 	});
 })
 
