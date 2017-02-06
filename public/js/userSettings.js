@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	var nameInputDisabled = true;
+    var passwordInputDisabled = true;
 	getUser();
 	$('#saveImg').on('click', function(){
 		var file = $('#photo-input').prop('files')[0];
@@ -19,6 +21,38 @@ $(document).ready(function(){
 			});
 		}
 	});
+	$("#edit-name").on("click", function(){
+        if (nameInputDisabled) {
+            $("#name-input").prop("disabled", false);
+            $(this).css({"color": "#c4c6ca"});
+            $("#name-input").addClass("active-input");
+            $("#name-input").focus();
+            nameInputDisabled = false;
+        }
+        else {
+            $("#name-input").prop("disabled", true);
+            $(this).css({"color": "#797f86"});
+            $("#name-input").removeClass("active-input");
+            nameInputDisabled = true;
+        }
+    });
+    $("#edit-password").on("click", function(){
+        if (passwordInputDisabled) {
+            $("#password-input").prop("disabled", false);
+            $(this).css({"color": "#c4c6ca"});
+            $("#password-input").addClass("active-input");
+            $("#password-input").attr("placeholder", "");
+            $("#password-input").focus();
+            passwordInputDisabled = false;
+        }
+        else {
+            $("#password-input").prop("disabled", true);
+            $(this).css({"color": "#797f86"});
+            $("#password-input").attr("placeholder", "••••••••••••");
+            $("#password-input").removeClass("active-input");
+            passwordInputDisabled = true;
+        }
+    });
 	$("#refuseImg").on('click', function(){
 		getUser();
 		$(".save-changes").css("display", "none");
@@ -36,20 +70,23 @@ $(document).ready(function(){
 			$("#name-input").prop("disabled", true);
             $("#edit-name").css({"color": "#797f86"});
             $("#name-input").removeClass("active-input");
-            //nameInputDisabled = true;
 		}
 		if (newFullName != "") {
 			$("#password-input").prop("disabled", true);
             $("#edit-password").css({"color": "#797f86"});
             $("#password-input").removeClass("active-input");
-            //passwordInputDisabled = true;
 		}
 		$.ajax({
 			url: 'api/saveUserSettings',
 			data: {newFullName: newFullName, newPassword: newPassword},
 			type: 'put',
 			success: function(response){
-				console.log(response);
+				if (response == "Success") {
+					$(".extra-block-feedback").html("Изменения успешно сохранены.");
+				}
+				else {
+					$(".extra-block-feedback").html("Произошла ошибка, попробуйте позже.");
+				}
 			}
 		});
 	});

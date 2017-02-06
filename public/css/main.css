@@ -126,6 +126,7 @@
   margin: 10px 0;
   height: 504px;
   overflow-y: scroll;
+  overflow-x: hidden;
   width: 390px;
 }
 
@@ -857,14 +858,16 @@
   position: absolute;
   bottom: -12px;
   z-index: 2000;
-  left: 47px;
+  left: 153px;
   border: solid 7px transparent;
   border-top-color: rgb(252, 253, 253);
 }
 
 .emoji-table {
   display: block;
-  margin: 0 10px;
+  height: 166px;
+  overflow: scroll;
+  padding: 0 10px;
 }
 
 .emoji-table table {
@@ -1479,6 +1482,14 @@
 
 .save-settings {
   margin: 0px 25px;
+}
+
+.extra-block-feedback {
+  color: #bfbfbf;
+  margin: 10px 25px;
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 5px;
 }
 
 .cap {
