@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	var closeMenu = true;
-	var closeNewDialog = true;
 	var fullName;
 	$("#logOut").on('click', function(){
 		$.ajax({
@@ -24,7 +23,7 @@ $(document).ready(function(){
     				$(".cap").css("display", "none");
 					$("#cap-empty").css("display", "block");
 					$(".cap-response").css("display", "none");
-					menuOpenClose();
+					if (!closeMenu) menuOpenClose();
 					getUserDialogs();
 				}
 				else $(".cap-response").css("display", "block");
@@ -44,7 +43,7 @@ $(document).ready(function(){
     				$(".cap").css("display", "none");
 					$("#cap-empty").css("display", "block");
 					$(".cap-response").css("display", "none");
-					menuOpenClose();
+					if (!closeMenu) menuOpenClose();
 					getUserDialogs();
 				}
 				else $(".cap-response").css("display", "block");
@@ -167,7 +166,6 @@ $(document).ready(function(){
             $("#newDialog").css("display", "none");
             $("#searchCompanion").val("");
             $(".companions-results").html("");
-    		closeNewDialog = true;
 	        closeMenu = true;
 	    }
     }
