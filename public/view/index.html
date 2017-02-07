@@ -32,13 +32,10 @@
         <script src="js/moment.min.js"></script>
         <script src="js/userSettings.js"></script>
         <script src="js/dialogSettings.js"></script>
-        <script src="js/linkify.js"></script>
-        <script src="js/linkify-jquery.js"></script>
         <script>
             $(window).load(function() {
               $('.preloader-bg').find('.preloader-fg').fadeOut().end().delay(400).fadeOut('slow');
             });
-            $(".emoji-table span").Emoji();
         </script>
     </head>
     <body>
@@ -151,7 +148,12 @@
                     <div class="cap" id="cap-rocket">
                         <div class="cap-image cap-rocket"></div>
                         <div class="cap-title">Мы рады, что Вы вернулись!</div>
-                        <div class="cap-text">Для того, что бы начать общаться, нажмите на диалог слева.</div>
+                        <div class="cap-text">Для того, что бы начать общаться, нажмите на диалог слева или<br> найдите собеседника через поиск.</div>
+                        <div class="cap-search">
+                            <input type="text" id="capCompanionSearch">
+                        </div>
+                        <div class="cap-search-results"></div>
+                        <div class="cap-search-results-gradient"></div>
                     </div>
                     <div class="cap" id="cap-empty">
                         <div class="cap-image cap-empty"></div>
@@ -166,7 +168,17 @@
                             <div class="cap-button open-dialog">Открытый диалог</div>
                             <div class="cap-button anonim-dialog">Анонимный диалог</div>
                         </div>
-                        <div class="cap-response"></div>
+                        <div class="cap-response">Такой диалог уже был создан.</div>
+                    </div>
+                    <div class="cap" id="first-entranse">
+                        <div class="cap-image cap-first-entranse"></div>
+                        <div class="cap-title">Мы очень рады приветствовать Вас на Humble!</div>
+                        <div class="cap-text">Начните общаться с друзьями, родными и знакомыми прямо сейчас!<br>Найдите собеседника в поиске и начните диалог:</div>
+                        <div class="cap-search">
+                            <input type="text" id="capCompanionSearch">
+                        </div>
+                        <div class="cap-search-results"></div>
+                        <div class="cap-search-results-gradient"></div>
                     </div>
                 </div>
             </div>
@@ -526,5 +538,7 @@
         <script src="js/lightbox.js"></script>
         <script src="js/custom-file-input.js"></script>
         <script src="js/load-photo-rendering.js"></script>
+        <script src="js/linkify.js"></script>
+        <script src="js/linkify-jquery.js"></script>
     </body>
 </html>
