@@ -1,6 +1,7 @@
 $(document).ready(function(){
-  	var scrollTop;
+  	var scrollTop, xhr;
 	$('.dialogs-list').on('click', '.single-dialog', function(){
+		if (xhr) xhr.abort();
 		var dialogName = $(this).find(".dialog-title").html();
 		var curDialog = $(this).attr('id');
 		var selector = "#" + curDialog + " .single-dialog-time";
@@ -14,7 +15,7 @@ $(document).ready(function(){
 		$(".dialog-area").empty();
 		$(".extra-right").css("display", "none");
 		$(".cap").css("display", "none");
-		$.ajax({
+		xhr = $.ajax({
 			type: 'get',
 			url: 'api/getDialog',
 			data: {'dialogId': $(this).attr('id')},

@@ -35,7 +35,7 @@ $(document).ready(function(){
 								}
 							});
 						}
-						else console.log('Такой логин уже занят');
+						else $(".error-msg").html("Такой логин уже занят, попробуйте другой.");
 					}
 				});
 			}
@@ -68,7 +68,7 @@ $(document).ready(function(){
 				}
 				else {
 					if (response == 'fail') {
-						console.log('Такой логин уже занят');
+						$(".error-msg").html("Такой логин уже занят, попробуйте другой.");
 					}
 					$(".login .success").fadeOut(200);
 					$(".login .error").fadeIn(200);
