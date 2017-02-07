@@ -79,7 +79,7 @@ $(document).ready(function(){
 						response.forEach(function(item, response){
 							if (item.login != getCookie('login')) {
 								result += 
-										"<div class='result' id='" + item._id + "''>" + 
+										"<div class='result' id='" + item._id + "'>" + 
 						                    "<div class='result-photo-outher'>" + 
 						                        "<div class='result-photo'>" + 
 						                            "<img src='uploads/" + item._id + ".jpg" + "'>" + 

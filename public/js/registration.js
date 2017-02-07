@@ -7,25 +7,35 @@ $(document).ready(function(){
 		if (checkFullName(fullName) && checkLogin(login) && checkPassword(password) && checkEmail(email)) {
 			if ($('#checkbox').prop('checked') == true) {
 				$.ajax({
-					type: "post",
-					url: "api/registrUser",
-					data: {"fullName": fullName, "login": login, "password": password, "email": email},
-					success: function(response){
-						if (response == 'Success') {
-							$("#fullName").val('');
-							$("#login").val('');
-							$("#password").val('');
-							$("#email").val('');
-							$(".sign-up-button").fadeOut(300, function(){
-								$(".success-feedback").fadeIn(300);
+					url: 'api/checkLogin',
+					type: 'get',
+					data: {login: login},
+					success: function(response){	
+						if (response == 'success') {
+							$.ajax({
+								type: "post",
+								url: "api/registrUser",
+								data: {"fullName": fullName, "login": login, "password": password, "email": email},
+								success: function(response){
+									if (response == 'Success') {
+										$("#fullName").val('');
+										$("#login").val('');
+										$("#password").val('');
+										$("#email").val('');
+										$(".sign-up-button").fadeOut(300, function(){
+											$(".success-feedback").fadeIn(300);
+										});
+										setTimeout(function(){
+											window.location.href = "/sign-in"
+										}, 2000);
+									}
+									if (response == 'Fail') {
+										$(".sign-up-button a").html('Произошла ошибка, нажмите чтобы повторить.')
+									}
+								}
 							});
-							setTimeout(function(){
-								window.location.href = "/sign-in"
-							}, 2000);
 						}
-						if (response == 'Fail') {
-							$(".sign-up-button a").html('Произошла ошибка, нажмите чтобы повторить.')
-						}
+						else console.log('Такой логин уже занят');
 					}
 				});
 			}
@@ -47,14 +57,24 @@ $(document).ready(function(){
 	});
 	$("#login").change(function(){
 		var login = $("#login").val();
-		if (checkLogin(login)){
-			$(".login .error").fadeOut(200);
-			$(".login .success").fadeIn(200);
-		}
-		else {
-			$(".login .success").fadeOut(200);
-			$(".login .error").fadeIn(200);
-		}
+		$.ajax({
+			url: 'api/checkLogin',
+			type: 'get',
+			data: {login: login},
+			success: function(response){
+				if (checkLogin(login) && response == 'success'){
+					$(".login .error").fadeOut(200);
+					$(".login .success").fadeIn(200);
+				}
+				else {
+					if (response == 'fail') {
+						console.log('Такой логин уже занят');
+					}
+					$(".login .success").fadeOut(200);
+					$(".login .error").fadeIn(200);
+				}
+			}
+		});
 	});
 	$("#password").change(function(){
 		var password = $("#password").val();
