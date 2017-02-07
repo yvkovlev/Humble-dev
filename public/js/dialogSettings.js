@@ -179,7 +179,13 @@ $(document).ready(function(){
     $(".dialog-send-button").on("click", function(){
         $(".emoji-popup").fadeOut(300);
         emojiClose = true;
-    })
+    });
+    $(".dialog-message-input").keypress(function(e){
+        if (e.keyCode == 13) {
+            $(".emoji-popup").fadeOut(300);
+            emojiClose = true;
+        }
+    });
 });
 
 function emptyDialog() {

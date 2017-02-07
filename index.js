@@ -223,6 +223,7 @@ app.get('/api/searchCompanion', function(req, res){
 	}
 });
 
+
 app.put('/api/createDialog', function (req, res){
 	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
 	var anonym = (req.body.anonym == 'true');
