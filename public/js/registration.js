@@ -65,6 +65,7 @@ $(document).ready(function(){
 				if (checkLogin(login) && response == 'success'){
 					$(".login .error").fadeOut(200);
 					$(".login .success").fadeIn(200);
+					$(".error-msg").html("");
 				}
 				else {
 					if (response == 'fail') {
