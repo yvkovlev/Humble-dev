@@ -99,6 +99,13 @@ app.get('/sign-up', function (req, res){
 	res.sendFile(__dirname + '/public/view/sign-up.html');
 });
 
+app.get('/api/checkLogin', function (req, res){
+	User.find({login: req.query.login}, function(err, data){
+		if (!data.length) res.send('success');
+		else res.send('fail');
+	});
+});
+
 app.post('/api/registrUser', function (req, res){
 	var id = new mongoose.Types.ObjectId;
 	bcrypt.hash(req.body.password, 10).then(function(hash) {
