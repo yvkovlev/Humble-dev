@@ -223,7 +223,6 @@ app.get('/api/searchCompanion', function(req, res){
 	}
 });
 
-
 app.put('/api/createDialog', function (req, res){
 	var from = req.user._id, to = req.body.companion, fullName = req.body.fullName;
 	var anonym = (req.body.anonym == 'true');
@@ -234,8 +233,8 @@ app.put('/api/createDialog', function (req, res){
 	// писать), а диалог у to создастся тогда, когда from напишет ему сообщение.
 	if (anonym)
 	{
-		userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, 
-			{$and: [ { 'dialogs.companion': mongoose.Types.ObjectId(to) }, { 'dialogs.anonym': anonym }, {'dialogs.initiator': req.user._id} ] } ]}, 
+		//userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, 
+		userDialogList.findOne({$and: [{user: '58977e4cae5e008e38140120'}, {dialogs: {$elemMatch: { 'companion': to, 'anonym': anonym, 'initiator': from} } } ] },
 			function(err, data){
 			if (data == undefined) { // Этого диалога у from нету
 				userDialogList.aggregate([
