@@ -363,6 +363,14 @@
   display: none;
 }
 
+.error-msg {
+  color: #fff;
+  font-size: 11px;
+  position: absolute;
+  left: 0;
+  bottom: -25px;
+}
+
 .success-feedback {
   display: flex;
   width: 60%;
