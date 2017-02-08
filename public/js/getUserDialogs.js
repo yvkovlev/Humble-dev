@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$("#cap-rocket").css("display", "block");
 	getUserDialogs();
 	$('#chord').prop("volume", 0.2);
+	
 });
 
 function getUserDialogs() {

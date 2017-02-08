@@ -40,7 +40,8 @@ $(document).ready(function(){
             $('.last-message').linkify({
             		target: "_blank"
         	});
-        	$(".dialogs-list span").Emoji();  
+        	$(".dialogs-list span").Emoji(); 
+        	if (data.from != login) chord.play(); 
   		} else {
   			var selector = "#" + data.dialog + " .single-dialog-last-message .last-message";
 	  		$(selector).html(data.message);
