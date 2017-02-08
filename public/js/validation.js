@@ -11,7 +11,8 @@ function checkLogin(str)
 
 function checkPassword(str)
 {
-	var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=(.*[a-zA-Z]){2}).{8,}$/;
+	//var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=(.*[a-zA-Z]){2}).{8,}$/;
+	var re = /^[a-zA-Z\d\.\_]{8,}$/;
 	return re.test(str);
 }
 

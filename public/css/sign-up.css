@@ -25,12 +25,12 @@
 
 .main-container {
   margin: 50px auto 10px;
-  display: inline-block;
+  display: flex;
   text-align: left;
+  justify-content: center;
 }
 
 .left-column {
-  float: left;
   width: 400px;
   background: #ffffff;
   padding: 25px 0px 10px 0px;
@@ -39,7 +39,6 @@
 }
 
 .right-column {
-  float: left;
   width: 700px;
   height: 649px;
   position: relative;
@@ -54,6 +53,42 @@
   background: -ms-linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
   background: linear-gradient(35deg, rgba(41,71,142,1) 0%, rgba(0,167,179,1) 50%, rgba(186,217,192,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29478e', endColorstr='#bad9c0', GradientType=1 );
+}
+
+@media screen and (max-width: 890px) {
+  .main-container {
+    display: block;
+    margin: auto;
+  }
+  .left-column {
+    width: 100%;
+    display: none;
+  }
+  .right-column {
+    width: 100%;
+  }
+  .download-app {
+    display: none;
+  }
+  .full-name, .login, .password, .email, .terms {
+    width: 85% !important;
+  }
+  .sign-up-title {
+    margin: auto !important
+  }
+  .sign-up-title h2 {
+    width:90% !important;
+    font-size: 17px !important;
+  }
+  .sign-up-input {
+    width: 100% !important;
+  }
+  .error {
+    right: 5px !important;
+  }
+  .success {
+    right: 5px !important;
+  }
 }
 
 .logo {
