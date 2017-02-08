@@ -102,6 +102,7 @@ $(document).ready(function(){
 				$(".user-info-photo-border img").attr('src', 'uploads/' + response._id + '.jpg');
 				$(".user-info-name").html(response.fullName + " <span class='online-status'><i class='fa fa-circle'></i></span>");
 				$(".user-info-login").html("@" + response.login);
+				document.title = response.fullName + " " + "(@" + response.login + ")"
 			}
 		});
 	};
