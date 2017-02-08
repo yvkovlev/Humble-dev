@@ -159,6 +159,7 @@ $(document).ready(function(){
 	});
 	function sendMessage () {
 		var messBody = $('.dialog-message-input').val();
+		messBody = messBody.replace(/^<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 		$(".dialog-message-input").attr("rows", 1);
 		$('.dialog-message-input').val("");
 		$('.dialog-message-input').val().replace(/\n$/m, ' ');
