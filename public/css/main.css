@@ -1650,14 +1650,15 @@
   margin: 0 5px;
   cursor: pointer;
   padding: 5px;
-  background: #fff;
+  color: #fff;
+  background: #363e47;
   border-radius: 3px;
-  border: 1px solid #DBDBDB;
+  border: 1px solid #20252b;
   transition: all 0.2s ease-in-out;
 }
 
 .cap-button:hover {
-  background: #fdfdfd;
+  background: #3f4750;
 }
 
 .cap-response {
