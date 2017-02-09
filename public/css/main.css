@@ -61,6 +61,14 @@
   padding: 0;
 }
 
+.left-column::-webkit-scrollbar { 
+  display: none; 
+}
+
+.left-column::-webkit-scrollbar {
+  display: none;
+}
+
 .right-column {
   float: left;
   width: 70%;
