@@ -17,7 +17,7 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: id, fullName: fullName, anonym: false},
 			success: function(response){
-				if (response == "Диалог успешно создан") {
+				if (response == "Success") {
 					$(".search-companion").removeClass("translateLeftIn");
     				$(".search-companion").addClass("translateLeftOut");
     				$(".cap").css("display", "none");
@@ -37,7 +37,7 @@ $(document).ready(function(){
 			url: 'api/createDialog',
 			data: {companion: id, fullName: fullName, anonym: true},
 			success: function(response) {
-				if (response == "Диалог успешно создан") {
+				if (response == "Success") {
 					$(".search-companion").removeClass("translateLeftIn");
     				$(".search-companion").addClass("translateLeftOut");
     				$(".cap").css("display", "none");
