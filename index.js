@@ -241,18 +241,18 @@ app.put('/api/createDialog', function (req, res){
 					if (anonym) {
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-							res.send("Р”РёР°Р»РѕРі СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
+							res.send("Success"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
 						});
 					} else
 					{
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-							res.send("Р”РёР°Р»РѕРі СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
+							res.send("Success"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
 						});
 					}
 				});
 			}
-			else res.send("РўР°РєРѕР№ РґРёР°Р»РѕРі СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚");
+			else res.send("Fail");
 		});
 	} else {
 		userDialogList.findOne({$and: [ { user: mongoose.Types.ObjectId(from) }, 
@@ -272,18 +272,18 @@ app.put('/api/createDialog', function (req, res){
 					if (anonym) {
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym, initiator: from} } }, function(err){
-							res.send("Р”РёР°Р»РѕРі СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
+							res.send("Success"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
 						});
 					} else
 					{
 						userDialogList.findOneAndUpdate({user: mongoose.Types.ObjectId(from)}, 
 						{ $push: {"dialogs": {dialogId: id, companion: to, name: fullName, anonym: anonym} } }, function(err){
-							res.send("Р”РёР°Р»РѕРі СѓСЃРїРµС€РЅРѕ СЃРѕР·РґР°РЅ"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
+							res.send("Success"); // РЎРѕР·РґР°РµРј СЌС‚РѕС‚ РґРёР°Р»РѕРі Рё РєР»Р°РґРµРј РІ userDialogsList from-a
 						});
 					}
 				});
 			}
-			else res.send("РўР°РєРѕР№ РґРёР°Р»РѕРі СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚");
+			else res.send("Fail");
 		});
 	}
 });
@@ -304,7 +304,7 @@ app.get('/api/getUserDialogs', function (req, res){
 							{$sort : { 'messages.date' : -1 } },
 						], 
 						function(err, data){
-							if (data.length == 0) lastMess = 'Р’ Р±РµСЃРµРґРµ РЅРµС‚ СЃРѕРѕР±С‰РµРЅРёР№';
+							if (data.length == 0) lastMess = 'В беседе нет сообщений';
 							else 
 							{
 								lastMess = data[0].messages.message;
@@ -451,7 +451,7 @@ app.get('/api/logOut', function (req, res){
 io.on('connection', function(socket){
 	socket.on('setRooms', function(data){
 		User.findOne({login: data.login}, function(err, data){
-			socket.join(data._id);
+			if (data) socket.join(data._id);
 		});
 	});
 	socket.on('newMess', function(data){
@@ -460,6 +460,6 @@ io.on('connection', function(socket){
 	});
 })
 
-http.listen(80, function(){
+http.listen(3000, function(){
   console.log('Humble is listening on port 80');
 });

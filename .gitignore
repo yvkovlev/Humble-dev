@@ -1,2 +1,5 @@
 public/uploads/
+node_modules/
+my_app_log.log
+my_app_err.log
 .DS_Store
